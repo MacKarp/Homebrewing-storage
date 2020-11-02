@@ -1,0 +1,1 @@
+start /b docker-compose -f docker-compose-backend-dev.yaml stop
