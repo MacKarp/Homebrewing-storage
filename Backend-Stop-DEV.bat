@@ -1,1 +1,1 @@
-start /b docker-compose -f docker-compose-backend-dev.yaml stop
+start /b docker-compose -f docker-compose-backend-dev.yaml --project-name Homebrewing-storage-DEV stop
