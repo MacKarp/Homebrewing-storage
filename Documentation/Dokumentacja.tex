@@ -1,0 +1,106 @@
+%ustawienia
+\documentclass[12pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage[polish]{babel}
+\usepackage{polski}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[left=3.5cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{indentfirst} 
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[most]{tcolorbox}
+\setlength{\parindent}{0.7cm}
+\hypersetup{
+	colorlinks = true,
+	linkcolor = black,
+	filecolor = magenta,
+	urlcolor = blue,
+	}
+\urlstyle{same}	
+	
+\author{Karpiński Maciej\\Krysa Marcin\\Kuczma Łukasz\\Mertuszka Adam\\\\\\\includegraphics[width=0.7\linewidth]{img/logoPWSZ.eps}\\\\\\\\Projektowanie i programowanie systemów internetowych II}
+\title{Nazwa aplikacji}
+
+\begin{document}
+
+	%Stron tytułowa
+	\maketitle
+	\thispagestyle{empty}
+	\pagenumbering{arabic} 
+	\clearpage
+
+	%Spis treści
+	\tableofcontents
+	\newpage
+
+	%Początek pierwszej sekcji opisującej system
+	\section{Opis funkcjonalny systemu}
+		\indent Opis funkcjonalny systemu
+		\begin{itemize}
+			\item funkcja 1
+			\item funkcja 2
+		\end{itemize}
+	\newpage
+
+	%sekcja druga, opis wykorzystanych technologii
+	\section{Opis technologiczny}
+		\indent Przy tworzeniu projektu ,,'' wykorzystano następujące technologie:
+
+		\subsection{C\#}
+			\indent C\# jest obiektowym językiem programowania, zaprojektowanym w latach 1998 – 2001 dla firmy Microsoft.
+			Napisany program jest kompilowany do Common Intermediate Language(CLI), który następnie wykonywany jest w środowisku uruchomieniowym takim jak .NET Framework,
+			.NET Core, Mono lub DotGNU.
+			Wykorzystanie CLI sprawia, że kod programu jest wieleplatformowy (dopóki istnieje odpowiednie środowisko uruchomieniowe).
+			C\# posiada wiele wspólnych cech z językami Object Pascal, Delphi, C++ i Java a najważniejszymi cechami C\# są:
+			\begin{itemize}
+				\item Obiektowość z hierarchią o jednym elemencie nadrzędnym (podobnie jak w Javie);
+				\item Zarządzaniem pamięcią zajmuje się środowisko uruchomieniowe;
+				\item Właściwości i indeksery;
+				\item Delegaty i zdarzenia – rozwinięcie wskaźników C++;
+				\item Typy ogólne, generyczne, częściowe, Nullable, domniemane, anonimowe;
+				\item Dynamiczne tworzenie kodu;
+				\item Metody anonimowe;
+				\item Wyrażenia lambda.
+			\end{itemize}
+			
+		\subsection{ASP.NET Core 3.1}
+			\indent ASP.Net Core jest wysokowydajnym frameworkiem, do budowania nowoczesnych aplikacji internetowych wykorzystujących moc obliczeniową chmur. ASP.Net Core jest technologią
+			open - source, wykorzystującą silnik html Razor, dzięki której możliwe jest tworzenie aplikacji mulitplaformowych, które mogą być używane na każdym urządzeniu wyposażonym
+			w przeglądarkę internetową.
+
+		\subsection{Entity Framework}		 
+		 	\indent Entity Framework jest technologią open - source do mapowania obiektowo – relacyjnego (ORM), które wspierają rozwój aplikacji zorientowanych na dane.
+		 	Entity Framework umożliwia programistom pracę z danymi w postaci obiektów i właściwości specyficznych dla domeny, bez konieczności przejmowania się bazowymi
+		 	tabelami i kolumnami baz danych, w których dane są przechowywane. 
+
+		\subsection{Microsoft SQL Server}		 
+		 	\indent Microsoft SQL Server jest systemem zarządzania relacyjnymi bazami danych opracowany przez firmę Microsoft. Cechą charakterystyczną jest głównie wykorzystywanie języka
+		 	zapytań	Transact-SQL, który jest rozwinięciem standardu ANSI/ISO. W projekcie wykorzystano wersje 2019 Express, która jest bezpłatną edycją programu Microsoft SQL Server, oferująca
+		 	podstawowy silnik bazy danych, nieposiadający ograniczenia ilości obsługiwanych baz lub użytkowników. Ograniczenia, występujące w wersji Express to  m.in.:
+		 	korzystanie z~jednego procesora, 1 GB pamięci RAM, 10GB plików bazy danych czy brak SQL Agent.
+
+	\newpage
+		
+	%Sekcja trzecia, instrukcja lokalnego i zdalnego uruchomienia systemu
+	\section{Instrukcja lokalnego i zdalnego uruchomienia systemu}
+		\subsection{Lokalne uruchomienie systemu}
+			\indent opis lokalnego
+			
+		\subsection{Zdalne uruchomienie systemu}
+			\indent opis zdalnego
+
+	\newpage
+	
+	%Sekcja czwarta, instrukcja uruchamiania testów oraz opis testowanych funkcjonalności
+	\section{Instrukcja uruchamiania testów oraz opis testowanych funkcjonalności}
+
+	\newpage
+
+	\section{Wnioski projektowe}
+		\indent wnioski		
+\end{document}
