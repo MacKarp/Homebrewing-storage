@@ -32,6 +32,8 @@ namespace Backend
 
 
             services.AddControllers();
+
+            services.AddScoped<IBackendRepo, SqlBackendRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
