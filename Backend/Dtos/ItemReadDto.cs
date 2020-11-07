@@ -1,14 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Backend.Models;
 
-namespace Backend.Models
+namespace Backend.Dtos
 {
-    public class Item
+    public class ItemReadDto
     {
-        [Key]
         public int Id { get; set; }
-        [Required]
         public string ItemName { get; set; }
-        [Required]
         public virtual Category NamCategory { get; set; }
     }
 }
