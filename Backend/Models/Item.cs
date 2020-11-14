@@ -9,6 +9,6 @@ namespace Backend.Models
         [Required]
         public string ItemName { get; set; }
         [Required]
-        public virtual Category NamCategory { get; set; }
+        public virtual Category IdCategory { get; set; }
     }
 }
