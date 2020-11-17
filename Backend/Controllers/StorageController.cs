@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using AutoMapper;
 using Backend.Data;
+using Backend.Dtos;
 using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,11 +11,13 @@ namespace Backend.Controllers
     [Route("api/[controller]")]
     public class StorageController : ControllerBase
     {
-        private IBackendRepo _repository;
+        private readonly IBackendRepo _repository;
+        private readonly IMapper _mapper;
 
-        public StorageController(IBackendRepo repository)
+        public StorageController(IBackendRepo repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -24,12 +28,12 @@ namespace Backend.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Expire> GetStorageById(int id)
+        public ActionResult<StorageReadDto> GetStorageById(int id)
         {
             var item = _repository.GetStorageById(id);
             if (item != null)
             {
-                return Ok(item);
+                return Ok(_mapper.Map<StorageReadDto>(item));
             }
             else return NotFound();
         }

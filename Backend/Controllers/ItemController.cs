@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using AutoMapper;
 using Backend.Data;
+using Backend.Dtos;
 using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +12,12 @@ namespace Backend.Controllers
     public class ItemController : ControllerBase
     {
         private readonly IBackendRepo _repository;
+        private readonly IMapper _mapper;
 
-        public ItemController(IBackendRepo repository)
+        public ItemController(IBackendRepo repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -24,12 +28,12 @@ namespace Backend.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Expire> GetItemById(int id)
+        public ActionResult<ItemReadDto> GetItemById(int id)
         {
             var item = _repository.GetItemById(id);
             if (item != null)
             {
-                return Ok(item);
+                return Ok(_mapper.Map<ItemReadDto>(item));
             }
             else return NotFound();
         }
