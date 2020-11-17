@@ -5,7 +5,7 @@ namespace Backend.Models
     public class Storage
     {
         [Key]
-        public int Id { get; set; }
+        public int StorageId { get; set; }
         [Required]
         public int UserID { get; set; } //temporary, need to change to proper UserID
         [Required]

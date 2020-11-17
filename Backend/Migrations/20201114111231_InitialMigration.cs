@@ -10,46 +10,46 @@ namespace Backend.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    CategoryId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryName = table.Column<string>(nullable: true)
+                    CategoryName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.PrimaryKey("PK_Categories", x => x.CategoryId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Storages",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    StorageId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<int>(nullable: false),
-                    StorageName = table.Column<string>(nullable: true)
+                    StorageName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Storages", x => x.Id);
+                    table.PrimaryKey("PK_Storages", x => x.StorageId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Items",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    ItemId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ItemName = table.Column<string>(nullable: true),
-                    NamCategoryId = table.Column<int>(nullable: true)
+                    ItemName = table.Column<string>(nullable: false),
+                    CategoryId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Items", x => x.Id);
+                    table.PrimaryKey("PK_Items", x => x.ItemId);
                     table.ForeignKey(
-                        name: "FK_Items_Categories_NamCategoryId",
-                        column: x => x.NamCategoryId,
+                        name: "FK_Items_Categories_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id",
+                        principalColumn: "CategoryId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -57,44 +57,44 @@ namespace Backend.Migrations
                 name: "Expires",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    ExpireId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(nullable: false),
-                    IdStorageId = table.Column<int>(nullable: true),
-                    IdItemId = table.Column<int>(nullable: true),
-                    ExpirationDate = table.Column<string>(nullable: true)
+                    StorageId = table.Column<int>(nullable: true),
+                    ItemId = table.Column<int>(nullable: true),
+                    ExpirationDate = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Expires", x => x.Id);
+                    table.PrimaryKey("PK_Expires", x => x.ExpireId);
                     table.ForeignKey(
-                        name: "FK_Expires_Items_IdItemId",
-                        column: x => x.IdItemId,
+                        name: "FK_Expires_Items_ItemId",
+                        column: x => x.ItemId,
                         principalTable: "Items",
-                        principalColumn: "Id",
+                        principalColumn: "ItemId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Expires_Storages_IdStorageId",
-                        column: x => x.IdStorageId,
+                        name: "FK_Expires_Storages_StorageId",
+                        column: x => x.StorageId,
                         principalTable: "Storages",
-                        principalColumn: "Id",
+                        principalColumn: "StorageId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Expires_IdItemId",
+                name: "IX_Expires_ItemId",
                 table: "Expires",
-                column: "IdItemId");
+                column: "ItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Expires_IdStorageId",
+                name: "IX_Expires_StorageId",
                 table: "Expires",
-                column: "IdStorageId");
+                column: "StorageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Items_NamCategoryId",
+                name: "IX_Items_CategoryId",
                 table: "Items",
-                column: "NamCategoryId");
+                column: "CategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -1,14 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Backend.Models
 {
     public class Item
     {
         [Key]
-        public int Id { get; set; }
+        public int ItemId { get; set; }
         [Required]
         public string ItemName { get; set; }
-        [Required]
+        [ForeignKey("CategoryId")]
         public virtual Category IdCategory { get; set; }
     }
 }
