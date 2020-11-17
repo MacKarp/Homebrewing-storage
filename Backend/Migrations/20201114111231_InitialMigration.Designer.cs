@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(BackendContext))]
-    [Migration("20201024095408_InitialMigration")]
+    [Migration("20201114111231_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,81 +23,85 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("Backend.Models.Category", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CategoryName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Backend.Models.Expire", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ExpireId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ExpirationDate")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("IdItemId")
+                    b.Property<int?>("ItemId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdStorageId")
+                    b.Property<int?>("StorageId")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("ExpireId");
 
-                    b.HasIndex("IdItemId");
+                    b.HasIndex("ItemId");
 
-                    b.HasIndex("IdStorageId");
+                    b.HasIndex("StorageId");
 
                     b.ToTable("Expires");
                 });
 
             modelBuilder.Entity("Backend.Models.Item", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ItemId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ItemName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("NamCategoryId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<string>("ItemName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("NamCategoryId");
+                    b.HasKey("ItemId");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Items");
                 });
 
             modelBuilder.Entity("Backend.Models.Storage", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("StorageId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("StorageName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserID")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("StorageId");
 
                     b.ToTable("Storages");
                 });
@@ -106,18 +110,18 @@ namespace Backend.Migrations
                 {
                     b.HasOne("Backend.Models.Item", "IdItem")
                         .WithMany()
-                        .HasForeignKey("IdItemId");
+                        .HasForeignKey("ItemId");
 
                     b.HasOne("Backend.Models.Storage", "IdStorage")
                         .WithMany()
-                        .HasForeignKey("IdStorageId");
+                        .HasForeignKey("StorageId");
                 });
 
             modelBuilder.Entity("Backend.Models.Item", b =>
                 {
-                    b.HasOne("Backend.Models.Category", "NamCategory")
+                    b.HasOne("Backend.Models.Category", "IdCategory")
                         .WithMany()
-                        .HasForeignKey("NamCategoryId");
+                        .HasForeignKey("CategoryId");
                 });
 #pragma warning restore 612, 618
         }

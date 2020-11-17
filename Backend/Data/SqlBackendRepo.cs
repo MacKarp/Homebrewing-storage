@@ -20,7 +20,7 @@ namespace Backend.Data
 
         public Category GetCategoryById(int id)
         {
-            return _context.Categories.FirstOrDefault(p => p.Id == id);
+            return _context.Categories.FirstOrDefault(p => p.CategoryId == id);
         }
 
         public IEnumerable<Expire> GetAllExpires()
@@ -30,7 +30,7 @@ namespace Backend.Data
 
         public Expire GetExpireById(int id)
         {
-            return _context.Expires.FirstOrDefault(p => p.Id == id);
+            return _context.Expires.FirstOrDefault(p => p.ExpireId == id);
         }
 
         public IEnumerable<Item> GetAllItems()
@@ -40,7 +40,7 @@ namespace Backend.Data
 
         public Item GetItemById(int id)
         {
-            return _context.Items.FirstOrDefault(p => p.Id == id);
+            return _context.Items.FirstOrDefault(p => p.ItemId == id);
         }
 
         public IEnumerable<Storage> GetAllStorages()
@@ -50,7 +50,7 @@ namespace Backend.Data
 
         public Storage GetStorageById(int id)
         {
-            return _context.Storages.FirstOrDefault(p => p.Id == id);
+            return _context.Storages.FirstOrDefault(p => p.StorageId == id);
         }
     }
 }

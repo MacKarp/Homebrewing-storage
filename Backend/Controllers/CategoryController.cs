@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using AutoMapper;
 using Backend.Data;
+using Backend.Dtos;
 using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +12,12 @@ namespace Backend.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly IBackendRepo _repository;
+        private readonly IMapper _mapper;
 
-        public CategoryController(IBackendRepo repository)
+        public CategoryController(IBackendRepo repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
 
@@ -25,12 +29,12 @@ namespace Backend.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Category> GetCategoryById(int id)
+        public ActionResult<CategoryReadDto> GetCategoryById(int id)
         {
             var item = _repository.GetCategoryById(id);
             if (item != null)
             {
-                return Ok(item);
+                return Ok(_mapper.Map<CategoryReadDto>(item));
             }
             else return NotFound();
         }
