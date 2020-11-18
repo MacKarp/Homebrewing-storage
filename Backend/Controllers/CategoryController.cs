@@ -2,7 +2,6 @@
 using AutoMapper;
 using Backend.Data;
 using Backend.Dtos;
-using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
@@ -22,10 +21,14 @@ namespace Backend.Controllers
 
 
         [HttpGet]
-        public ActionResult<IEnumerable<Category>> GetAllCategories()
+        public ActionResult<IEnumerable<CategoryReadDto>> GetAllCategories()
         {
             var item = _repository.GetAllCategories();
-            return Ok(item);
+            if (item != null)
+            {
+                return Ok(_mapper.Map<IEnumerable<CategoryReadDto>>(item));
+            }
+            else return NotFound();
         }
 
         [HttpGet("{id}")]

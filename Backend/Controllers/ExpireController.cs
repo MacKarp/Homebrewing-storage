@@ -2,7 +2,6 @@
 using AutoMapper;
 using Backend.Data;
 using Backend.Dtos;
-using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
@@ -21,10 +20,14 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Expire>> GetAllExpires()
+        public ActionResult<IEnumerable<ExpireReadDto>> GetAllExpires()
         {
             var item = _repository.GetAllExpires();
-            return Ok(item);
+            if (item != null)
+            {
+                return Ok(_mapper.Map<IEnumerable<ExpireReadDto>>(item));
+            }
+            else return NotFound();
         }
 
         [HttpGet("{id}")]
