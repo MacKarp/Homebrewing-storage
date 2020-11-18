@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Backend.Models;
 
@@ -6,7 +7,7 @@ namespace Backend.Data
 {
     public class SqlBackendRepo : IBackendRepo
     {
-       private readonly BackendContext _context;
+        private readonly BackendContext _context;
 
         public SqlBackendRepo(BackendContext context)
         {
@@ -51,6 +52,51 @@ namespace Backend.Data
         public Storage GetStorageById(int id)
         {
             return _context.Storages.FirstOrDefault(p => p.StorageId == id);
+        }
+
+        public bool SaveChanges()
+        {
+            return (_context.SaveChanges() >= 0);
+        }
+
+        public void CreateCategory(Category category)
+        {
+            if (category == null)
+            {
+                throw new ArgumentNullException(nameof(category));
+            }
+
+            _context.Categories.Add(category);
+        }
+
+        public void CreateExpire(Expire expire)
+        {
+            if (expire == null)
+            {
+                throw new ArgumentNullException(nameof(expire));
+            }
+
+            _context.Expires.Add(expire);
+        }
+
+        public void CreateItem(Item item)
+        {
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            _context.Items.Add(item);
+        }
+
+        public void CreateStorage(Storage storage)
+        {
+            if (storage == null)
+            {
+                throw new ArgumentNullException(nameof(storage));
+            }
+
+            _context.Storages.Add(storage);
         }
     }
 }
