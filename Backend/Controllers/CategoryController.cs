@@ -2,6 +2,7 @@
 using AutoMapper;
 using Backend.Data;
 using Backend.Dtos;
+using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
@@ -31,7 +32,7 @@ namespace Backend.Controllers
             else return NotFound();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetCategoryById")]
         public ActionResult<CategoryReadDto> GetCategoryById(int id)
         {
             var item = _repository.GetCategoryById(id);
@@ -40,6 +41,18 @@ namespace Backend.Controllers
                 return Ok(_mapper.Map<CategoryReadDto>(item));
             }
             else return NotFound();
+        }
+
+        [HttpPost]
+        public ActionResult<CategoryReadDto> CreateCategory(CategoryCreateDto categoryCreateDto)
+        {
+            var model = _mapper.Map<Category>(categoryCreateDto);
+            _repository.CreateCategory(model);
+            _repository.SaveChanges();
+
+            var readDto = _mapper.Map<CategoryReadDto>(model);
+
+            return CreatedAtRoute(nameof(GetCategoryById), new { Id = readDto.CategoryId }, readDto);
         }
     }
 }

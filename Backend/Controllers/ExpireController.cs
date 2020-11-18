@@ -2,6 +2,7 @@
 using AutoMapper;
 using Backend.Data;
 using Backend.Dtos;
+using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
@@ -30,7 +31,7 @@ namespace Backend.Controllers
             else return NotFound();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetExpireById")]
         public ActionResult<ExpireReadDto> GetExpireById(int id)
         {
             var item = _repository.GetExpireById(id);
@@ -39,6 +40,18 @@ namespace Backend.Controllers
                 return Ok(_mapper.Map<ExpireReadDto>(item));
             }
             else return NotFound();
+        }
+
+        [HttpPost]
+        public ActionResult<ExpireReadDto> CreateExpire(ExpireCreateDto expireCreateDto)
+        {
+            var model = _mapper.Map<Expire>(expireCreateDto);
+            _repository.CreateExpire(model);
+            _repository.SaveChanges();
+
+            var readDto = _mapper.Map<ExpireReadDto>(model);
+
+            return CreatedAtRoute(nameof(GetExpireById), new { Id = readDto.ExpireId }, readDto);
         }
     }
 }
