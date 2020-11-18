@@ -6,6 +6,6 @@ namespace Backend.Dtos
     {
         public int ItemId { get; set; }
         public string ItemName { get; set; }
-        public virtual Category NamCategory { get; set; }
+        public virtual Category NamCategory { get; set; } //ustawić mapowanie na int zamiast zwracać cały obiekt 
     }
 }

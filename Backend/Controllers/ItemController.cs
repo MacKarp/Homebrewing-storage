@@ -21,13 +21,17 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Item>> GetAllItems()
+        public ActionResult<IEnumerable<ItemReadDto>> GetAllItems()
         {
             var item = _repository.GetAllItems();
-            return Ok(item);
+            if (item != null)
+            {
+                return Ok(_mapper.Map<IEnumerable<ItemReadDto>>(item));
+            }
+            else return NotFound();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetItemById")]
         public ActionResult<ItemReadDto> GetItemById(int id)
         {
             var item = _repository.GetItemById(id);
@@ -36,6 +40,18 @@ namespace Backend.Controllers
                 return Ok(_mapper.Map<ItemReadDto>(item));
             }
             else return NotFound();
+        }
+
+        [HttpPost]
+        public ActionResult<ItemReadDto> CreateItem(ItemCreateDto itemCreateDto)
+        {
+            var model = _mapper.Map<Item>(itemCreateDto);
+            _repository.CreateItem(model);
+            _repository.SaveChanges();
+
+            var readDto = _mapper.Map<ItemReadDto>(model);
+
+            return CreatedAtRoute(nameof(GetItemById), new { Id = readDto.ItemId }, readDto);
         }
     }
 }

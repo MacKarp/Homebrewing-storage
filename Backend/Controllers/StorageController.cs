@@ -21,13 +21,17 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Storage>> GetAllStorages()
+        public ActionResult<IEnumerable<StorageReadDto>> GetAllStorages()
         {
             var item = _repository.GetAllStorages();
-            return Ok(item);
+            if (item != null)
+            {
+                return Ok(_mapper.Map<IEnumerable<StorageReadDto>>(item));
+            }
+            else return NotFound();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetStorageById")]
         public ActionResult<StorageReadDto> GetStorageById(int id)
         {
             var item = _repository.GetStorageById(id);
@@ -36,6 +40,18 @@ namespace Backend.Controllers
                 return Ok(_mapper.Map<StorageReadDto>(item));
             }
             else return NotFound();
+        }
+
+        [HttpPost]
+        public ActionResult<StorageReadDto> CreateStorage(StorageCreateDto storageCreateDto)
+        {
+            var model = _mapper.Map<Storage>(storageCreateDto);
+            _repository.CreateStorage(model);
+            _repository.SaveChanges();
+
+            var readDto = _mapper.Map<StorageReadDto>(model);
+
+            return CreatedAtRoute(nameof(GetStorageById), new { Id = readDto.StorageId }, readDto);
         }
     }
 }
