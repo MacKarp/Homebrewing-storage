@@ -9,6 +9,7 @@ namespace Backend.Profiles
         public ExpireProfile()
         {
             CreateMap<Expire, ExpireReadDto>();
+            CreateMap<ExpireCreateDto, Expire>();
         }
     }
 }
