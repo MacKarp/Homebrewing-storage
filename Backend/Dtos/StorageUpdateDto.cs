@@ -2,7 +2,7 @@
 
 namespace Backend.Dtos
 {
-    public class StorageCreateDto
+    public class StorageUpdateDto
     {
         [Required]
         public int UserID { get; set; } //temporary, need to change to proper UserID

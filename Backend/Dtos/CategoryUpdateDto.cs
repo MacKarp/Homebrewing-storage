@@ -2,7 +2,7 @@
 
 namespace Backend.Dtos
 {
-    public class CategoryCreateDto
+    public class CategoryUpdateDto
     {
         [Required]
         public string CategoryName { get; set; }

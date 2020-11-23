@@ -3,6 +3,7 @@ using AutoMapper;
 using Backend.Data;
 using Backend.Dtos;
 using Backend.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
@@ -53,6 +54,59 @@ namespace Backend.Controllers
             var readDto = _mapper.Map<CategoryReadDto>(model);
 
             return CreatedAtRoute(nameof(GetCategoryById), new { Id = readDto.CategoryId }, readDto);
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult UpdateCategory(int id, CategoryUpdateDto categoryUpdateDto)
+        {
+            var modelFromRepo = _repository.GetCategoryById(id);
+            if (modelFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(categoryUpdateDto, modelFromRepo);
+            _repository.UpdateCategory(modelFromRepo);
+            _repository.SaveChanges();
+
+            return NoContent();
+        }
+
+        [HttpPatch("{id}")]
+        public ActionResult PartialUpdateCategory(int id, JsonPatchDocument<CategoryUpdateDto> patchDocument)
+        {
+            var modelFromRepo = _repository.GetCategoryById(id);
+            if (modelFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            var toPatch = _mapper.Map<CategoryUpdateDto>(modelFromRepo);
+            patchDocument.ApplyTo(toPatch, ModelState);
+            if (!TryValidateModel(toPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            _mapper.Map(toPatch, modelFromRepo);
+            _repository.UpdateCategory(modelFromRepo);
+            _repository.SaveChanges();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteCategory(int id)
+        {
+            var modelFromRepo = _repository.GetCategoryById(id);
+            if (modelFromRepo == null)
+            {
+                return NotFound();
+            }
+            _repository.DeleteCategory(modelFromRepo);
+            _repository.SaveChanges();
+
+            return NoContent();
         }
     }
 }

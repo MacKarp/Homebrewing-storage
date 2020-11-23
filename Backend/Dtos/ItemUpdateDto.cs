@@ -3,7 +3,7 @@ using Backend.Models;
 
 namespace Backend.Dtos
 {
-    public class ItemCreateDto
+    public class ItemUpdateDto
     {
         [Required]
         public string ItemName { get; set; }

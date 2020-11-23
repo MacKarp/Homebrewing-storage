@@ -10,6 +10,8 @@ namespace Backend.Profiles
         {
             CreateMap<Storage, StorageReadDto>();
             CreateMap<StorageCreateDto, Storage>();
+            CreateMap<StorageUpdateDto, Storage>();
+            CreateMap<Storage, StorageUpdateDto>();
         }
     }
 }

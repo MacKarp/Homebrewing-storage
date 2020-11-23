@@ -3,6 +3,7 @@ using AutoMapper;
 using Backend.Data;
 using Backend.Dtos;
 using Backend.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
@@ -52,6 +53,59 @@ namespace Backend.Controllers
             var readDto = _mapper.Map<ExpireReadDto>(model);
 
             return CreatedAtRoute(nameof(GetExpireById), new { Id = readDto.ExpireId }, readDto);
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult UpdateExpire(int id, ExpireUpdateDto expireUpdateDto)
+        {
+            var modelFromRepo = _repository.GetExpireById(id);
+            if (modelFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(expireUpdateDto, modelFromRepo);
+            _repository.UpdateExpire(modelFromRepo);
+            _repository.SaveChanges();
+
+            return NoContent();
+        }
+
+        [HttpPatch("{id}")]
+        public ActionResult PartialUpdateExpire(int id, JsonPatchDocument<ExpireUpdateDto> patchDocument)
+        {
+            var modelFromRepo = _repository.GetExpireById(id);
+            if (modelFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            var toPatch = _mapper.Map<ExpireUpdateDto>(modelFromRepo);
+            patchDocument.ApplyTo(toPatch, ModelState);
+            if (!TryValidateModel(toPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            _mapper.Map(toPatch, modelFromRepo);
+            _repository.UpdateExpire(modelFromRepo);
+            _repository.SaveChanges();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteExpire(int id)
+        {
+            var modelFromRepo = _repository.GetExpireById(id);
+            if (modelFromRepo == null)
+            {
+                return NotFound();
+            }
+            _repository.DeleteExpire(modelFromRepo);
+            _repository.SaveChanges();
+
+            return NoContent();
         }
     }
 }

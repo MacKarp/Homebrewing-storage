@@ -3,6 +3,7 @@ using AutoMapper;
 using Backend.Data;
 using Backend.Dtos;
 using Backend.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
@@ -52,6 +53,59 @@ namespace Backend.Controllers
             var readDto = _mapper.Map<StorageReadDto>(model);
 
             return CreatedAtRoute(nameof(GetStorageById), new { Id = readDto.StorageId }, readDto);
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult UpdateStorage(int id, StorageUpdateDto storageUpdateDto)
+        {
+            var modelFromRepo = _repository.GetStorageById(id);
+            if (modelFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(storageUpdateDto, modelFromRepo);
+            _repository.UpdateStorage(modelFromRepo);
+            _repository.SaveChanges();
+
+            return NoContent();
+        }
+
+        [HttpPatch("{id}")]
+        public ActionResult PartialUpdateStorage(int id, JsonPatchDocument<StorageUpdateDto> patchDocument)
+        {
+            var modelFromRepo = _repository.GetStorageById(id);
+            if (modelFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            var toPatch = _mapper.Map<StorageUpdateDto>(modelFromRepo);
+            patchDocument.ApplyTo(toPatch, ModelState);
+            if (!TryValidateModel(toPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            _mapper.Map(toPatch, modelFromRepo);
+            _repository.UpdateStorage(modelFromRepo);
+            _repository.SaveChanges();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteStorage(int id)
+        {
+            var modelFromRepo = _repository.GetStorageById(id);
+            if (modelFromRepo == null)
+            {
+                return NotFound();
+            }
+            _repository.DeleteStorage(modelFromRepo);
+            _repository.SaveChanges();
+
+            return NoContent();
         }
     }
 }

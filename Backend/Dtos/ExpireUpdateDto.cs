@@ -3,7 +3,7 @@ using Backend.Models;
 
 namespace Backend.Dtos
 {
-    public class ExpireCreateDto
+    public class ExpireUpdateDto
     {
         [Required]
         public int UserId { get; set; } //temporary, need to change to proper UserID
