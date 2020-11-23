@@ -23,5 +23,15 @@ namespace Backend.Data
         void CreateExpire(Expire expire);
         void CreateItem(Item item);
         void CreateStorage(Storage storage);
+
+        void UpdateCategory(Category category);
+        void UpdateExpire(Expire expire);
+        void UpdateItem(Item item);
+        void UpdateStorage(Storage storage);
+
+        void DeleteCategory(Category category);
+        void DeleteExpire(Expire expire);
+        void DeleteItem(Item item);
+        void DeleteStorage(Storage storage);
     }
 }

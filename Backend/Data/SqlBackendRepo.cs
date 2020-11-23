@@ -98,5 +98,65 @@ namespace Backend.Data
 
             _context.Storages.Add(storage);
         }
+
+        public void UpdateCategory(Category category)
+        {
+            // Nothing
+        }
+
+        public void UpdateExpire(Expire expire)
+        {
+            // Nothing
+        }
+
+        public void UpdateItem(Item item)
+        {
+            // Nothing
+        }
+
+        public void UpdateStorage(Storage storage)
+        {
+            // Nothing
+        }
+
+        public void DeleteCategory(Category category)
+        {
+            if (category == null)
+            {
+                throw new ArgumentNullException(nameof(category));
+            }
+
+            _context.Categories.Remove(category);
+        }
+
+        public void DeleteExpire(Expire expire)
+        {
+            if (expire == null)
+            {
+                throw new ArgumentNullException(nameof(expire));
+            }
+
+            _context.Expires.Remove(expire);
+        }
+
+        public void DeleteItem(Item item)
+        {
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            _context.Items.Remove(item);
+        }
+
+        public void DeleteStorage(Storage storage)
+        {
+            if (storage == null)
+            {
+                throw new ArgumentNullException(nameof(storage));
+            }
+
+            _context.Storages.Remove(storage);
+        }
     }
 }
