@@ -1,6 +1,8 @@
 using System;
 using AutoMapper;
 using Backend.Data;
+using Backend.Handler;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -26,13 +28,16 @@ namespace Backend
         {
 
             var server = Configuration["DBServer"] ?? "localhost";
-            var port = Configuration["DBPort"] ?? "1433";
+            var port = Configuration["DBPort"] ?? "14331";
             var user = Configuration["DBUser"] ?? "SA";
             var password = Configuration["DBPassword"] ?? "ThisIsNotSuperSecretP@55w0rd";
             var database = Configuration["Database"] ?? "Backend_API";
 
             System.Console.WriteLine($"Connection string: Server={server},{port};Initial Catalog={database};User ID={user};Password={password}");
             services.AddDbContext<BackendContext>(options => options.UseSqlServer($"Server={server},{port};Initial Catalog={database};User ID={user};Password={password}"));
+
+            services.AddAuthentication("BasicAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
             // Register the Swagger generator
             services.AddSwaggerGen(c =>
@@ -63,6 +68,7 @@ namespace Backend
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
