@@ -56,6 +56,11 @@ namespace Backend.Data
             return _context.Storages.FirstOrDefault(p => p.StorageId == id);
         }
 
+        public IEnumerable<User> GetAllUsers()
+        {
+            return _context.Users.ToList();
+        }
+        
         public User GetUserById(int id)
         {
             return _context.Users.FirstOrDefault(p => p.UserId == id);
