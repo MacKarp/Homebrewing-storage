@@ -22,7 +22,7 @@ namespace Backend.Handler
         {
 
         }
-
+        
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             if (!Request.Headers.ContainsKey("Authorization")) return AuthenticateResult.Fail("Authorization header was not found");
