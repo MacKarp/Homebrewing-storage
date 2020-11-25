@@ -4,12 +4,8 @@ using Backend.Dtos;
 using Backend.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Backend.Controllers
 {
@@ -25,7 +21,8 @@ namespace Backend.Controllers
             _repository = repository;
             _mapper = mapper;
         }
-
+        
+        //GET api/users
         [HttpGet]
         public ActionResult<IEnumerable<UserReadDto>> GetAllUsers()
         {
@@ -36,7 +33,8 @@ namespace Backend.Controllers
             }
             else return NotFound();
         }
-
+        
+        //GET api/users/{id}
         [HttpGet("{id}", Name = "GetUserById")]
         public ActionResult<UserReadDto> GetUserById(int id)
         {
@@ -48,6 +46,7 @@ namespace Backend.Controllers
             else return NotFound();
         }
 
+        //GET api/users/GetUser
         [HttpGet("GetUser")]
         public ActionResult<UserReadDto>GetUser()
         {
@@ -59,7 +58,8 @@ namespace Backend.Controllers
             }
             else return NotFound();
         }
-
+        
+        //POST api/users
         [HttpPost]
         public ActionResult<UserReadDto> CreateUser(UserCreateDto userCreateDto)
         {
@@ -72,6 +72,7 @@ namespace Backend.Controllers
             return CreatedAtRoute(nameof(GetUserById), new { Id = readDto.UserId }, readDto);
         }
 
+        //POST api/users/{id}
         [HttpPut("{id}")]
         public ActionResult UpdateUser(int id, UserUpdateDto userUpdateDto)
         {
@@ -88,6 +89,7 @@ namespace Backend.Controllers
             return NoContent();
         }
 
+        //PATCH api/users/{id}
         [HttpPatch("{id}")]
         public ActionResult PartialUpdateUser(int id, JsonPatchDocument<UserUpdateDto> patchDocument)
         {
@@ -110,7 +112,8 @@ namespace Backend.Controllers
 
             return NoContent();
         }
-
+        
+        //DELETE api/users/{id}
         [HttpDelete("{id}")]
         public ActionResult DeleteUser(int id)
         {
