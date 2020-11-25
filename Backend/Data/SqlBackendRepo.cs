@@ -8,12 +8,14 @@ namespace Backend.Data
     public class SqlBackendRepo : IBackendRepo
     {
         private readonly BackendContext _context;
-
+        
+        //Constructor
         public SqlBackendRepo(BackendContext context)
         {
             _context = context;
         }
-
+        
+        //GET methods
         public IEnumerable<Category> GetAllCategories()
         {
             return _context.Categories.ToList();
@@ -23,7 +25,7 @@ namespace Backend.Data
         {
             return _context.Categories.FirstOrDefault(p => p.CategoryId == id);
         }
-
+        
         public IEnumerable<Expire> GetAllExpires()
         {
             return _context.Expires.ToList();
@@ -33,7 +35,7 @@ namespace Backend.Data
         {
             return _context.Expires.FirstOrDefault(p => p.ExpireId == id);
         }
-
+        
         public IEnumerable<Item> GetAllItems()
         {
             return _context.Items.ToList();
@@ -43,7 +45,7 @@ namespace Backend.Data
         {
             return _context.Items.FirstOrDefault(p => p.ItemId == id);
         }
-
+        
         public IEnumerable<Storage> GetAllStorages()
         {
             return _context.Storages.ToList();
@@ -54,11 +56,12 @@ namespace Backend.Data
             return _context.Storages.FirstOrDefault(p => p.StorageId == id);
         }
 
-        public bool SaveChanges()
+        public User GetUserById(int id)
         {
-            return (_context.SaveChanges() >= 0);
+            return _context.Users.FirstOrDefault(p => p.UserId == id);
         }
 
+        //CREATE methods
         public void CreateCategory(Category category)
         {
             if (category == null)
@@ -99,6 +102,17 @@ namespace Backend.Data
             _context.Storages.Add(storage);
         }
 
+        public void CreateUser(User user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            _context.Users.Add(user);
+        }
+
+        //UPDATE methods
         public void UpdateCategory(Category category)
         {
             // Nothing
@@ -119,13 +133,18 @@ namespace Backend.Data
             // Nothing
         }
 
+        public void UpdateUser(User user)
+        {
+            // Nothing
+        }
+
+        //DELETE methods
         public void DeleteCategory(Category category)
         {
             if (category == null)
             {
                 throw new ArgumentNullException(nameof(category));
             }
-
             _context.Categories.Remove(category);
         }
 
@@ -135,7 +154,6 @@ namespace Backend.Data
             {
                 throw new ArgumentNullException(nameof(expire));
             }
-
             _context.Expires.Remove(expire);
         }
 
@@ -145,7 +163,6 @@ namespace Backend.Data
             {
                 throw new ArgumentNullException(nameof(item));
             }
-
             _context.Items.Remove(item);
         }
 
@@ -155,8 +172,23 @@ namespace Backend.Data
             {
                 throw new ArgumentNullException(nameof(storage));
             }
-
             _context.Storages.Remove(storage);
+        }
+
+        public void DeleteUser(User user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+            _context.Users.Remove(user);
+        }
+
+
+        //Saving cahanges to DB method
+        public bool SaveChanges()
+        {
+            return (_context.SaveChanges() >= 0);
         }
     }
 }
