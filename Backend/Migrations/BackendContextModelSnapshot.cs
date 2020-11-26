@@ -42,9 +42,8 @@ namespace Backend.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ExpirationDate")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("Date");
 
                     b.Property<int?>("ItemId")
                         .HasColumnType("int");
@@ -52,7 +51,7 @@ namespace Backend.Migrations
                     b.Property<int?>("StorageId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("ExpireId");
@@ -60,6 +59,8 @@ namespace Backend.Migrations
                     b.HasIndex("ItemId");
 
                     b.HasIndex("StorageId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Expires");
                 });
@@ -96,10 +97,12 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserID")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("StorageId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Storages");
                 });
@@ -137,6 +140,10 @@ namespace Backend.Migrations
                     b.HasOne("Backend.Models.Storage", "IdStorage")
                         .WithMany()
                         .HasForeignKey("StorageId");
+
+                    b.HasOne("Backend.Models.User", "IdUser")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Backend.Models.Item", b =>
@@ -144,6 +151,13 @@ namespace Backend.Migrations
                     b.HasOne("Backend.Models.Category", "IdCategory")
                         .WithMany()
                         .HasForeignKey("CategoryId");
+                });
+
+            modelBuilder.Entity("Backend.Models.Storage", b =>
+                {
+                    b.HasOne("Backend.Models.User", "IdUser")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

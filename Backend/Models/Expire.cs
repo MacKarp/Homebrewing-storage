@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Backend.Models
@@ -7,13 +8,14 @@ namespace Backend.Models
     {
         [Key]
         public int ExpireId { get; set; }
-        [Required]
-        public int UserId { get; set; } //temporary, need to change to proper UserID
+        [ForeignKey("UserId")]
+        public virtual User IdUser { get; set; }
         [ForeignKey("StorageId")]
         public virtual Storage IdStorage { get; set; }
         [ForeignKey("ItemId")]
         public virtual Item IdItem { get; set; }
         [Required]
-        public string ExpirationDate { get; set; } //need to change to proper Data format
+        [Column(TypeName = "Date")]
+        public DateTime ExpirationDate { get; set; }
     }
 }
