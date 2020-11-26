@@ -1,6 +1,7 @@
 using System;
 using AutoMapper;
 using Backend.Data;
+using Backend.Email;
 using Backend.Handler;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
@@ -35,6 +36,15 @@ namespace Backend
 
             System.Console.WriteLine($"Connection string: Server={server},{port};Initial Catalog={database};User ID={user};Password={password}");
             services.AddDbContext<BackendContext>(options => options.UseSqlServer($"Server={server},{port};Initial Catalog={database};User ID={user};Password={password}"));
+
+            var emailServer = Configuration["SmtpServer"];
+            var emailPort = int.Parse(Configuration["SmtpPort"]);
+            var emailSsl = Boolean.Parse(Configuration["SSL"]);
+            var emailUserName = Configuration["SmtpUserName"];
+            var emailPassword = Configuration["SmtpUserPassword"];
+
+            services.AddSingleton<IEmailConfiguration>(new EmailConfiguration() { SmtpServer = emailServer, SmtpPort = emailPort, Ssl = emailSsl, SmtpUserName = emailUserName, SmtpPassword = emailPassword });
+            services.AddTransient<IEmailService, EmailService>();
 
             services.AddAuthentication("BasicAuthentication")
                 .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
