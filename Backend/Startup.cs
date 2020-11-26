@@ -37,13 +37,13 @@ namespace Backend
             System.Console.WriteLine($"Connection string: Server={server},{port};Initial Catalog={database};User ID={user};Password={password}");
             services.AddDbContext<BackendContext>(options => options.UseSqlServer($"Server={server},{port};Initial Catalog={database};User ID={user};Password={password}"));
 
-            var emailServer = Configuration["SmtpServer"];
-            var emailPort = int.Parse(Configuration["SmtpPort"]);
-            var emailSsl = Boolean.Parse(Configuration["SSL"]);
-            var emailUserName = Configuration["SmtpUserName"];
-            var emailPassword = Configuration["SmtpUserPassword"];
+            var emailServer = Configuration["SmtpServer"] ?? "DefaultEmailServer";
+            var emailPort = (Configuration["SmtpPort"]) ?? "0";
+            var emailSsl = (Configuration["SSL"]) ?? "true";
+            var emailUserName = Configuration["SmtpUserName"] ?? "DefaultUserName";
+            var emailPassword = Configuration["SmtpUserPassword"] ?? "DefaultUserPassword";
 
-            services.AddSingleton<IEmailConfiguration>(new EmailConfiguration() { SmtpServer = emailServer, SmtpPort = emailPort, Ssl = emailSsl, SmtpUserName = emailUserName, SmtpPassword = emailPassword });
+            services.AddSingleton<IEmailConfiguration>(new EmailConfiguration() { SmtpServer = emailServer, SmtpPort = int.Parse(emailPort), Ssl = Boolean.Parse(emailSsl), SmtpUserName = emailUserName, SmtpPassword = emailPassword });
             services.AddTransient<IEmailService, EmailService>();
 
             services.AddAuthentication("BasicAuthentication")
