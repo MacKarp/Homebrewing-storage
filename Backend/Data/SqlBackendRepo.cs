@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Backend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Data
 {
@@ -26,32 +27,32 @@ namespace Backend.Data
 
         public IEnumerable<Expire> GetAllExpires()
         {
-            return _context.Expires.ToList();
+            return _context.Expires.Include(storage => storage.IdStorage).Include(item => item.IdItem).Include(user => user.IdUser).ToList();
         }
 
         public Expire GetExpireById(int id)
         {
-            return _context.Expires.FirstOrDefault(p => p.ExpireId == id);
+            return _context.Expires.Include(storage => storage.IdStorage).Include(item => item.IdItem).Include(user => user.IdUser).FirstOrDefault(p => p.ExpireId == id);
         }
 
         public IEnumerable<Item> GetAllItems()
         {
-            return _context.Items.ToList();
+            return _context.Items.Include(category => category.IdCategory).ToList();
         }
 
         public Item GetItemById(int id)
         {
-            return _context.Items.FirstOrDefault(p => p.ItemId == id);
+            return _context.Items.Include(category => category.IdCategory).FirstOrDefault(p => p.ItemId == id);
         }
 
         public IEnumerable<Storage> GetAllStorages()
         {
-            return _context.Storages.ToList();
+            return _context.Storages.Include(user => user.IdUser).ToList();
         }
 
         public Storage GetStorageById(int id)
         {
-            return _context.Storages.FirstOrDefault(p => p.StorageId == id);
+            return _context.Storages.Include(user => user.IdUser).FirstOrDefault(p => p.StorageId == id);
         }
 
         public bool SaveChanges()
