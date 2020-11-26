@@ -8,7 +8,7 @@ namespace Backend.Profiles
     {
         public StorageProfile()
         {
-            CreateMap<Storage, StorageReadDto>();
+            CreateMap<Storage, StorageReadDto>().ForMember(dest => dest.IdUser, opt => opt.MapFrom(src => src.IdUser.UserId));
             CreateMap<StorageCreateDto, Storage>();
             CreateMap<StorageUpdateDto, Storage>();
             CreateMap<Storage, StorageUpdateDto>();

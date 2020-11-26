@@ -1,25 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Backend.Models.Category">
-    <Position X="9.75" Y="3.25" Width="1.5" />
+    <Position X="8" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Category.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Backend.Models.Expire">
-    <Position X="4.25" Y="0.75" Width="1.5" />
+    <Position X="3.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAQAAAAAAAEAAAAAAgAQAAAAIAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAQCAAAAAAEAAAAAAAAQAAAAIAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Expire.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="IdItem" />
       <Property Name="IdStorage" />
+      <Property Name="IdItem" />
+      <Property Name="IdUser" />
     </ShowAsAssociation>
   </Class>
   <Class Name="Backend.Models.Item">
-    <Position X="9.75" Y="0.5" Width="1.5" />
+    <Position X="8" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
       <FileName>Models\Item.cs</FileName>
@@ -29,10 +30,20 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Backend.Models.Storage">
-    <Position X="7" Y="1.5" Width="1.5" />
+    <Position X="6" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAEAAAAAAAAAAgAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAACAAEAAAAAAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
       <FileName>Models\Storage.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="IdUser" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Backend.Models.User">
+    <Position X="6" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAQAACAIAAAA=</HashCode>
+      <FileName>Models\User.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
