@@ -8,6 +8,6 @@ namespace Backend.Dtos
         [Required]
         public string ItemName { get; set; }
         [Required]
-        public virtual Category NamCategory { get; set; } //ustawić mapowanie na int zamiast zwracać cały obiekt
+        public int CategoryId { get; set; }
     }
 }
