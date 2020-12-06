@@ -57,6 +57,7 @@ namespace Backend.Handler
 
                 return AuthenticateResult.Fail("Error has occured");
             }
+            await Task.Delay(1);
             return AuthenticateResult.Fail("Error...");
 
         }
