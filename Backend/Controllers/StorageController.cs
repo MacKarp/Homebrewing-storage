@@ -68,7 +68,9 @@ namespace Backend.Controllers
                 return NotFound();
             }
 
-            _mapper.Map(storageUpdateDto, modelFromRepo);
+            modelFromRepo.IdUser = _repository.GetUserById(storageUpdateDto.UserId);
+            modelFromRepo.StorageName = storageUpdateDto.StorageName;
+
             _repository.UpdateStorage(modelFromRepo);
             _repository.SaveChanges();
 

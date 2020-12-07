@@ -70,7 +70,10 @@ namespace Backend.Controllers
                 return NotFound();
             }
 
-            _mapper.Map(expireUpdateDto, modelFromRepo);
+            modelFromRepo.IdUser = _repository.GetUserById(expireUpdateDto.UserId);
+            modelFromRepo.IdStorage = _repository.GetStorageById(expireUpdateDto.IdStorage);
+            modelFromRepo.IdItem = _repository.GetItemById(expireUpdateDto.IdItem);
+            modelFromRepo.ExpirationDate = expireUpdateDto.ExpirationDate.Date;
             _repository.UpdateExpire(modelFromRepo);
             _repository.SaveChanges();
 

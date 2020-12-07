@@ -68,7 +68,9 @@ namespace Backend.Controllers
                 return NotFound();
             }
 
-            _mapper.Map(itemUpdateDto, modelFromRepo);
+            modelFromRepo.IdCategory = _repository.GetCategoryById(itemUpdateDto.CategoryId);
+            modelFromRepo.ItemName = itemUpdateDto.ItemName;
+
             _repository.UpdateItem(modelFromRepo);
             _repository.SaveChanges();
 
