@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Backend.Models;
 
 namespace Backend.Dtos
@@ -6,12 +7,12 @@ namespace Backend.Dtos
     public class ExpireUpdateDto
     {
         [Required]
-        public int UserId { get; set; } //temporary, need to change to proper UserID
+        public int UserId { get; set; }
         [Required]
-        public virtual Storage IdStorage { get; set; } //ustawić mapowanie na int zamiast zwracać cały obiekt 
+        public int IdStorage { get; set; }
         [Required]
-        public virtual Item IdItem { get; set; } //ustawić mapowanie na int zamiast zwracać cały obiekt 
+        public int IdItem { get; set; }
         [Required]
-        public string ExpirationDate { get; set; } //need to change to proper Data format
+        public DateTime ExpirationDate { get; set; }
     }
 }

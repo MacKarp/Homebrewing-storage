@@ -16,6 +16,14 @@ services:
             DBUser: SA
             DBPassword: ThisIsNotSuperSecretP@55w0rd
             Database: Backend_API
+            SmtpServer: test.test
+            SmtpPort: 123
+            SSL: "True"
+            SmtpUserName: testusername
+            SmtpUserPassword: testpassword
+            # Check NotificationSchedule configuration pattern at:
+            # https://www.quartz-scheduler.net/documentation/quartz-3.x/tutorial/crontriggers.html#cron-expressions
+            NotificationSchedule: "0/15 * * * * ?" 
         ports: 
             - "8080:80"
     db:

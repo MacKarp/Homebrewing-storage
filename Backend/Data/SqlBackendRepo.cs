@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Backend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Data
 {
@@ -28,32 +29,32 @@ namespace Backend.Data
         
         public IEnumerable<Expire> GetAllExpires()
         {
-            return _context.Expires.ToList();
+            return _context.Expires.Include(storage => storage.IdStorage).Include(item => item.IdItem).Include(user => user.IdUser).ToList();
         }
 
         public Expire GetExpireById(int id)
         {
-            return _context.Expires.FirstOrDefault(p => p.ExpireId == id);
+            return _context.Expires.Include(storage => storage.IdStorage).Include(item => item.IdItem).Include(user => user.IdUser).FirstOrDefault(p => p.ExpireId == id);
         }
         
         public IEnumerable<Item> GetAllItems()
         {
-            return _context.Items.ToList();
+            return _context.Items.Include(category => category.IdCategory).ToList();
         }
 
         public Item GetItemById(int id)
         {
-            return _context.Items.FirstOrDefault(p => p.ItemId == id);
+            return _context.Items.Include(category => category.IdCategory).FirstOrDefault(p => p.ItemId == id);
         }
         
         public IEnumerable<Storage> GetAllStorages()
         {
-            return _context.Storages.ToList();
+            return _context.Storages.Include(user => user.IdUser).ToList();
         }
 
         public Storage GetStorageById(int id)
         {
-            return _context.Storages.FirstOrDefault(p => p.StorageId == id);
+            return _context.Storages.Include(user => user.IdUser).FirstOrDefault(p => p.StorageId == id);
         }
 
         public IEnumerable<User> GetAllUsers()
@@ -64,6 +65,11 @@ namespace Backend.Data
         public User GetUserById(int id)
         {
             return _context.Users.FirstOrDefault(p => p.UserId == id);
+        }
+        
+        public IEnumerable<Expire> GetAllExpiresByExpirationTimeLeft(double days)
+        {
+            return _context.Expires.Where(p => p.ExpirationDate >= DateTime.Now.Date && p.ExpirationDate <= DateTime.Now.AddDays(days)).Include(storage => storage.IdStorage).Include(item => item.IdItem).Include(user => user.IdUser).ToList();
         }
 
         //CREATE methods
@@ -180,6 +186,7 @@ namespace Backend.Data
             _context.Storages.Remove(storage);
         }
 
+
         public void DeleteUser(User user)
         {
             if (user == null)
@@ -189,11 +196,12 @@ namespace Backend.Data
             _context.Users.Remove(user);
         }
 
-
         //Saving cahanges to DB method
         public bool SaveChanges()
         {
             return (_context.SaveChanges() >= 0);
         }
+
+        //GetAllExpiresByExpirationTimeLeft przeniesione wyżej do sekcji GET
     }
 }

@@ -8,10 +8,12 @@ namespace Backend.Profiles
     {
         public ItemProfile()
         {
-            CreateMap<Item, ItemReadDto>();
-            CreateMap<ItemCreateDto, Item>();
-            CreateMap<ItemUpdateDto, Item>();
-            CreateMap<Item, ItemUpdateDto>();
+            CreateMap<Item, ItemReadDto>()
+                .ForMember(dest => dest.IdCategory, opt => opt.MapFrom(src => src.IdCategory.CategoryId));
+            CreateMap<ItemUpdateDto, Item>()
+                .ForPath(dest => dest.IdCategory.CategoryId, opt => opt.MapFrom(src => src.CategoryId));
+            CreateMap<Item, ItemUpdateDto>()
+                .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.IdCategory.CategoryId));
         }
     }
 }

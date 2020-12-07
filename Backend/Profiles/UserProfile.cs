@@ -14,4 +14,5 @@ namespace Backend.Profiles
             CreateMap<User, UserUpdateDto>();
         }
     }
+
 }
