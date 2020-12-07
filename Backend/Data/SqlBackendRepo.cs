@@ -194,5 +194,10 @@ namespace Backend.Data
 
             _context.Users.Remove(user);
         }
+
+        public IEnumerable<Expire> GetAllExpiresByExpirationTimeLeft(double days)
+        {
+            return _context.Expires.Where(p => p.ExpirationDate >= DateTime.Now.Date && p.ExpirationDate <= DateTime.Now.AddDays(days)).Include(storage => storage.IdStorage).Include(item => item.IdItem).Include(user => user.IdUser).ToList();
+        }
     }
 }
