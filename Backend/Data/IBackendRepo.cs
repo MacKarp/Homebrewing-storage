@@ -41,7 +41,6 @@ namespace Backend.Data
         void DeleteExpire(Expire expire);
         void DeleteItem(Item item);
         void DeleteStorage(Storage storage);
-        
-
+        void DeleteUser(User user);
     }
 }
