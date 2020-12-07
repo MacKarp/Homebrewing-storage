@@ -10,7 +10,7 @@ using System.Linq;
 namespace Backend.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/users")]
     public class UsersController : ControllerBase
     {
         private readonly IBackendRepo _repository;
@@ -22,8 +22,9 @@ namespace Backend.Controllers
             _mapper = mapper;
         }
         
-        //GET api/users
-        [HttpGet]
+        
+        [HttpGet] //GET api/users
+        [HttpGet("/users")] // GET users
         public ActionResult<IEnumerable<UserReadDto>> GetAllUsers()
         {
             var user = _repository.GetAllUsers();
