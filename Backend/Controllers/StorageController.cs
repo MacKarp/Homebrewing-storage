@@ -46,7 +46,11 @@ namespace Backend.Controllers
         [HttpPost]
         public ActionResult<StorageReadDto> CreateStorage(StorageCreateDto storageCreateDto)
         {
-            var model = _mapper.Map<Storage>(storageCreateDto);
+            var model = new Storage()
+            {
+                IdUser = _repository.GetUserById(storageCreateDto.UserId),
+                StorageName = storageCreateDto.StorageName,
+            };
             _repository.CreateStorage(model);
             _repository.SaveChanges();
 

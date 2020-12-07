@@ -46,7 +46,13 @@ namespace Backend.Controllers
         [HttpPost]
         public ActionResult<ExpireReadDto> CreateExpire(ExpireCreateDto expireCreateDto)
         {
-            var model = _mapper.Map<Expire>(expireCreateDto);
+            var model = new Expire()
+            {
+                ExpirationDate = expireCreateDto.ExpirationDate.Date,
+                IdUser = _repository.GetUserById(expireCreateDto.UserId),
+                IdItem = _repository.GetItemById(expireCreateDto.IdItem),
+                IdStorage = _repository.GetStorageById(expireCreateDto.IdStorage),
+            };
             _repository.CreateExpire(model);
             _repository.SaveChanges();
 

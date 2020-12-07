@@ -46,7 +46,11 @@ namespace Backend.Controllers
         [HttpPost]
         public ActionResult<ItemReadDto> CreateItem(ItemCreateDto itemCreateDto)
         {
-            var model = _mapper.Map<Item>(itemCreateDto);
+            var model = new Item()
+            {
+                IdCategory = _repository.GetCategoryById(itemCreateDto.CategoryId),
+                ItemName = itemCreateDto.ItemName,
+            };
             _repository.CreateItem(model);
             _repository.SaveChanges();
 
