@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Backend.Models;
 
 namespace Backend.Data
@@ -18,7 +19,9 @@ namespace Backend.Data
         Storage GetStorageById(int id);
         IEnumerable<User> GetAllUsers();
         User GetUserById(int id);
-        
+            
+        IEnumerable<Expire> GetAllExpiresByExpirationTimeLeft(double days);  
+      
         //CREATE methods
         void CreateCategory(Category category);
         void CreateExpire(Expire expire);
@@ -38,6 +41,7 @@ namespace Backend.Data
         void DeleteExpire(Expire expire);
         void DeleteItem(Item item);
         void DeleteStorage(Storage storage);
-        void DeleteUser(User user);
+        
+
     }
 }

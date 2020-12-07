@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Backend.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class initialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,17 +21,18 @@ namespace Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Storages",
+                name: "Users",
                 columns: table => new
                 {
-                    StorageId = table.Column<int>(nullable: false)
+                    UserId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserID = table.Column<int>(nullable: false),
-                    StorageName = table.Column<string>(nullable: false)
+                    UserName = table.Column<string>(nullable: false),
+                    UserEmail = table.Column<string>(nullable: false),
+                    UserPassword = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Storages", x => x.StorageId);
+                    table.PrimaryKey("PK_Users", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
@@ -54,15 +56,35 @@ namespace Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Storages",
+                columns: table => new
+                {
+                    StorageId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(nullable: true),
+                    StorageName = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Storages", x => x.StorageId);
+                    table.ForeignKey(
+                        name: "FK_Storages_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Expires",
                 columns: table => new
                 {
                     ExpireId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: true),
                     StorageId = table.Column<int>(nullable: true),
                     ItemId = table.Column<int>(nullable: true),
-                    ExpirationDate = table.Column<string>(nullable: false)
+                    ExpirationDate = table.Column<DateTime>(type: "Date", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,6 +101,12 @@ namespace Backend.Migrations
                         principalTable: "Storages",
                         principalColumn: "StorageId",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Expires_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -92,9 +120,19 @@ namespace Backend.Migrations
                 column: "StorageId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Expires_UserId",
+                table: "Expires",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Items_CategoryId",
                 table: "Items",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Storages_UserId",
+                table: "Storages",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -110,6 +148,9 @@ namespace Backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

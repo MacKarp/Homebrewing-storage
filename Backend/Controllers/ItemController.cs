@@ -46,7 +46,11 @@ namespace Backend.Controllers
         [HttpPost]
         public ActionResult<ItemReadDto> CreateItem(ItemCreateDto itemCreateDto)
         {
-            var model = _mapper.Map<Item>(itemCreateDto);
+            var model = new Item()
+            {
+                IdCategory = _repository.GetCategoryById(itemCreateDto.CategoryId),
+                ItemName = itemCreateDto.ItemName,
+            };
             _repository.CreateItem(model);
             _repository.SaveChanges();
 
@@ -64,7 +68,9 @@ namespace Backend.Controllers
                 return NotFound();
             }
 
-            _mapper.Map(itemUpdateDto, modelFromRepo);
+            modelFromRepo.IdCategory = _repository.GetCategoryById(itemUpdateDto.CategoryId);
+            modelFromRepo.ItemName = itemUpdateDto.ItemName;
+
             _repository.UpdateItem(modelFromRepo);
             _repository.SaveChanges();
 

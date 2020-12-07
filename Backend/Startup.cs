@@ -1,7 +1,9 @@
 using System;
 using AutoMapper;
 using Backend.Data;
+using Backend.Email;
 using Backend.Handler;
+using Backend.Jobs;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
+using Quartz;
 
 namespace Backend
 {
@@ -36,6 +39,15 @@ namespace Backend
             System.Console.WriteLine($"Connection string: Server={server},{port};Initial Catalog={database};User ID={user};Password={password}");
             services.AddDbContext<BackendContext>(options => options.UseSqlServer($"Server={server},{port};Initial Catalog={database};User ID={user};Password={password}"));
 
+            var emailServer = Configuration["SmtpServer"] ?? "DefaultEmailServer";
+            var emailPort = (Configuration["SmtpPort"]) ?? "0";
+            var emailSsl = (Configuration["SSL"]) ?? "true";
+            var emailUserName = Configuration["SmtpUserName"] ?? "DefaultUserName";
+            var emailPassword = Configuration["SmtpUserPassword"] ?? "DefaultUserPassword";
+
+            services.AddSingleton<IEmailConfiguration>(new EmailConfiguration() { SmtpServer = emailServer, SmtpPort = int.Parse(emailPort), Ssl = Boolean.Parse(emailSsl), SmtpUserName = emailUserName, SmtpPassword = emailPassword });
+            services.AddTransient<IEmailService, EmailService>();
+
             services.AddAuthentication("BasicAuthentication")
                 .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
@@ -56,6 +68,34 @@ namespace Backend
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IBackendRepo, SqlBackendRepo>();
+
+            var notificationSchedule = Configuration["NotificationSchedule"] ?? "0/30 * * * * ?";
+            Console.WriteLine("NotificationSchedule: " + notificationSchedule);
+            services.AddQuartz(q =>
+            {
+                // base quartz scheduler, job and trigger configuration
+                q.UseMicrosoftDependencyInjectionScopedJobFactory();
+
+
+                // Create a "key" for the job
+                var jobKey = new JobKey("NotificationEmailSend");
+
+                // Register the job with the DI container
+                q.AddJob<NotificationEmailSend>(opts => opts.WithIdentity(jobKey));
+
+                // Create a trigger for the job
+                q.AddTrigger(opts => opts
+                    .ForJob(jobKey) // link to the NotificationEmailSend
+                    .WithIdentity("NotificationEmailSend") // give the trigger a unique name
+                    .WithCronSchedule(notificationSchedule)); // run with "NotificationSchedule" value or every 30 seconds
+            });
+
+            // ASP.NET Core hosting
+            services.AddQuartzServer(options =>
+            {
+                // when shutting down we want jobs to complete gracefully
+                options.WaitForJobsToComplete = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

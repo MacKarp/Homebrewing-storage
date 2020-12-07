@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Backend.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -21,8 +22,22 @@ namespace Backend.Data
         {
             System.Console.WriteLine("Applying Migrations...");
             context.Database.Migrate();
-            
+
             //Populating Database
+            if (!context.Users.Any())
+            {
+                System.Console.WriteLine("Adding Users...");
+                var item = new List<User>
+                {
+                    new User { UserName = "User 1", UserEmail = "user1@test.test", UserPassword = "user1password"},
+                    new User { UserName = "User 2", UserEmail = "user2@test.test", UserPassword = "user2password"},
+                    new User { UserName = "User 3", UserEmail = "user3@test.test", UserPassword = "user3password"},
+                    new User { UserName = "User 4", UserEmail = "user4@test.test", UserPassword = "user4password"},
+                    new User { UserName = "User 5", UserEmail = "user5@test.test", UserPassword = "user5password"},
+                };
+                context.AddRange(item);
+                context.SaveChanges();
+            }
             if (!context.Categories.Any())
             {
                 System.Console.WriteLine("Adding Categories...");
@@ -43,11 +58,11 @@ namespace Backend.Data
                 System.Console.WriteLine("Adding Storage...");
                 var item = new List<Storage>
                 {
-                    new Storage {UserID = 0, StorageName = "Storage 1"},
-                    new Storage {UserID = 0, StorageName = "Storage 2"},
-                    new Storage {UserID = 0, StorageName = "Storage 3"},
-                    new Storage {UserID = 0, StorageName = "Storage 4"},
-                    new Storage {UserID = 0, StorageName = "Storage 5"},
+                    new Storage {IdUser = context.Users.Find(1), StorageName = "Storage 1"},
+                    new Storage {IdUser = context.Users.Find(2), StorageName = "Storage 2"},
+                    new Storage {IdUser = context.Users.Find(3), StorageName = "Storage 3"},
+                    new Storage {IdUser = context.Users.Find(4), StorageName = "Storage 4"},
+                    new Storage {IdUser = context.Users.Find(5), StorageName = "Storage 5"},
                 };
                 context.AddRange(item);
                 context.SaveChanges();
@@ -74,11 +89,11 @@ namespace Backend.Data
                 System.Console.WriteLine("Adding Expire...");
                 var item = new List<Expire>
                 {
-                    new Expire { UserId = 0, IdStorage = context.Storages.Find(1), IdItem = context.Items.Find(1), ExpirationDate = "12345"},
-                    new Expire { UserId = 0, IdStorage = context.Storages.Find(1), IdItem = context.Items.Find(1), ExpirationDate = "12345"},
-                    new Expire { UserId = 0, IdStorage = context.Storages.Find(1), IdItem = context.Items.Find(1), ExpirationDate = "12345"},
-                    new Expire { UserId = 0, IdStorage = context.Storages.Find(1), IdItem = context.Items.Find(1), ExpirationDate = "12345"},
-                    new Expire { UserId = 0, IdStorage = context.Storages.Find(1), IdItem = context.Items.Find(1), ExpirationDate = "12345"},
+                    new Expire { IdUser = context.Users.Find(1), IdStorage = context.Storages.Find(1), IdItem = context.Items.Find(1), ExpirationDate = DateTime.Today},
+                    new Expire { IdUser = context.Users.Find(2), IdStorage = context.Storages.Find(1), IdItem = context.Items.Find(1), ExpirationDate = DateTime.Today},
+                    new Expire { IdUser = context.Users.Find(3), IdStorage = context.Storages.Find(1), IdItem = context.Items.Find(1), ExpirationDate = DateTime.Today},
+                    new Expire { IdUser = context.Users.Find(4), IdStorage = context.Storages.Find(1), IdItem = context.Items.Find(1), ExpirationDate = DateTime.Today},
+                    new Expire { IdUser = context.Users.Find(5), IdStorage = context.Storages.Find(1), IdItem = context.Items.Find(1), ExpirationDate = DateTime.Today},
                 };
                 context.AddRange(item);
                 context.SaveChanges();

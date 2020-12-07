@@ -1,6 +1,10 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Linq;
+using AutoMapper;
+using Backend.Data;
 using Backend.Dtos;
 using Backend.Models;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Backend.Profiles
 {
@@ -8,10 +12,13 @@ namespace Backend.Profiles
     {
         public StorageProfile()
         {
-            CreateMap<Storage, StorageReadDto>();
-            CreateMap<StorageCreateDto, Storage>();
-            CreateMap<StorageUpdateDto, Storage>();
-            CreateMap<Storage, StorageUpdateDto>();
+            Console.WriteLine("StorageProfile constructor");
+            CreateMap<Storage, StorageReadDto>()
+                .ForMember(dest => dest.IdUser, opt => opt.MapFrom(src => src.IdUser.UserId));
+            CreateMap<StorageUpdateDto, Storage>()
+                .ForPath(dest => dest.IdUser.UserId, opt => opt.MapFrom(src => src.UserId));
+            CreateMap<Storage, StorageUpdateDto>()
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.IdUser.UserId));
         }
     }
 }
