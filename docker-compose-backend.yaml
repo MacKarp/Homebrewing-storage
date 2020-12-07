@@ -19,6 +19,9 @@ services:
             SSL: "True"
             SmtpUserName: testusername
             SmtpUserPassword: testpassword
+            # Check NotificationSchedule configuration pattern at:
+            # https://www.quartz-scheduler.net/documentation/quartz-3.x/tutorial/crontriggers.html#cron-expressions
+            NotificationSchedule: "0 0 3 * * ?" 
         ports: 
             - "8080:80"
     db:

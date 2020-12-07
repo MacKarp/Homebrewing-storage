@@ -159,5 +159,45 @@ namespace Backend.Data
 
             _context.Storages.Remove(storage);
         }
+
+        public IEnumerable<User> GetAllUsers()
+        {
+            return _context.Users.ToList();
+        }
+
+        public User GetUserById(int id)
+        {
+            return _context.Users.FirstOrDefault(p => p.UserId == id);
+        }
+
+        public void CreateUser(User user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            _context.Users.Add(user);
+        }
+
+        public void UpdateUser(User user)
+        {
+            // Nothing
+        }
+
+        public void DeleteUser(User user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            _context.Users.Remove(user);
+        }
+
+        public IEnumerable<Expire> GetAllExpiresByExpirationTimeLeft(double days)
+        {
+            return _context.Expires.Where(p => p.ExpirationDate >= DateTime.Now.Date && p.ExpirationDate <= DateTime.Now.AddDays(days)).Include(storage => storage.IdStorage).Include(item => item.IdItem).Include(user => user.IdUser).ToList();
+        }
     }
 }

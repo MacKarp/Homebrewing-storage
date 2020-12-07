@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Backend.Models;
 
 namespace Backend.Data
@@ -33,5 +34,13 @@ namespace Backend.Data
         void DeleteExpire(Expire expire);
         void DeleteItem(Item item);
         void DeleteStorage(Storage storage);
+
+        IEnumerable<User> GetAllUsers();
+        User GetUserById(int id);
+        void CreateUser(User user);
+        void UpdateUser(User user);
+        void DeleteUser(User user);
+
+        IEnumerable<Expire> GetAllExpiresByExpirationTimeLeft(double days);
     }
 }
