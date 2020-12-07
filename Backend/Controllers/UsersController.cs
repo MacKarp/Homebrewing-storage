@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using Backend.Data;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using Backend.Dtos;
 using Backend.Models;
 using Microsoft.AspNetCore.JsonPatch;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Backend.Controllers
 {
@@ -22,29 +21,45 @@ namespace Backend.Controllers
             _repository = repository;
             _mapper = mapper;
         }
-
+        
+        //GET api/users
         [HttpGet]
         public ActionResult<IEnumerable<UserReadDto>> GetAllUsers()
         {
-            var item = _repository.GetAllUsers();
-            if (item != null)
+            var user = _repository.GetAllUsers();
+            if (user != null)
             {
-                return Ok(_mapper.Map<IEnumerable<UserReadDto>>(item));
+                return Ok(_mapper.Map<IEnumerable<UserReadDto>>(user));
             }
             else return NotFound();
         }
-
+        
+        //GET api/users/{id}
         [HttpGet("{id}", Name = "GetUserById")]
         public ActionResult<UserReadDto> GetUserById(int id)
         {
-            var item = _repository.GetUserById(id);
-            if (item != null)
+            var user = _repository.GetUserById(id);
+            if (user != null)
             {
-                return Ok(_mapper.Map<UserReadDto>(item));
+                return Ok(_mapper.Map<UserReadDto>(user));
             }
             else return NotFound();
         }
 
+        //GET api/users/GetUser
+        [HttpGet("GetUser")]
+        public ActionResult<UserReadDto>GetUser()
+        {
+            string emailAdress = HttpContext.User.Identity.Name;
+            var user = _repository.GetAllUsers().Where(user => user.UserEmail == emailAdress);
+            if (user != null)
+            {
+                return Ok(_mapper.Map<UserReadDto>(user));
+            }
+            else return NotFound();
+        }
+        
+        //POST api/users
         [HttpPost]
         public ActionResult<UserReadDto> CreateUser(UserCreateDto userCreateDto)
         {
@@ -57,6 +72,7 @@ namespace Backend.Controllers
             return CreatedAtRoute(nameof(GetUserById), new { Id = readDto.UserId }, readDto);
         }
 
+        //POST api/users/{id}
         [HttpPut("{id}")]
         public ActionResult UpdateUser(int id, UserUpdateDto userUpdateDto)
         {
@@ -73,6 +89,7 @@ namespace Backend.Controllers
             return NoContent();
         }
 
+        //PATCH api/users/{id}
         [HttpPatch("{id}")]
         public ActionResult PartialUpdateUser(int id, JsonPatchDocument<UserUpdateDto> patchDocument)
         {
@@ -95,7 +112,8 @@ namespace Backend.Controllers
 
             return NoContent();
         }
-
+        
+        //DELETE api/users/{id}
         [HttpDelete("{id}")]
         public ActionResult DeleteUser(int id)
         {
@@ -109,6 +127,5 @@ namespace Backend.Controllers
 
             return NoContent();
         }
-
     }
 }

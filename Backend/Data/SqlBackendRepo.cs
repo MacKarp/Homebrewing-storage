@@ -9,12 +9,14 @@ namespace Backend.Data
     public class SqlBackendRepo : IBackendRepo
     {
         private readonly BackendContext _context;
-
+        
+        //Constructor
         public SqlBackendRepo(BackendContext context)
         {
             _context = context;
         }
-
+        
+        //GET methods
         public IEnumerable<Category> GetAllCategories()
         {
             return _context.Categories.ToList();
@@ -24,7 +26,7 @@ namespace Backend.Data
         {
             return _context.Categories.FirstOrDefault(p => p.CategoryId == id);
         }
-
+        
         public IEnumerable<Expire> GetAllExpires()
         {
             return _context.Expires.Include(storage => storage.IdStorage).Include(item => item.IdItem).Include(user => user.IdUser).ToList();
@@ -34,7 +36,7 @@ namespace Backend.Data
         {
             return _context.Expires.Include(storage => storage.IdStorage).Include(item => item.IdItem).Include(user => user.IdUser).FirstOrDefault(p => p.ExpireId == id);
         }
-
+        
         public IEnumerable<Item> GetAllItems()
         {
             return _context.Items.Include(category => category.IdCategory).ToList();
@@ -44,7 +46,7 @@ namespace Backend.Data
         {
             return _context.Items.Include(category => category.IdCategory).FirstOrDefault(p => p.ItemId == id);
         }
-
+        
         public IEnumerable<Storage> GetAllStorages()
         {
             return _context.Storages.Include(user => user.IdUser).ToList();
@@ -55,11 +57,22 @@ namespace Backend.Data
             return _context.Storages.Include(user => user.IdUser).FirstOrDefault(p => p.StorageId == id);
         }
 
-        public bool SaveChanges()
+        public IEnumerable<User> GetAllUsers()
         {
-            return (_context.SaveChanges() >= 0);
+            return _context.Users.ToList();
+        }
+        
+        public User GetUserById(int id)
+        {
+            return _context.Users.FirstOrDefault(p => p.UserId == id);
+        }
+        
+        public IEnumerable<Expire> GetAllExpiresByExpirationTimeLeft(double days)
+        {
+            return _context.Expires.Where(p => p.ExpirationDate >= DateTime.Now.Date && p.ExpirationDate <= DateTime.Now.AddDays(days)).Include(storage => storage.IdStorage).Include(item => item.IdItem).Include(user => user.IdUser).ToList();
         }
 
+        //CREATE methods
         public void CreateCategory(Category category)
         {
             if (category == null)
@@ -100,6 +113,17 @@ namespace Backend.Data
             _context.Storages.Add(storage);
         }
 
+        public void CreateUser(User user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            _context.Users.Add(user);
+        }
+
+        //UPDATE methods
         public void UpdateCategory(Category category)
         {
             // Nothing
@@ -120,13 +144,18 @@ namespace Backend.Data
             // Nothing
         }
 
+        public void UpdateUser(User user)
+        {
+            // Nothing
+        }
+
+        //DELETE methods
         public void DeleteCategory(Category category)
         {
             if (category == null)
             {
                 throw new ArgumentNullException(nameof(category));
             }
-
             _context.Categories.Remove(category);
         }
 
@@ -136,7 +165,6 @@ namespace Backend.Data
             {
                 throw new ArgumentNullException(nameof(expire));
             }
-
             _context.Expires.Remove(expire);
         }
 
@@ -146,7 +174,6 @@ namespace Backend.Data
             {
                 throw new ArgumentNullException(nameof(item));
             }
-
             _context.Items.Remove(item);
         }
 
@@ -156,34 +183,9 @@ namespace Backend.Data
             {
                 throw new ArgumentNullException(nameof(storage));
             }
-
             _context.Storages.Remove(storage);
         }
 
-        public IEnumerable<User> GetAllUsers()
-        {
-            return _context.Users.ToList();
-        }
-
-        public User GetUserById(int id)
-        {
-            return _context.Users.FirstOrDefault(p => p.UserId == id);
-        }
-
-        public void CreateUser(User user)
-        {
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
-
-            _context.Users.Add(user);
-        }
-
-        public void UpdateUser(User user)
-        {
-            // Nothing
-        }
 
         public void DeleteUser(User user)
         {
@@ -191,13 +193,15 @@ namespace Backend.Data
             {
                 throw new ArgumentNullException(nameof(user));
             }
-
             _context.Users.Remove(user);
         }
 
-        public IEnumerable<Expire> GetAllExpiresByExpirationTimeLeft(double days)
+        //Saving cahanges to DB method
+        public bool SaveChanges()
         {
-            return _context.Expires.Where(p => p.ExpirationDate >= DateTime.Now.Date && p.ExpirationDate <= DateTime.Now.AddDays(days)).Include(storage => storage.IdStorage).Include(item => item.IdItem).Include(user => user.IdUser).ToList();
+            return (_context.SaveChanges() >= 0);
         }
+
+        //GetAllExpiresByExpirationTimeLeft przeniesione wyżej do sekcji GET
     }
 }
