@@ -14,11 +14,11 @@ services:
             DBUser: SA
             DBPassword: ThisIsNotSuperSecretP@55w0rd
             Database: Backend_API
-            SmtpServer: test.test
-            SmtpPort: 123
+            SmtpServer: smtp.gmail.com
+            SmtpPort: 465
             SSL: "True"
-            SmtpUserName: testusername
-            SmtpUserPassword: testpassword
+            SmtpUserName: storage.homebrew@gmail.com
+            SmtpUserPassword: teetuyxpvzvrafrr
             # Check NotificationSchedule configuration pattern at:
             # https://www.quartz-scheduler.net/documentation/quartz-3.x/tutorial/crontriggers.html#cron-expressions
             NotificationSchedule: "0 0 3 * * ?" 
