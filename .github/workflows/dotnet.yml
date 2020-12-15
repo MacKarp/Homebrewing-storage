@@ -1,6 +1,6 @@
 name: Backend CI
 env:
-  DBServer: db
+  DBServer: localhost
   DBPort: 14331
   DBUser: SA
   DBPassword: ThisIsNotSuperSecretP@55w0rd
