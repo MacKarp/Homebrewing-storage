@@ -1,4 +1,10 @@
-name: .NET
+name: Backend CI
+env:
+  DBServer: Database
+  DBPort: 1433
+  DBUser: SA
+  DBPassword: ThisIsNotSuperSecretP@55w0rd
+  Database: Test_Backend_API
 
 on:
   push:
@@ -6,10 +12,17 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
-
+  ci:
     runs-on: ubuntu-latest
-
+    services:
+      Database:
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        ports:
+          - 1433
+        env:
+          ACCEPT_EULA: Y
+          SA_PASSWORD: ThisIsNotSuperSecretP@55w0rd
+          MSSQL_PID: Express
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET
