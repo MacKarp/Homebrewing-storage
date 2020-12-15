@@ -18,7 +18,7 @@ jobs:
       Database:
         image: mcr.microsoft.com/mssql/server:2019-latest
         ports:
-          - 1433
+          - 14331:1433
         env:
           ACCEPT_EULA: Y
           SA_PASSWORD: ThisIsNotSuperSecretP@55w0rd
