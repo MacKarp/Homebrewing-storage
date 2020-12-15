@@ -1,10 +1,16 @@
 name: Backend CI
 env:
-  DBServer: Database
-  DBPort: 1433
+  DBServer: db
+  DBPort: 14331
   DBUser: SA
   DBPassword: ThisIsNotSuperSecretP@55w0rd
-  Database: Test_Backend_API
+  Database: Backend_API
+  SmtpServer: smtp.email.email
+  SmtpPort: 465
+  SSL: "True"
+  SmtpUserName: email@emauil.email
+  SmtpUserPassword: password
+  NotificationSchedule: "0 0 3 * * ?"
 
 on:
   push:
@@ -15,14 +21,14 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     services:
-      Database:
+      db:
         image: mcr.microsoft.com/mssql/server:2019-latest
-        ports:
-          - 14331:1433
         env:
-          ACCEPT_EULA: Y
-          SA_PASSWORD: ThisIsNotSuperSecretP@55w0rd
-          MSSQL_PID: Express
+            ACCEPT_EULA: Y
+            SA_PASSWORD: ThisIsNotSuperSecretP@55w0rd
+            MSSQL_PID: Express
+        ports: 
+            - "14331:1433"            
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET
