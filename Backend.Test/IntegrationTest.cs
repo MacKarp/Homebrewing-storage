@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Configuration;
 using System.Net.Http;
 using Backend.Data;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
+using Xunit;
+// Tymczasowo wyłącza równoległe uruchamianie testów
+// do momentu rozwiązania przypisywania różnych baz danych dla różnych testów
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
 
 namespace Backend.Test
 {

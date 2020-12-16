@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,18 +10,22 @@ using Xunit;
 
 namespace Backend.Test
 {
-    public class CategoryControllerTests : IntegrationTest
+    public class ExpireControllerTests : IntegrationTest
     {
-        private static readonly CategoryCreateDto NewCategory = new CategoryCreateDto()
+        private static readonly ExpireCreateDto NewExpire = new ExpireCreateDto()
         {
-            CategoryName = "New Test Category"
+            ExpirationDate = DateTime.Now.Date,
+            IdItem = 1,
+            IdStorage = 1,
+            UserId = 1
         };
 
-        private static readonly string Json = JsonConvert.SerializeObject(NewCategory);
-        private readonly StringContent _content = new StringContent(Json, Encoding.UTF8, "application/json");
-        private static readonly string Url = "api/category/";
+        private static readonly string Json = JsonConvert.SerializeObject(NewExpire);
+        private static readonly StringContent Content = new StringContent(Json, Encoding.UTF8, "application/json");
+        private static readonly string Url = "api/expire/";
+
         [Fact]
-        public async Task GetAllCategories()
+        public async Task GetAllExpires()
         {
             // Arrange
 
@@ -33,7 +38,7 @@ namespace Backend.Test
 
         [Theory]
         [InlineData(1)]
-        public async Task GetCategoryById_CategoryExists(int id)
+        public async Task GetExpireById_ExpireExists(int id)
         {
             // Arrange
 
@@ -46,7 +51,7 @@ namespace Backend.Test
 
         [Theory]
         [InlineData(6)]
-        public async Task GetCategoryById_CategoryNotExists(int id)
+        public async Task GetExpireById_ExpireNotExists(int id)
         {
             // Arrange
 
@@ -58,19 +63,19 @@ namespace Backend.Test
         }
 
         [Fact]
-        public async Task CreateCategory()
+        public async Task CreateExpire()
         {
             // Arrange
 
             // Act
-            var response = await TestClient.PostAsync(Url, _content);
+            var response = await TestClient.PostAsync(Url, Content);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.Created);
         }
 
         [Fact]
-        public async Task CreateCategory_BadRequest()
+        public async Task CreateExpire_BadRequest()
         {
             // Arrange
             var json = JsonConvert.SerializeObject("Create Category Bad Request");
@@ -85,12 +90,12 @@ namespace Backend.Test
 
         [Theory]
         [InlineData(1)]
-        public async Task UpdateCategory(int id)
+        public async Task UpdateExpire(int id)
         {
             // Arrange
-            var categoryName = "Updated Test Category " + id;
-            CategoryUpdateDto categoryUpdate = new CategoryUpdateDto() { CategoryName = categoryName };
-            var json = JsonConvert.SerializeObject(categoryUpdate);
+            var newExpireDate = DateTime.Now.Date.AddDays(id);
+            ExpireUpdateDto expireUpdateDto = new ExpireUpdateDto() { ExpirationDate = newExpireDate };
+            var json = JsonConvert.SerializeObject(expireUpdateDto);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             // Act
@@ -102,12 +107,12 @@ namespace Backend.Test
 
         [Theory]
         [InlineData(6)]
-        public async Task UpdateCategory_NotFound(int id)
+        public async Task UpdateExpire_NotFound(int id)
         {
             // Arrange
-            var categoryName = "Updated Test Category " + id;
-            CategoryUpdateDto categoryUpdate = new CategoryUpdateDto() { CategoryName = categoryName };
-            var json = JsonConvert.SerializeObject(categoryUpdate);
+            var newExpireDate = DateTime.Now.Date.AddDays(id);
+            ExpireUpdateDto expireUpdateDto = new ExpireUpdateDto() { ExpirationDate = newExpireDate };
+            var json = JsonConvert.SerializeObject(expireUpdateDto);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             // Act
@@ -119,10 +124,10 @@ namespace Backend.Test
 
         [Theory]
         [InlineData(1)]
-        public async Task UpdateCategory_BadRequest(int id)
+        public async Task UpdateExpire_BadRequest(int id)
         {
             // Arrange
-            var json = JsonConvert.SerializeObject("UpdateCategory_BadRequest");
+            var json = JsonConvert.SerializeObject("UpdateExpire_BadRequest");
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             // Act
@@ -132,10 +137,10 @@ namespace Backend.Test
         }
 
         [Fact]
-        public async Task DeleteCategory()
+        public async Task DeleteExpire()
         {
             // Arrange
-            await TestClient.PostAsync(Url, _content);
+            await TestClient.PostAsync(Url, Content);
 
             // Act
             var response = await TestClient.DeleteAsync(Url + 6);
@@ -144,7 +149,7 @@ namespace Backend.Test
         }
 
         [Fact]
-        public async Task DeleteCategory_NotFound()
+        public async Task DeleteExpire_NotFound()
         {
             // Arrange
 

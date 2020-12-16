@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,18 +10,21 @@ using Xunit;
 
 namespace Backend.Test
 {
-    public class CategoryControllerTests : IntegrationTest
+    public class UserControllerTests : IntegrationTest
     {
-        private static readonly CategoryCreateDto NewCategory = new CategoryCreateDto()
+        private static readonly UserCreateDto NewUser = new UserCreateDto()
         {
-            CategoryName = "New Test Category"
+            UserEmail = "test.email@test.email.com",
+            UserName = "Test User Name",
+            UserPassword = "Test User Password"
         };
 
-        private static readonly string Json = JsonConvert.SerializeObject(NewCategory);
-        private readonly StringContent _content = new StringContent(Json, Encoding.UTF8, "application/json");
-        private static readonly string Url = "api/category/";
+        private static readonly string Json = JsonConvert.SerializeObject(NewUser);
+        private static readonly StringContent Content = new StringContent(Json, Encoding.UTF8, "application/json");
+        private static readonly string Url = "api/users/";
+
         [Fact]
-        public async Task GetAllCategories()
+        public async Task GetAllUsers()
         {
             // Arrange
 
@@ -33,7 +37,7 @@ namespace Backend.Test
 
         [Theory]
         [InlineData(1)]
-        public async Task GetCategoryById_CategoryExists(int id)
+        public async Task GetUserById_UserExists(int id)
         {
             // Arrange
 
@@ -46,7 +50,7 @@ namespace Backend.Test
 
         [Theory]
         [InlineData(6)]
-        public async Task GetCategoryById_CategoryNotExists(int id)
+        public async Task GetUserById_UserNotExists(int id)
         {
             // Arrange
 
@@ -58,22 +62,42 @@ namespace Backend.Test
         }
 
         [Fact]
-        public async Task CreateCategory()
+        public async Task GetUser_ByEmail_UserExist()
         {
             // Arrange
 
             // Act
-            var response = await TestClient.PostAsync(Url, _content);
+
+            // Assert
+        }
+
+        [Fact]
+        public async Task GetUser_ByEmail_UserNotExist()
+        {
+            // Arrange
+
+            // Act
+
+            // Assert
+        }
+
+        [Fact]
+        public async Task CreateUser()
+        {
+            // Arrange
+
+            // Act
+            var response = await TestClient.PostAsync(Url, Content);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.Created);
         }
 
         [Fact]
-        public async Task CreateCategory_BadRequest()
+        public async Task CreateUser_BadRequest()
         {
             // Arrange
-            var json = JsonConvert.SerializeObject("Create Category Bad Request");
+            var json = JsonConvert.SerializeObject("Create User Bad Request");
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             // Act
@@ -85,12 +109,14 @@ namespace Backend.Test
 
         [Theory]
         [InlineData(1)]
-        public async Task UpdateCategory(int id)
+        public async Task UpdateUser(int id)
         {
             // Arrange
-            var categoryName = "Updated Test Category " + id;
-            CategoryUpdateDto categoryUpdate = new CategoryUpdateDto() { CategoryName = categoryName };
-            var json = JsonConvert.SerializeObject(categoryUpdate);
+            var userName = "Updated Test User Name" + id;
+            var userEmail = "updated_test@email." + id;
+            var userPassword = "Updated Test User Password" + id;
+            UserUpdateDto userUpdate = new UserUpdateDto() { UserName = userName, UserEmail = userEmail, UserPassword = userPassword };
+            var json = JsonConvert.SerializeObject(userUpdate);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             // Act
@@ -102,12 +128,14 @@ namespace Backend.Test
 
         [Theory]
         [InlineData(6)]
-        public async Task UpdateCategory_NotFound(int id)
+        public async Task UpdateUser_NotFound(int id)
         {
             // Arrange
-            var categoryName = "Updated Test Category " + id;
-            CategoryUpdateDto categoryUpdate = new CategoryUpdateDto() { CategoryName = categoryName };
-            var json = JsonConvert.SerializeObject(categoryUpdate);
+            var userName = "Updated Test User Name" + id;
+            var userEmail = "updated_test@email." + id;
+            var userPassword = "Updated Test User Password" + id;
+            UserUpdateDto userUpdate = new UserUpdateDto() { UserName = userName, UserEmail = userEmail, UserPassword = userPassword };
+            var json = JsonConvert.SerializeObject(userUpdate);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             // Act
@@ -119,10 +147,10 @@ namespace Backend.Test
 
         [Theory]
         [InlineData(1)]
-        public async Task UpdateCategory_BadRequest(int id)
+        public async Task UpdateUser_BadRequest(int id)
         {
             // Arrange
-            var json = JsonConvert.SerializeObject("UpdateCategory_BadRequest");
+            var json = JsonConvert.SerializeObject("Update User BadRequest");
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             // Act
@@ -132,10 +160,10 @@ namespace Backend.Test
         }
 
         [Fact]
-        public async Task DeleteCategory()
+        public async Task DeleteUser()
         {
             // Arrange
-            await TestClient.PostAsync(Url, _content);
+            await TestClient.PostAsync(Url, Content);
 
             // Act
             var response = await TestClient.DeleteAsync(Url + 6);
@@ -144,7 +172,7 @@ namespace Backend.Test
         }
 
         [Fact]
-        public async Task DeleteCategory_NotFound()
+        public async Task DeleteUser_NotFound()
         {
             // Arrange
 
