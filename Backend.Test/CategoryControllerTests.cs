@@ -11,13 +11,21 @@ namespace Backend.Test
 {
     public class CategoryControllerTests : IntegrationTest
     {
+        private static readonly CategoryCreateDto NewCategory = new CategoryCreateDto()
+        {
+            CategoryName = "New Test Category"
+        };
+
+        private static readonly string Json = JsonConvert.SerializeObject(NewCategory);
+        private readonly StringContent _content = new StringContent(Json, Encoding.UTF8, "application/json");
+        private static readonly string Url = "api/category/";
         [Fact]
         public async Task GetAllCategories()
         {
             // Arrange
 
             // Act
-            var response = await TestClient.GetAsync("api/category/");
+            var response = await TestClient.GetAsync(Url);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -30,7 +38,7 @@ namespace Backend.Test
             // Arrange
 
             // Act
-            var response = await TestClient.GetAsync("api/category/" + id);
+            var response = await TestClient.GetAsync(Url + id);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -43,7 +51,7 @@ namespace Backend.Test
             // Arrange
 
             // Act
-            var response = await TestClient.GetAsync("api/category/" + id);
+            var response = await TestClient.GetAsync(Url + id);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -53,15 +61,9 @@ namespace Backend.Test
         public async Task CreateCategory()
         {
             // Arrange
-            CategoryCreateDto newCategory = new CategoryCreateDto()
-            {
-                CategoryName = "New Test Category"
-            };
-            var json = JsonConvert.SerializeObject(newCategory);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await TestClient.PostAsync("api/category/", content);
+            var response = await TestClient.PostAsync(Url, _content);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -71,11 +73,11 @@ namespace Backend.Test
         public async Task CreateCategory_BadRequest()
         {
             // Arrange
-            var json = JsonConvert.SerializeObject("newCategory");
+            var json = JsonConvert.SerializeObject("Create Category Bad Request");
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await TestClient.PostAsync("api/category/", content);
+            var response = await TestClient.PostAsync(Url, content);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -92,7 +94,7 @@ namespace Backend.Test
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await TestClient.PutAsync("api/category/" + id, content);
+            var response = await TestClient.PutAsync(Url + id, content);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NoContent);
@@ -109,7 +111,7 @@ namespace Backend.Test
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await TestClient.PutAsync("api/category/" + id, content);
+            var response = await TestClient.PutAsync(Url + id, content);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -124,35 +126,19 @@ namespace Backend.Test
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await TestClient.PutAsync("api/category/" + id, content);
+            var response = await TestClient.PutAsync(Url + id, content);
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        }
-
-        [Fact]
-        public async Task PartialUpdateCategory()
-        {
-            // Arrange
-
-            // Act
-
-            // Assert
         }
 
         [Fact]
         public async Task DeleteCategory()
         {
             // Arrange
-            CategoryCreateDto newCategory = new CategoryCreateDto()
-            {
-                CategoryName = "New Test Category"
-            };
-            var json = JsonConvert.SerializeObject(newCategory);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            await TestClient.PostAsync("api/category/", content);
+            await TestClient.PostAsync(Url, _content);
 
             // Act
-            var response = await TestClient.DeleteAsync("api/category/" + 6);
+            var response = await TestClient.DeleteAsync(Url + 6);
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NoContent);
         }
@@ -163,7 +149,7 @@ namespace Backend.Test
             // Arrange
 
             // Act
-            var response = await TestClient.DeleteAsync("api/category/" + 6);
+            var response = await TestClient.DeleteAsync(Url + 6);
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
