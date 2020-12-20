@@ -40,16 +40,21 @@
 
 	%Początek pierwszej sekcji opisującej system
 	\section{Opis funkcjonalny systemu}
-		\indent Opis funkcjonalny systemu
+		\indent jest aplikacją internetową pozwalającą zarejestrowanemu i zalogowanemu użytkownikowi na tworzenie swoich wirtualnych magazynów i dodawania
+		do nich swoich posiadanych składników wraz z ich datami ważności. Funkcjonalność aplikacji obejmuje:
 		\begin{itemize}
-			\item funkcja 1
-			\item funkcja 2
+			\item Dostęp do aplikacji poprzez przeglądarkę www (PC, smartphone,
+			\item rejestrację i logowanie użytkowników,
+			\item dodawanie, modyfikowanie i usuwanie kategorii przedmiotów,
+			\item dodawanie, modyfikowanie i usuwanie przedmiotów,
+			\item dodawanie, modyfikowanie i usuwanie magazynów,
+			\item wysyłanie powiadomień o zbliżającym się terminie ważności,
 		\end{itemize}
 	\newpage
 
 	%sekcja druga, opis wykorzystanych technologii
 	\section{Opis technologiczny}
-		\indent Przy tworzeniu projektu ,,'' wykorzystano następujące technologie:
+		\indent Przy tworzeniu projektu aplikacji wykorzystano następujące technologie:
 
 		\subsection{ASP.NET Core 3.1}
 			\indent ASP.Net Core jest wysokowydajnym frameworkiem, do budowania nowoczesnych aplikacji internetowych wykorzystujących moc obliczeniową chmur. ASP.Net Core jest technologią
@@ -76,6 +81,11 @@
 				\item Wyrażenia lambda.
 			\end{itemize}
 		
+		\subsection{Coverlet}
+			\indent Coverlet to projekt typu open source, który zapewnia wieloplatformowy framework
+			pokrywający kod. Coverlet zbiera dane dotyczące przebiegu testu pokrycia,
+			które są używane do generowania raportów.
+
 		\subsection{Docker}
 			\indent Docker jest otwarto źródłowym oprogramowaniem służącym do realizacji „konteneryzacji” aplikacji, służąca jako platforma dla programistów
 				i administratorów do tworzenia, wdrażania i uruchamiania aplikacji rozproszonych. Pozwala umieścić program oraz jego zależności (biblioteki,
@@ -89,6 +99,12 @@
 		 	\indent Entity Framework jest technologią open - source do mapowania obiektowo – relacyjnego (ORM), które wspierają rozwój aplikacji zorientowanych na dane.
 		 	Entity Framework umożliwia programistom pracę z danymi w postaci obiektów i właściwości specyficznych dla domeny, bez konieczności przejmowania się bazowymi
 		 	tabelami i kolumnami baz danych, w których dane są przechowywane. 
+
+		\subsection{Fluent Assertions}
+			\indent Fluent Assertions to zestaw metod rozszerzających .NET, które pozwalają
+			w bardziej naturalny sposób określić oczekiwany wynik testu jednostkowego.
+			Umożliwia to prostą, intuicyjną budowę testu oraz szybsze diagnozowanie przyczyn
+			niepowodzenia testu dzięki czytelniejszym błędom.
 
 		\subsection{MailKit}
 			\indent MailKit jest multiplatformową otwarto źródłową biblioteką .NET klienta pocztowego opartą o MimeKit, która została zoptymalizowana pod kątem urządzeń mobilnych.
@@ -112,7 +128,7 @@
 		 	korzystanie z~jednego procesora, 1 GB pamięci RAM, 10GB plików bazy danych czy brak SQL Agent.
 		
 		\subsection{Quartz.NET}
-			\indent Quartz.NET jest otwartoźródłową biblioteką do planowania zadań.
+			\indent Quartz.NET jest otwarto źródłową biblioteką do planowania zadań.
 			Quartz.NET może być używany do tworzenia prostych lub złożonych harmonogramów wykonywania
 			dziesiątek, setek, a nawet dziesiątek tysięcy zadań.
 			Quartz.NET jest portem biblioteki Quartz dla środowiska Java. 	 
@@ -121,23 +137,102 @@
 			\indent Swashbuckle jest biblioteką, która dodaje zestaw narzędzi ,,Swagger" generujących automatycznie dokumentację API aplikacji,
 				wyposażoną w przejrzysty interfejs użytkownika. Swashbuckle umożliwia również testowanie API. Dokumentacja jest dostępna pod adresem: ,,/swagger"
 
+		\subsection{xUnit.net}
+			\indent xUnit.net to darmowe narzędzie typu open source służące do testowania jednostkowego
+			przeznaczone dla platformy .NET Framework, napisane przez oryginalnego autora NUnit.
+			xUnit.net współpracuje z platformami Xamarin, ReSharper, CodeRush i TestDriven.NET.
+	
 	\newpage
 		
 	%Sekcja trzecia, instrukcja lokalnego i zdalnego uruchomienia systemu
 	\section{Instrukcja lokalnego i zdalnego uruchomienia systemu}
 		\subsection{Lokalne uruchomienie systemu}
-			\indent opis lokalnego
+			\indent Aplikacja ,,nazwa aplikacji'' jest systemem internetowym, który jest dostępny
+			poprzez dowolną współczesną przeglądarkę internetową. Aby skorzystać z aplikacji należy
+			uruchomić przeglądarkę internetową a następnie udać się pod adres \url{www}.
 			
 		\subsection{Zdalne uruchomienie systemu}
-			\indent opis zdalnego
+			\indent Do uruchomienia systemu wymagana jest działająca platforma konteneryzacji ,,Docker''
+			oraz narzędzie ,,Docker Compose'' szczegóły instalacji i konfiguracji wymaganych
+			komponentów, można sprawdzić na stronie internetowej: \url{https://docs.docker.com/}.
+			Po poprawnym zainstalowaniu i skonfigurowaniu narzędzi należy utworzyć plik ,,docker-compose.yaml'',
+			z następującą przykładową konfiguracją:  
+			\begin{tcolorbox}[minipage,colback=white,arc=0pt,outer arc=0pt, fontupper=\footnotesize]
+				\begin{tabbing}
+						version: '3' \\
+						serv\= ices: \\
+						\> back\= endapi: \\
+        				\>\> image: karpiu/homebrewing-storage-api \\
+        				\>\> restart: always \\
+        				\>\> container\_name: Backend\_API \\
+        				\>\> depe\= nds\_on: \\
+            			\>\>\> - db \\ 
+        				\>\> environment: \\ 
+            			\>\>\> DBServer: Database \\ 
+            			\>\>\> DBPort: 1433 \\ 
+            			\>\>\> DBUser: SA \\
+            			\>\>\> DBPassword: ThisIsNotSuperSecretP@55w0rd \\
+            			\>\>\> Database: Backend\_API \\
+            			\>\>\> SmtpServer: your.email.smtp.server.here \\
+            			\>\>\> SmtpPort: 465 \\
+						\>\>\> SSL: "True" \\
+            			\>\>\> SmtpUserName: your.email@addres.here \\
+            			\>\>\> SmtpUserPassword: ThisIsNotSuperSecretP@55w0rd \\
+            			\>\>\> NotificationSchedule: "0 0 3 * * ?" \\
+        				\>\> ports: \\
+            			\>\>\> - "8080:80" \\
+    					\> db: \\
+						\>\> image: mcr.microsoft.com/mssql/server:2019-latest \\
+        				\>\> restart: always \\
+        				\>\> environment: \\
+            			\>\>\> ACCEPT\_EULA: Y \\
+            			\>\>\> SA\_PASSWORD: ThisIsNotSuperSecretP@55w0rd \\
+            			\>\>\> MSSQL\_PID: Express \\
+        				\>\> container\_name: Database \\
+        				\>\> ports: \\
+						\>\>\> - "14331:1433"
+					\end{tabbing}
+				\end{tcolorbox}	
+				\begin{tcolorbox}[minipage,colback=white,arc=0pt,outer arc=0pt, fontupper=\scriptsize]
+					Uwaga! Plik konfiguracyjny wymaga odpowiedniego formatowania, przykładowe pliki konfiguracyjne są dostępne w repozytorium projektu
+					\url{https://github.com/MacKarp/Homebrewing-storage}
+				\end{tcolorbox}
+				Po zapisaniu pliku konfiguracyjnego należy uruchomić następujące konsolowe polecenie w folderze zawierającym plik ,,docker-compose.yaml'':
+				\begin{tcolorbox}[minipage,colback=white,arc=0pt,outer arc=0pt, fontupper=\scriptsize]
+					docker-compose up
+				\end{tcolorbox}
+				Spowoduje to pobranie i uruchomienie wszystkich wszystkich składników aplikacji. Aby zakończyć działanie aplikacji należy uruchomić konsolowe
+				polecenie w katalogu zawierającym plik ,,docker-compose.yaml''  	
+				\begin{tcolorbox}[minipage,colback=white,arc=0pt,outer arc=0pt, fontupper=\scriptsize]
+					docker-compose stop			
+				\end{tcolorbox}
 
 	\newpage
 	
 	%Sekcja czwarta, instrukcja uruchamiania testów oraz opis testowanych funkcjonalności
 	\section{Instrukcja uruchamiania testów oraz opis testowanych funkcjonalności}
-
+		\indent Wszystkie testy projektowanej aplikacji są automatycznie uruchamiane na platformie GitHub, przy każdym ,,commitcie'' i utworzeniu ,,pull requesta''.
+			Lokalnie testy można uruchomić poprzez interfejs graficzny oferujący testy np. Eksplorator testów w Visual Studio 2019 lub poprzez uruchomienie komendy konsolowej:
+				\begin{tcolorbox}[minipage,colback=white,arc=0pt,outer arc=0pt, fontupper=\scriptsize]
+					dotnet test --verbosity normal
+				\end{tcolorbox}
+				\begin{tcolorbox}[minipage,colback=white,arc=0pt,outer arc=0pt, fontupper=\scriptsize]
+					Uwaga! Aby przeprowadzić lokalne testy należy posiadać uruchomiony lokalnie MSSQL Server na porcie: 14331
+				\end{tcolorbox}
+				 52 testy integracyjne obejmują poprawne działanie wszystkich endpointów API tj. pobieranie, tworzenie, modyfikację i usuwanie danych.     
 	\newpage
-
+	
+	\section{Repozytorium kodu i dokumentacja techniczna}
+		\indent Repozytorium kodu projektu i jego dokumentacja znajdują się w serwisie GitHub pod adresem: 
+			\begin{tcolorbox}[minipage,colback=white,arc=0pt,outer arc=0pt, fontupper=\scriptsize]
+				\url{https://github.com/MacKarp/Homebrewing-storage}
+			\end{tcolorbox}
+	\newpage
+	
 	\section{Wnioski projektowe}
-		\indent wnioski		
+		\indent Projekt aplikacji internetowej było bardzo ciekawym doświadczaniem, w którym zdobyliśmy wiele praktycznej wiedzy jak w poprawny sposób
+			stworzyć profesjonalną aplikację internetową począwszy od wyboru wykorzystywanej technologi, poprzez projekt frontendu i oddzielonej funkcjonalności backendu.
+			Wdrożenie aplikacji internetowej opartej o framework ASP.NET Core 3.1 okazało się bardzo proste i powtarzalne dzięki zastosowaniu konteneryzacji ,,Dockera''.
+			Praca w grupie wykazała że każdy z nas posiada inny zestaw umiejętności i wiedzy dzięki czemu w naturalny sposób wytworzył się podział prac przy projekcie,
+			jednocześnie gdy napotykany był jakiś problem to różnice w~posiadanej wiedzy pozwalały na wspólne szybkie rozwiązanie problemu. 
 \end{document}
