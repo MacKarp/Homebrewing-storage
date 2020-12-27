@@ -55,12 +55,33 @@
 	
 	%Sekcja czawarta, wybór narzędzi
 	\section{Wybór narzędzi}
-		\indent Wybór narzędzi skopiować z dokumentacji + Ubuntu 20.04 Server + Docker
+		\indent Wybór narzędzi skopiować z dokumentacji, dodać ubuntu serwer
+		
+		Ubuntu 20.04 LTS (Focal Fossa) server jest kompletną dystrybucją systemu operacyjnego GNU/Linux, przeznaczoną do serwerów. Ubuntu bazuje na niestabilnej gałęzi ,,Sid''
+		dystrybucji Debian. Projekt rozwijany jest przed przedsiębiorstwo Canonical Ltd. oraz fundację Ubuntu Foundation. Najważniejszymi cechami dystrybucji jest
+		\begin{itemize}
+			\item Domyślne ustawienia i konfiguracja sprzętu;
+			\item Uproszczona administracja;
+			\item Bogaty wybór oprogramowania;
+			\item Wsparcie techniczne;
+		\end{itemize}
+		Producent zapewnia wsparcie techniczne i rozwój dystrybucji do kwietnia 2025.
 	\newpage
 	
 	%Sekcja piąta, tworzenie projektu z uwzględnieniem bezpieczeństwa
 	\section{Tworzenie projektu z uwzględnieniem bezpieczeństwa}
-		\indent Tworzenie projektu z uwzględnieniem bezpieczeństwa
+		\indent Aplikacja została stworzona z uwzględnieniem wszystkich obowiązujących standardów bezpieczeństwa oraz obowiązujących przepisów RODO.
+		Przy projektowaniu zabezpieczeń aplikacji pomocna była książka \emph{Bezpieczeństwo aplikacji webowych}\cite{BAW} opisująca liczne metody zabezpieczenia aplikacji
+		takich jak szyfrowanie, autoryzacja itp. oraz liczne wpisy opisujące wpadki i ataki na serwisy www i aplikacje webowe opisane na blogach internetowych
+		\emph{Niebezpiecznik}\cite{Nieb}, \emph{Sekurak}\cite{Sek} i \emph{Zaufana Trzecia Strona}\cite{ZTS} dzięki, którym udało się wyeliminować dużą ilość potencjalnych wektorów ataków. 
+		Przy zabezpieczaniu serwera oraz bazy danych pomocna była książka \emph{Unix i Linux Przewodnik administratora systemów}\cite{Unix} oraz artykuły na blogu internetowym
+		\emph{Chris Titus Tech}\cite{CTT} przy pomocy, których udało się zabezpieczyć i zaszyfrować dane znajdujące się na serwerze przed nieautoryzowanym dostępem. Na serwerze
+		jest automatycznie tworzona kopia bezpieczeństwa, a dzięki wykorzystaniu macierzy RAID-Z, serwer jest odporny na całkowite uszkodzenie jednego z trzech podłączonych dysków.
+		W przeciwieństwie do tradycyjnych macierzy RAID, RAID-Z jest macierzą opartą o system plików ZFS dzięki czemu rozszerzenie macierzy o dodatkowe dyski nie stanowi żadnego problemu
+		a przeniesie dysków do innego serwera nie jest uzależnione od obecności identycznego fizycznego kontrolera macierzy RAID.
+		\emph{Ogólne rozporządzenie o ochronie danych}\cite{RODO}, \emph{poradniki i wskazówki - UODO}\cite{UODO} wraz z rozmowami z pracownikami wskazały
+		zakres danych, które są niezbędne do przetworzenia zlecenia oraz, które w przypadku złamania i/lub ominięcia zabezpieczeń będą jak najmniej
+		narażać klientów firmy na wszelkiego rodzaju potencjalne straty.  
 	\newpage
 	
 	%Sekcja szósta, Oszacowanie kosztów - detale
@@ -135,13 +156,13 @@
 				\hline
 				Pamięć RAM: & Patriot Viper 4 Blackout & 1 & 179zł \\
 				\hline
-				Twardy dysk: & Crucial BX 500 & 1 & 229zł \\
+				Twardy dysk: & Crucial BX 500 & 3 & 687zł \\
 				\hline
 				Zasilacz: & SilentiumPC Elementum E2 450W & 1 & 150zł \\
 				\hline
 				Obudowa: & SilentiumPC Armis AR1 & 1 & 109zł \\
 				\hline
-				\multicolumn{3}{|l|}{Razem:} & 1255zł \\
+				\multicolumn{3}{|l|}{Razem:} & 1713zł \\
 				\hline
 			\end{tabular}
 			\caption{Koszt podzespołów serwera}
@@ -152,12 +173,41 @@
 	
 	%Sekcja śiódma, wdrożenie - instalacja systemu
 	\section{Wdrożenie}
-		\indent Wdrożenie
+		\indent Po uprzednim przygotowaniu miejsca w instalację sieci przewodowej Ethernet oraz sieci energetycznej, w którym będzie znajdować się serwer  przystąpiono
+		do poskładania wszystkich zakupionych podzespołów serwera a następnie zainstalowania wybranej dystrybucji systemu operacyjnego GNU/Linux. Proces złożenia serwera i instalacji
+		systemu operacyjnego, zajęło około dwóch godzin. Następnie przystąpiono do konfiguracji dostępu SSH, stworzenia i skonfigurowania macierzy dyskowej RAID-Z,
+		zainstalowania i skonfigurowania firewalla, uruchomienia pełnego szyfrowania dysków. Po wstępnym przygotowaniu serwera został on podłączony w docelowej lokalizacji, a kolejne etapy
+		wdrażania zostały przeprowadzone zdalnie poprzez konsolę SSH. Po podłączeniu serwera do sieci Ethernet, został skonfigurowany znajdujący się w przedsiębiorstwie serwer DHCP
+		oraz switch. Kolejnymi krokami w wdrażaniu aplikacji było zainstalowanie i skonfigurowanie usługi konteneryzacji Docker oraz pobranie i instalacja stworzonej aplikacji.
+		Dzięki modułowej budowie aplikacji, po kolei były uruchamiane i konfigurowane poszczególne elementy systemu aplikacji tj. baza danych MS SQL, Backend-API i Frontend.
+		Instalacja zabezpieczenie bazy danych i konfiguracja aplikacja potrwała około jednej godziny. Po zakończeniu instalacji i konfiguracji aplikacji, został skonfigurowany 
+		harmonogram systemu ,,cron'' w celu automatycznego uruchamiania skryptu tworzącego kopię bezpieczeństwa a następnie weryfikującego poprawność utworzonej kopii.
+		Ze względu na wykorzystanie systemu plików ZFS, nie było potrzeby tworzenia skryptu sprawdzających integralność wcześniej wykonanych kopii zapasowych
+		- system plików automatycznie sprawdza i w razie potrzeby dokonuje stosownej korekty. Po zakończeniu konfiguracji wszystkich usług i aplikacji,
+		nastąpił etap testowania integralności całego systemu tj. sprawdzono poziomy dostępu do systemu operacyjnego, bazy danych i aplikacji, autoryzację, wszystkie funkcjonalności aplikacji,
+		przeprowadzono test jakości kopii zapasowej oraz przeprowadzono symulację uszkodzenia twardego dysku oraz odbudowę macierzy dyskowej,
+		sprawdzono konfigurację infrastruktury sieciowej. Na bieżąco były wprowadzane niezbędne poprawki do konfiguracji, a następnie ponownie sprawdzano czy wszystko działa prawidłowo.
+		Po zakończeniu testów rozpoczęliśmy szkolenie pracowników z wykorzystania aplikacji.
 	\newpage
 	
 	%Sekcja ósma, Źródła z których były tworzone
 	\section{Źródła}
-		\indent Źródła
+		\begin{thebibliography}{99}
+			\bibitem{BAW} M. Bentkowi, G. Coldwind, A. Czyż, R. Janicki, J. Kamiński, A. Michalczyk, M. Niezabitowski, M. Piosek, M. Sajdak, G. Trawiński, B. Widła:
+				\emph{Bezpieczeństwo aplikacji webowych},
+				SECURITUM Szkolenia sp. z o.o. sp.k., 2019.
+				ISBN: 978-83-954853-0-5
+			\bibitem{Nieb} https://niebezpiecznik.pl
+			\bibitem{Sek} https://sekurak.pl
+			\bibitem{ZTS} https://zaufanatrzeciastrona.pl
+			\bibitem{Unix} E. Nemeth, G. Snyder, T. R. Hein, B. Whaley, D. Mackin:
+				\emph{Unix i Linux Przewodnik administratora systemów Wydanie V},
+				Helion S.A., 2018.
+				ISBN: 978-83-283-4176-0
+			\bibitem{CTT} https://christitus.com
+			\bibitem{RODO} https://uodo.gov.pl/pl/404
+			\bibitem{UODO} https://uodo.gov.pl/7
+		\end{thebibliography}
 	\newpage
 	
 	%Sekcja dziewiąta, spis tabel i obrazków
