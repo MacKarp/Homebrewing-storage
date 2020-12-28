@@ -50,33 +50,156 @@
 	
 	%Sekcja trzecia, analiza potrzeb
 	\section{Analiza potrzeb informacyjnych}
-		\indent Analiza potrzeb informacyjnych
+		\indent Celem projektowanego systemu informatycznego jest usprawnienie realizacji umów z~kontrahentami poprzez skuteczne gromadzenie informacji
+			na temat zamówienia, tak aby dział realizujący zamówienie posiadał kompletną listę zamówionych rzeczy przez klienta oraz innych wymaganych do montażu, bez konieczności
+			przeglądania umów przez pracownika magazynu w dziale sprzedaży.\\
+		\indent System informatyczny składa się z trzech głównych modułów tj:
+			\begin{itemize}
+				\item Backend - API
+				\item Baza danych
+				\item Frontend
+			\end{itemize}
+		\indent Backend - API, realizuje łączność między modułem frontendu a bazą danych, jest odpowiedzialny za przetwarzanie i udostępnianie danych. Backend udostępnia API
+			dzięki, któremu	moduł frontendu ma możliwość pobierania i wysyłania niezbędnych danych z bazy danych. Zastosowanie API pozwala w przyszłości rozbudować system o nową
+			funkcjonalność lub alternatywne moduły komunikacyjne z użytkownikiem. Budowa backendu uniemożliwia pobieranie zbędnych danych, dzięki czemu ruch sieciowy oraz wymagana moc
+			obliczeniowa jest ograniczona do niezbędnego minimum.\\
+		\indent Baza danych realizuje funkcję gromadzenia danych wprowadzanych przez użytkowników. Dane wprowadzone do bazy danych są automatycznie archiwizowane
+			w kopii zapasowej na twardym dysku zgodnie z ustawionym harmonogramem.\\
+		\indent Frontend realizuje funkcje komunikacji pomiędzy użytkownikiem a modułem backendu. Frontend posiada przejrzysty i prosty interfejs użytkownika, przetwarza
+			dane pobrane z API w sposób przyjazny dla użytkownika, oraz umożliwia w łatwy sposób wprowadzanie nowych danych do systemu informatycznego.\\			  
+		\indent System informacyjny realizuje następujące funkcje:
+			\begin{itemize}
+				\item Przyjazny interfejs użytkownika - interfejs użytkownika był projektowany i konsultowany wraz z użytkownikami przedsiębiorstwa, którzy będą go codziennie
+					wykorzystywać do pracy
+				\item Tworzenie i logowanie użytkowników systemu - po otworzeniu okna systemu informatycznego użytkownik będzie miał możliwość zalogowania się na swoje indywidualne konto
+					lub w przypadku nowego użytkownika jego utworzenie;
+				\item Nadawanie uprawnień użytkownikom - administrator systemu może przypisywać uprawnienia dla kont użytkowników, ograniczając im funkcjonalność jedynie do niezbędnych
+					przy wykonywaniu pracy; 
+				\item Użytkownik działu sprzedaży może tworzyć i modyfikować ,,kontener'' zawierający listę zamówień, numer umowy oraz termin i adres realizacji zamówienia;
+				\item Użytkownik działu magazynowego może przeglądać listę utworzonych ,,kontenerów'' dzięki czemu będzie mógł uzupełnić magazyn o brakujące elementy;
+				\item Użytkownik działu realizacji zamówienia może przeglądać listę utworzonych ,,kontenerów'' dzięki czemu wie kiedy i gdzie będzie musiał przystąpić do realizacji zamówienia;
+				\item Zabezpieczenie przed utratą danych - serwer został skonfigurowany w taki sposób aby była automatycznie tworzona kopia zapasowa danych, kontrola jej integralności
+					oraz możliwe było odtworzenie stanu sprzed awarii maksymalnie jednego twardego dysku. Funkcje realizujące zabezpieczenie danych uruchamiają się automatycznie
+					codziennie o godzinie 19:00 oraz powinny zakończyć się maksymalnie o godzinie 5:00;
+				\item Zabezpieczenie przed nieautoryzowanym dostępem do danych - dostęp do systemu informatycznego wymaga logowania, wszystkie dane przesyłane pomiędzy systemem informatycznym
+					a użytkownikiem są szyfrowane asynchronicznie. Dostęp do serwera wymaga autoryzacji, konto ,,root'' wymaga podania specjalnego hasła, wszystkie dane na dysku
+					są automatycznie szyfrowane. Dostęp do bazy danych wymaga autoryzacji, system nie jest dostępny poprzez sieć internetową - działa jedynie w lokalnej sieci Ethernet.
+					Zapora sieciowa na serwerze automatycznie blokuje wszelki ruch na portach, które nie są wykorzystywane w realizacji zadań systemu informatycznego, systemu operacyjnego
+					oraz usługi konteneryzacji Docker; 
+			\end{itemize}
+		
 	\newpage
 	
 	%Sekcja czawarta, wybór narzędzi
 	\section{Wybór narzędzi}
-		\indent Wybór narzędzi skopiować z dokumentacji, dodać ubuntu serwer
+		\subsection{ASP.NET Core 3.1}
+			\indent ASP.Net Core jest wysokowydajnym frameworkiem, do budowania nowoczesnych aplikacji internetowych wykorzystujących moc obliczeniową chmur. ASP.Net Core jest technologią
+			open - source, wykorzystującą silnik html Razor, dzięki której możliwe jest tworzenie aplikacji mulitplaformowych, które mogą być używane na każdym urządzeniu wyposażonym
+			w przeglądarkę internetową.
+
+		\subsection{AutoMapper}
+			\indent AutoMapper jest biblioteką służącą do mapowania między obiektami, dzięki czemu można automatycznie mapować właściwości dwóch różnych obiektów,
+					przekształcając obiekt wejściowy jednego typu na obiekt wyjściowy innego typu.  
+		\subsection{C\#}
+			\indent C\# jest obiektowym językiem programowania, zaprojektowanym w latach 1998 – 2001 dla firmy Microsoft.
+			Napisany program jest kompilowany do Common Intermediate Language(CLI), który następnie wykonywany jest w środowisku uruchomieniowym takim jak .NET Framework,
+			.NET Core, Mono lub DotGNU.
+			Wykorzystanie CLI sprawia, że kod programu jest wieleplatformowy (dopóki istnieje odpowiednie środowisko uruchomieniowe).
+			C\# posiada wiele wspólnych cech z językami Object Pascal, Delphi, C++ i Java a najważniejszymi cechami C\# są:
+			\begin{itemize}
+				\item Obiektowość z hierarchią o jednym elemencie nadrzędnym (podobnie jak w Javie);
+				\item Zarządzaniem pamięcią zajmuje się środowisko uruchomieniowe;
+				\item Właściwości i indeksery;
+				\item Delegaty i zdarzenia – rozwinięcie wskaźników C++;
+				\item Typy ogólne, generyczne, częściowe, Nullable, domniemane, anonimowe;
+				\item Dynamiczne tworzenie kodu;
+				\item Metody anonimowe;
+				\item Wyrażenia lambda.
+			\end{itemize}
 		
-		Ubuntu 20.04 LTS (Focal Fossa) server jest kompletną dystrybucją systemu operacyjnego GNU/Linux, przeznaczoną do serwerów. Ubuntu bazuje na niestabilnej gałęzi ,,Sid''
-		dystrybucji Debian. Projekt rozwijany jest przed przedsiębiorstwo Canonical Ltd. oraz fundację Ubuntu Foundation. Najważniejszymi cechami dystrybucji jest
-		\begin{itemize}
-			\item Domyślne ustawienia i konfiguracja sprzętu;
-			\item Uproszczona administracja;
-			\item Bogaty wybór oprogramowania;
-			\item Wsparcie techniczne;
-		\end{itemize}
-		Producent zapewnia wsparcie techniczne i rozwój dystrybucji do kwietnia 2025.
+		\subsection{Coverlet}
+			\indent Coverlet to projekt typu open source, który zapewnia wieloplatformowy framework
+			pokrywający kod. Coverlet zbiera dane dotyczące przebiegu testu pokrycia,
+			które są używane do generowania raportów.
+
+		\subsection{Docker}
+			\indent Docker jest otwarto źródłowym oprogramowaniem służącym do realizacji „konteneryzacji” aplikacji, służąca jako platforma dla programistów
+				i administratorów do tworzenia, wdrażania i uruchamiania aplikacji rozproszonych. Pozwala umieścić program oraz jego zależności (biblioteki,
+				pliki konfiguracyjne, lokalne bazy danych itp.) w lekkim, przenośnym, wirtualnym kontenerze, który można uruchomić na prawie każdym serwerze
+				z systemem Linux. Kontenery wraz z zawartością działają niezależnie od siebie i nie wiedzą o swoim istnieniu. Mogą się jednak ze sobą
+				komunikować w ramach ściśle zdefiniowanych kanałów wymiany informacji. Dzięki uruchamianiu na jednym wspólnym systemie operacyjnym,
+				konteneryzacja jest lżejszym sposobem wirtualizacji niż pełna wirtualizacja lub parawirtualizacja za pomocą wirtualnych systemów
+				operacyjnych.
+				 	
+		\subsection{Entity Framework}		 
+		 	\indent Entity Framework jest technologią open - source do mapowania obiektowo – relacyjnego (ORM), które wspierają rozwój aplikacji zorientowanych na dane.
+		 	Entity Framework umożliwia programistom pracę z danymi w postaci obiektów i właściwości specyficznych dla domeny, bez konieczności przejmowania się bazowymi
+		 	tabelami i kolumnami baz danych, w których dane są przechowywane. 
+
+		\subsection{Fluent Assertions}
+			\indent Fluent Assertions to zestaw metod rozszerzających .NET, które pozwalają
+			w bardziej naturalny sposób określić oczekiwany wynik testu jednostkowego.
+			Umożliwia to prostą, intuicyjną budowę testu oraz szybsze diagnozowanie przyczyn
+			niepowodzenia testu dzięki czytelniejszym błędom.
+
+		\subsection{MailKit}
+			\indent MailKit jest multiplatformową otwarto źródłową biblioteką .NET klienta pocztowego opartą o MimeKit, która została zoptymalizowana pod kątem urządzeń mobilnych.
+			MailKit oferuje następującą funkcjonalność:
+			\begin{itemize}
+				\item Obsługa proxy HTTP, Socks4, Socks4a i Socks5;
+				\item Uwierzytelnianie SASL;
+				\item Kompletny klient SMTP;
+				\item Kompletny klient POP3;
+				\item Kompletny klient IMAP;
+				\item Sortowanie i wątkowanie wiadomości po stronie klienta;
+				\item Asynchroniczne wersje wszystkich metod sieciowych;
+				\item Obsługa S/MIME, OpenPGP, DKIM i ARC;
+				\item Obsługa Microsoft TNEF.
+			\end{itemize}
+
+		\subsection{Microsoft SQL Server}		 
+		 	\indent Microsoft SQL Server jest systemem zarządzania relacyjnymi bazami danych opracowany przez firmę Microsoft. Cechą charakterystyczną jest głównie wykorzystywanie języka
+		 	zapytań	Transact-SQL, który jest rozwinięciem standardu ANSI/ISO. W projekcie wykorzystano wersje 2019 Express, która jest bezpłatną edycją programu Microsoft SQL Server, oferująca
+		 	podstawowy silnik bazy danych, nieposiadający ograniczenia ilości obsługiwanych baz lub użytkowników. Ograniczenia, występujące w wersji Express to  m.in.:
+		 	korzystanie z~jednego procesora, 1 GB pamięci RAM, 10GB plików bazy danych czy brak SQL Agent.
+		
+		\subsection{Quartz.NET}
+			\indent Quartz.NET jest otwarto źródłową biblioteką do planowania zadań.
+			Quartz.NET może być używany do tworzenia prostych lub złożonych harmonogramów wykonywania
+			dziesiątek, setek, a nawet dziesiątek tysięcy zadań.
+			Quartz.NET jest portem biblioteki Quartz dla środowiska Java. 	 
+
+		\subsection{Swashbuckle}
+			\indent Swashbuckle jest biblioteką, która dodaje zestaw narzędzi ,,Swagger" generujących automatycznie dokumentację API aplikacji,
+				wyposażoną w przejrzysty interfejs użytkownika. Swashbuckle umożliwia również testowanie API. Dokumentacja jest dostępna pod adresem: ,,/swagger"
+
+		\subsection{Ubuntu 20.04}		
+		\indent Ubuntu 20.04 LTS (Focal Fossa) server jest kompletną dystrybucją systemu operacyjnego GNU/Linux, przeznaczoną dla serwerów. Ubuntu bazuje na niestabilnej gałęzi ,,Sid''
+			dystrybucji Debian. Projekt rozwijany jest przed przedsiębiorstwo Canonical Ltd. oraz fundację Ubuntu Foundation. Najważniejszymi cechami dystrybucji jest:
+			\begin{itemize}
+				\item Domyślne ustawienia i konfiguracja sprzętu;
+				\item Uproszczona administracja;
+				\item Bogaty wybór oprogramowania;
+				\item Wsparcie techniczne;
+			\end{itemize}
+			Producent zapewnia wsparcie techniczne i rozwój dystrybucji do kwietnia 2025.
+			
+		\subsection{xUnit.net}
+			\indent xUnit.net to darmowe narzędzie typu open source służące do testowania jednostkowego
+			przeznaczone dla platformy .NET Framework, napisane przez oryginalnego autora NUnit.
+			xUnit.net współpracuje z platformami Xamarin, ReSharper, CodeRush i TestDriven.NET.
+		
 	\newpage
 	
 	%Sekcja piąta, tworzenie projektu z uwzględnieniem bezpieczeństwa
 	\section{Tworzenie projektu z uwzględnieniem bezpieczeństwa}
 		\indent Aplikacja została stworzona z uwzględnieniem wszystkich obowiązujących standardów bezpieczeństwa oraz obowiązujących przepisów RODO.
-		Przy projektowaniu zabezpieczeń aplikacji pomocna była książka \emph{Bezpieczeństwo aplikacji webowych}\cite{BAW} opisująca liczne metody zabezpieczenia aplikacji
-		takich jak szyfrowanie, autoryzacja itp. oraz liczne wpisy opisujące wpadki i ataki na serwisy www i aplikacje webowe opisane na blogach internetowych
+		Przy projektowaniu zabezpieczeń aplikacji pomocna była książka \emph{Bezpieczeństwo aplikacji webowych}\cite{BAW} opisująca liczne mechanizmy i metody zabezpieczenia aplikacji
+		takich jak asynchroniczne szyfrowanie, autoryzacja itp. oraz liczne wpisy opisujące wpadki i ataki na serwisy www i aplikacje webowe opisane na blogach internetowych
 		\emph{Niebezpiecznik}\cite{Nieb}, \emph{Sekurak}\cite{Sek} i \emph{Zaufana Trzecia Strona}\cite{ZTS} dzięki, którym udało się wyeliminować dużą ilość potencjalnych wektorów ataków. 
 		Przy zabezpieczaniu serwera oraz bazy danych pomocna była książka \emph{Unix i Linux Przewodnik administratora systemów}\cite{Unix} oraz artykuły na blogu internetowym
 		\emph{Chris Titus Tech}\cite{CTT} przy pomocy, których udało się zabezpieczyć i zaszyfrować dane znajdujące się na serwerze przed nieautoryzowanym dostępem. Na serwerze
-		jest automatycznie tworzona kopia bezpieczeństwa, a dzięki wykorzystaniu macierzy RAID-Z, serwer jest odporny na całkowite uszkodzenie jednego z trzech podłączonych dysków.
+		jest automatycznie tworzona kopia bezpieczeństwa, a dzięki wykorzystaniu macierzy RAID-Z, serwer jest odporny na całkowite uszkodzenie jednego z trzech podłączonych twardych dysków.
 		W przeciwieństwie do tradycyjnych macierzy RAID, RAID-Z jest macierzą opartą o system plików ZFS dzięki czemu rozszerzenie macierzy o dodatkowe dyski nie stanowi żadnego problemu
 		a przeniesie dysków do innego serwera nie jest uzależnione od obecności identycznego fizycznego kontrolera macierzy RAID.
 		\emph{Ogólne rozporządzenie o ochronie danych}\cite{RODO}, \emph{poradniki i wskazówki - UODO}\cite{UODO} wraz z rozmowami z pracownikami wskazały
@@ -123,21 +246,21 @@
 			\center
 			\begin{tabular}{|l|r|}
 				\hline
-				Dobór podzespołów: & 50zł \\				
+				Dobór podzespołów & 50zł \\				
 				\hline
-				Montaż serwera: & 150zł \\
+				Montaż serwera & 150zł \\
 				\hline
-				Instalacja i konfiguracja systemu operacyjnego: & 300zł \\
+				Instalacja i konfiguracja systemu operacyjnego & 300zł \\
 				\hline
-				Konfiguracja sieci komputerowej: & 100zł \\
+				Konfiguracja sieci komputerowej & 100zł \\
 				\hline
-				Instalacja i konfiguracji aplikacji: & 100zł \\
+				Instalacja i konfiguracji aplikacji & 100zł \\
 				\hline
-				Szkolenie pracowników: & 500zł \\
+				Szkolenie pracowników & 500zł \\
 				\hline
-				Inne: & 100zł \\
+				Inne & 100zł \\
 				\hline
-				Razem: & 1300zł\\
+				Razem & 1300zł\\
 				\hline
 			\end{tabular}
 			\caption{Koszt wdrożenia na produkcję}
@@ -150,19 +273,19 @@
 				\hline
 				\multicolumn{2}{|l|}{Nazwa:} & Sztuk: & Cena: \\
 				\hline
-				Procesor: & AMD Athlon 3000G & 1 & 229zł \\
+				Procesor & AMD Athlon 3000G & 1 & 229zł \\
 				\hline
-				Płyta główna: & ASRock B450M-HDV R4 & 1 & 259zł \\
+				Płyta główna & ASRock B450M-HDV R4 & 1 & 259zł \\
 				\hline
-				Pamięć RAM: & Patriot Viper 4 Blackout & 1 & 179zł \\
+				Pamięć RAM & Patriot Viper 4 Blackout & 1 & 179zł \\
 				\hline
-				Twardy dysk: & Crucial BX 500 & 3 & 687zł \\
+				Twardy dysk & Crucial BX 500 & 3 & 687zł \\
 				\hline
-				Zasilacz: & SilentiumPC Elementum E2 450W & 1 & 150zł \\
+				Zasilacz & SilentiumPC Elementum E2 450W & 1 & 150zł \\
 				\hline
-				Obudowa: & SilentiumPC Armis AR1 & 1 & 109zł \\
+				Obudowa & SilentiumPC Armis AR1 & 1 & 109zł \\
 				\hline
-				\multicolumn{3}{|l|}{Razem:} & 1713zł \\
+				\multicolumn{3}{|l|}{Razem} & 1713zł \\
 				\hline
 			\end{tabular}
 			\caption{Koszt podzespołów serwera}
@@ -176,18 +299,18 @@
 		\indent Po uprzednim przygotowaniu miejsca w instalację sieci przewodowej Ethernet oraz sieci energetycznej, w którym będzie znajdować się serwer  przystąpiono
 		do poskładania wszystkich zakupionych podzespołów serwera a następnie zainstalowania wybranej dystrybucji systemu operacyjnego GNU/Linux. Proces złożenia serwera i instalacji
 		systemu operacyjnego, zajęło około dwóch godzin. Następnie przystąpiono do konfiguracji dostępu SSH, stworzenia i skonfigurowania macierzy dyskowej RAID-Z,
-		zainstalowania i skonfigurowania firewalla, uruchomienia pełnego szyfrowania dysków. Po wstępnym przygotowaniu serwera został on podłączony w docelowej lokalizacji, a kolejne etapy
-		wdrażania zostały przeprowadzone zdalnie poprzez konsolę SSH. Po podłączeniu serwera do sieci Ethernet, został skonfigurowany znajdujący się w przedsiębiorstwie serwer DHCP
-		oraz switch. Kolejnymi krokami w wdrażaniu aplikacji było zainstalowanie i skonfigurowanie usługi konteneryzacji Docker oraz pobranie i instalacja stworzonej aplikacji.
+		zainstalowania i skonfigurowania zapory sieciowej, uruchomienia pełnego szyfrowania dysków. Po wstępnym przygotowaniu serwera został on podłączony w docelowej lokalizacji,
+		a kolejne etapy	wdrażania zostały przeprowadzone zdalnie poprzez konsolę SSH. Po podłączeniu serwera do sieci Ethernet, został skonfigurowany znajdujący się w przedsiębiorstwie
+		serwer DHCP	oraz switch. Kolejnymi krokami w wdrażaniu aplikacji było zainstalowanie i skonfigurowanie usługi konteneryzacji Docker oraz pobranie i instalacja stworzonej aplikacji.
 		Dzięki modułowej budowie aplikacji, po kolei były uruchamiane i konfigurowane poszczególne elementy systemu aplikacji tj. baza danych MS SQL, Backend-API i Frontend.
-		Instalacja zabezpieczenie bazy danych i konfiguracja aplikacja potrwała około jednej godziny. Po zakończeniu instalacji i konfiguracji aplikacji, został skonfigurowany 
-		harmonogram systemu ,,cron'' w celu automatycznego uruchamiania skryptu tworzącego kopię bezpieczeństwa a następnie weryfikującego poprawność utworzonej kopii.
+		Instalacja, zabezpieczenie bazy danych i konfiguracja aplikacji potrwała około jednej godziny. Po zakończeniu instalacji i konfiguracji aplikacji, został skonfigurowany 
+		harmonogram systemu \emph{cron} w celu automatycznego uruchamiania skryptu tworzącego kopię bezpieczeństwa a następnie weryfikującego poprawność utworzonej kopii.
 		Ze względu na wykorzystanie systemu plików ZFS, nie było potrzeby tworzenia skryptu sprawdzających integralność wcześniej wykonanych kopii zapasowych
-		- system plików automatycznie sprawdza i w razie potrzeby dokonuje stosownej korekty. Po zakończeniu konfiguracji wszystkich usług i aplikacji,
+		- system plików automatycznie sprawdza integralność wszystkich plików i w razie potrzeby dokonuje stosownej korekty. Po zakończeniu konfiguracji wszystkich usług i aplikacji,
 		nastąpił etap testowania integralności całego systemu tj. sprawdzono poziomy dostępu do systemu operacyjnego, bazy danych i aplikacji, autoryzację, wszystkie funkcjonalności aplikacji,
 		przeprowadzono test jakości kopii zapasowej oraz przeprowadzono symulację uszkodzenia twardego dysku oraz odbudowę macierzy dyskowej,
-		sprawdzono konfigurację infrastruktury sieciowej. Na bieżąco były wprowadzane niezbędne poprawki do konfiguracji, a następnie ponownie sprawdzano czy wszystko działa prawidłowo.
-		Po zakończeniu testów rozpoczęliśmy szkolenie pracowników z wykorzystania aplikacji.
+		sprawdzono konfigurację infrastruktury sieciowej. W przypadku wykrycia nieprawidłowości od razu były wprowadzane niezbędne poprawki do konfiguracji, a następnie ponownie
+		sprawdzano czy wszystko działa prawidłowo. Po zakończeniu testów rozpoczęliśmy szkolenie pracowników z wykorzystania aplikacji.
 	\newpage
 	
 	%Sekcja ósma, Źródła z których były tworzone
