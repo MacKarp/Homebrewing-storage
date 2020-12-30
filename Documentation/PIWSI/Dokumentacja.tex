@@ -52,7 +52,13 @@
 	\section{Analiza potrzeb informacyjnych}
 		\indent Celem projektowanego systemu informatycznego jest usprawnienie realizacji umów z~kontrahentami poprzez skuteczne gromadzenie informacji
 			na temat zamówienia, tak aby dział realizujący zamówienie posiadał kompletną listę zamówionych rzeczy przez klienta oraz innych wymaganych do montażu, bez konieczności
-			przeglądania umów przez pracownika magazynu w dziale sprzedaży.\\
+			przeglądania umów przez pracownika magazynu w dziale sprzedaży. Model działania przedstawia obrazek nr. \ref{fig:sys_model}\\
+			\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{./img/model_systemu_informatycznego.jpg}
+			\caption{Model systemu infromatycznego}
+			\label{fig:sys_model}
+		\end{figure}
 		\indent System informatyczny składa się z trzech głównych modułów tj:
 			\begin{itemize}
 				\item Backend - API
@@ -62,15 +68,24 @@
 		\indent Backend - API, realizuje łączność między modułem frontendu a bazą danych, jest odpowiedzialny za przetwarzanie i udostępnianie danych. Backend udostępnia API
 			dzięki, któremu	moduł frontendu ma możliwość pobierania i wysyłania niezbędnych danych z bazy danych. Zastosowanie API pozwala w przyszłości rozbudować system o nową
 			funkcjonalność lub alternatywne moduły komunikacyjne z użytkownikiem. Budowa backendu uniemożliwia pobieranie zbędnych danych, dzięki czemu ruch sieciowy oraz wymagana moc
-			obliczeniowa jest ograniczona do niezbędnego minimum.\\
+			obliczeniowa jest ograniczona do niezbędnego minimum. Backend - API jest zbudowany na podstawie modelu przedstawionego na obrazku nr. \ref{fig:api_model}\\
+		\begin{figure}[ht]
+			\centering
+			\includegraphics[width=\textwidth]{./img/Backend-API_model.jpg}
+			\caption{Model Backend - API}
+			\label{fig:api_model}
+		\end{figure}
 		\indent Baza danych realizuje funkcję gromadzenia danych wprowadzanych przez użytkowników. Dane wprowadzone do bazy danych są automatycznie archiwizowane
 			w kopii zapasowej na twardym dysku zgodnie z ustawionym harmonogramem.\\
 		\indent Frontend realizuje funkcje komunikacji pomiędzy użytkownikiem a modułem backendu. Frontend posiada przejrzysty i prosty interfejs użytkownika, przetwarza
 			dane pobrane z API w sposób przyjazny dla użytkownika, oraz umożliwia w łatwy sposób wprowadzanie nowych danych do systemu informatycznego.\\			  
-		\indent System informacyjny realizuje następujące funkcje:
+		\indent Dobór oraz zakup oprogramowania i podzespołów komputerowych, na którym będzie funkcjonował system informatyczny. \\ 
+		\indent Dostosowanie infrastruktury sieciowej - rozszerzenie i konfiguracji dotychczasowej infrastruktury sieciowej o możliwość podłączenia serwera udostępniającego
+			system informatyczny.\\		
+		\indent System informacyjny realizuje następującą funkcjonalność:
 			\begin{itemize}
 				\item Przyjazny interfejs użytkownika - interfejs użytkownika był projektowany i konsultowany wraz z użytkownikami przedsiębiorstwa, którzy będą go codziennie
-					wykorzystywać do pracy
+					wykorzystywać do pracy;
 				\item Tworzenie i logowanie użytkowników systemu - po otworzeniu okna systemu informatycznego użytkownik będzie miał możliwość zalogowania się na swoje indywidualne konto
 					lub w przypadku nowego użytkownika jego utworzenie;
 				\item Nadawanie uprawnień użytkownikom - administrator systemu może przypisywać uprawnienia dla kont użytkowników, ograniczając im funkcjonalność jedynie do niezbędnych
@@ -78,16 +93,18 @@
 				\item Użytkownik działu sprzedaży może tworzyć i modyfikować ,,kontener'' zawierający listę zamówień, numer umowy oraz termin i adres realizacji zamówienia;
 				\item Użytkownik działu magazynowego może przeglądać listę utworzonych ,,kontenerów'' dzięki czemu będzie mógł uzupełnić magazyn o brakujące elementy;
 				\item Użytkownik działu realizacji zamówienia może przeglądać listę utworzonych ,,kontenerów'' dzięki czemu wie kiedy i gdzie będzie musiał przystąpić do realizacji zamówienia;
-				\item Zabezpieczenie przed utratą danych - serwer został skonfigurowany w taki sposób aby była automatycznie tworzona kopia zapasowa danych, kontrola jej integralności
-					oraz możliwe było odtworzenie stanu sprzed awarii maksymalnie jednego twardego dysku. Funkcje realizujące zabezpieczenie danych uruchamiają się automatycznie
-					codziennie o godzinie 19:00 oraz powinny zakończyć się maksymalnie o godzinie 5:00;
+				\item Logowanie akcji użytkowników - system informatyczny loguje wszystkie podejmowane przez użytkowników akcje. Administrator posiada możliwość przeglądania
+					wygenerowanych logów, dzięki czemu ma wgląd w działanie systemu informatycznego;  
+				\item Zabezpieczenie przed utratą danych - system operacyjny serwera został skonfigurowany w taki sposób aby była automatycznie tworzona kopia zapasowa danych,
+					kontrola jej integralności oraz aby możliwe było odtworzenie stanu sprzed awarii maksymalnie jednego twardego dysku.
+					Funkcje realizujące zabezpieczenie danych uruchamiają się automatycznie codziennie o godzinie 19:00 oraz powinny zakończyć się maksymalnie o godzinie 5:00;
 				\item Zabezpieczenie przed nieautoryzowanym dostępem do danych - dostęp do systemu informatycznego wymaga logowania, wszystkie dane przesyłane pomiędzy systemem informatycznym
 					a użytkownikiem są szyfrowane asynchronicznie. Dostęp do serwera wymaga autoryzacji, konto ,,root'' wymaga podania specjalnego hasła, wszystkie dane na dysku
 					są automatycznie szyfrowane. Dostęp do bazy danych wymaga autoryzacji, system nie jest dostępny poprzez sieć internetową - działa jedynie w lokalnej sieci Ethernet.
 					Zapora sieciowa na serwerze automatycznie blokuje wszelki ruch na portach, które nie są wykorzystywane w realizacji zadań systemu informatycznego, systemu operacyjnego
-					oraz usługi konteneryzacji Docker; 
+					oraz usługi konteneryzacji Docker;
 			\end{itemize}
-		
+					
 	\newpage
 	
 	%Sekcja czawarta, wybór narzędzi
@@ -209,37 +226,42 @@
 	
 	%Sekcja szósta, Oszacowanie kosztów - detale
 	\section{Oszacowanie kosztów}
-		\indent Łączny koszt wdrożenia aplikacji w firmie wyniósł: kwota, na którą składały się poszczególne pozycje:
-
+		\indent Łączny koszt wdrożenia aplikacji w firmie wyniósł: 13 068zł, na którą składały się poszczególne pozycje:
+		\begin{itemize}
+			\item Projektowanie i programowanie aplikacji: 10 055zł
+			\item Wdrożenie na produkcję: 1 300zł
+			\item Serwer: 1 713zł
+		\end{itemize}
+		Szczegóły dotyczące kosztów przedstawiają tabele \ref{tab:Koszt projektu i programowania aplikacji}, \ref{tab:Koszt wdrożenie na produkcję} i \ref{tab:Koszt podzespołów serwera} 
 		\begin{table}[!hbp]
 			\center
 			\begin{tabular}{|l|c|c|r|}
 				\hline
 				Nazwa: & Ilość godzin: & Cena za godzinę: & Cena: \\
 				\hline
-				Analiza zapotrzebowania & \ & \ & \\
+				Analiza zapotrzebowania & 3 & 50 & 150zł\\
 				\hline
-				Projekt aplikacji & \ & \ & \\
+				Projekt aplikacji & 5 & 50zł & 250zł\\
 				\hline
-				Programowanie frontendu & \ & \ & \\
+				Programowanie frontendu & 80 & 30zł & 2 400zł\\
 				\hline
-				Programowanie backendu & \ & \ & \\
+				Programowanie backendu & 100 & 60zł & 6 000zł\\
 				\hline
-				Programowanie testów & \ & \ & \\
+				Programowanie testów & 10 & 30zł & 300zł\\
 				\hline
-				DevOps & \ & \ & \ \\
+				DevOps & 5 & 35zł & 175zł\\
 				\hline
-				Poprawki 1 & \ & \ & \ \\
+				Poprawki 1 & 10 & 40zł & 400zł\\
 				\hline
-				Poprawki 2 & \ & \ & \ \\
+				Poprawki 2 & 5 & 40zł & 200zł\\
 				\hline
-				Dokumentacja & \ & \ & \ \\
+				Dokumentacja & 6 & 30zł & 180zł\\
 				\hline
-				\multicolumn{3}{|l|}{Razem:} & \ \\
+				\multicolumn{3}{|l|}{Razem:} & 10 055zł\\
 				\hline
 			\end{tabular}
 			\caption{Koszt projektu i programowania aplikacji}
-			\label{Koszt projektu i programowania aplikacji}
+			\label{tab:Koszt projektu i programowania aplikacji}
 		\end{table}		
 				
 		\begin{table}[!hbp]
@@ -260,11 +282,11 @@
 				\hline
 				Inne & 100zł \\
 				\hline
-				Razem & 1300zł\\
+				Razem & 1 300zł\\
 				\hline
 			\end{tabular}
 			\caption{Koszt wdrożenia na produkcję}
-			\label{Koszt wdrożenie na produkcję}
+			\label{tab:Koszt wdrożenie na produkcję}
 		\end{table}
 		
 		\begin{table}[!hbp]
@@ -285,11 +307,11 @@
 				\hline
 				Obudowa & SilentiumPC Armis AR1 & 1 & 109zł \\
 				\hline
-				\multicolumn{3}{|l|}{Razem} & 1713zł \\
+				\multicolumn{3}{|l|}{Razem} & 1 713zł \\
 				\hline
 			\end{tabular}
 			\caption{Koszt podzespołów serwera}
-			\label{Koszt podzespołów serwera}
+			\label{tab:Koszt podzespołów serwera}
 		\end{table}
 	
 	\newpage
