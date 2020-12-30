@@ -13,13 +13,15 @@ namespace Backend.Data
         Category GetCategoryById(int id);
         IEnumerable<Expire> GetAllExpires();
         Expire GetExpireById(int id);
+        IEnumerable<Expire> GetExpiresByUserId(int userId);
         IEnumerable<Item> GetAllItems();
         Item GetItemById(int id);
         IEnumerable<Storage> GetAllStorages();
         Storage GetStorageById(int id);
         IEnumerable<User> GetAllUsers();
         User GetUserById(int id);
-            
+
+
         IEnumerable<Expire> GetAllExpiresByExpirationTimeLeft(double days);  
       
         //CREATE methods

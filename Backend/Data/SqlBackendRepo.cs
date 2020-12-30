@@ -66,7 +66,12 @@ namespace Backend.Data
         {
             return _context.Users.FirstOrDefault(p => p.UserId == id);
         }
-        
+
+        public IEnumerable<Expire> GetExpiresByUserId(int userId)
+        {
+            return _context.Expires.Where(user=>user.IdUser.UserId==userId).Include(storage => storage.IdStorage).Include(item => item.IdItem).Include(user => user.IdUser).ToList();
+        }
+
         public IEnumerable<Expire> GetAllExpiresByExpirationTimeLeft(double days)
         {
             return _context.Expires.Where(p => p.ExpirationDate >= DateTime.Now.Date && p.ExpirationDate <= DateTime.Now.AddDays(days)).Include(storage => storage.IdStorage).Include(item => item.IdItem).Include(user => user.IdUser).ToList();

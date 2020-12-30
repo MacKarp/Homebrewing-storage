@@ -158,5 +158,31 @@ namespace Backend.Test
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
+
+        [Theory]
+        [InlineData(1)]
+        public async Task GetExpireByUserId_UserExists(int id)
+        {
+            // Arrange
+
+            // Act
+            var response = await TestClient.GetAsync(Url+"byUserId/" + id);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+        }
+
+        [Theory]
+        [InlineData(6)]
+        public async Task GetExpireByUserId_UserNotExists(int id)
+        {
+            // Arrange
+
+            // Act
+            var response = await TestClient.GetAsync(Url+"byUserId/" + id);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
     }
 }
