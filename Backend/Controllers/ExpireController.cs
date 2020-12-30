@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Backend.Data;
 using Backend.Dtos;
@@ -115,6 +116,17 @@ namespace Backend.Controllers
             _repository.SaveChanges();
 
             return NoContent();
+        }
+
+        [HttpGet("byUserId/{id}",Name = "GetExpireByUserId")]
+        public ActionResult<IEnumerable<ExpireReadDto>> GetExpireByUserId(int id)
+        {
+            var item = _repository.GetExpiresByUserId(id);
+            if (item.Count() != 0)
+            {
+                return Ok(_mapper.Map<IEnumerable<ExpireReadDto>>(item));
+            }
+            else return NotFound();
         }
     }
 }
