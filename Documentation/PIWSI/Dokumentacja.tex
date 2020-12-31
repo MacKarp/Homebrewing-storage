@@ -23,8 +23,8 @@
 	}
 \urlstyle{same}	
 	
-\author{Karpiński Maciej\\Krysa Marcin\\Kuczma Łukasz\\Mertuszka Adam\\\\\\\includegraphics[width=0.7\linewidth]{img/logoPWSZ.eps}\\\\\\\\Projektowanie i wdrażanie systemów informatycznych}
-\title{Nazwa aplikacji}
+\author{Projektowanie i wdrażanie systemów informatycznych\\\\\\\\\\\\\includegraphics[width=0.7\linewidth]{img/logoPWSZ.eps}\\\\\\\\Karpiński Maciej\\Krysa Marcin\\Kuczma Łukasz\\Mertuszka Adam\\\\\\\\}
+\title{}
 
 \begin{document}
 
@@ -51,14 +51,17 @@
 	%Sekcja trzecia, analiza potrzeb
 	\section{Analiza potrzeb informacyjnych}
 		\indent Celem projektowanego systemu informatycznego jest usprawnienie realizacji umów z~kontrahentami poprzez skuteczne gromadzenie informacji
-			na temat zamówienia, tak aby dział realizujący zamówienie posiadał kompletną listę zamówionych rzeczy przez klienta oraz innych wymaganych do montażu, bez konieczności
-			przeglądania umów przez pracownika magazynu w dziale sprzedaży. Model działania przedstawia obrazek nr. \ref{fig:sys_model}\\
+			na temat zamówienia, tak aby dział realizujący zamówienie posiadał kompletną listę zamówionych elementów i inny rzeczy wymaganych do montażu u klienta, bez konieczności
+			przeglądania umów przez pracownika magazynu w dziale sprzedaży. Model działania systemu informatycznego przedstawia rysunek nr. \ref{fig:sys_model}\\
 			\begin{figure}[H]
 			\centering
-			\includegraphics[width=\textwidth]{./img/model_systemu_informatycznego.jpg}
+			\includegraphics[width=\textwidth]{img/model_systemu_informatycznego.jpg}
 			\caption{Model systemu infromatycznego}
 			\label{fig:sys_model}
 		\end{figure}
+		\indent Dobór oraz zakup oprogramowania i podzespołów komputerowych, na którym będzie funkcjonował system informatyczny. \\ 
+		\indent Dostosowanie infrastruktury sieciowej - rozszerzenie i konfiguracja dotychczas istniejącej infrastruktury sieciowej o możliwość podłączenia serwera udostępniającego
+			system informatyczny.\\		
 		\indent System informatyczny składa się z trzech głównych modułów tj:
 			\begin{itemize}
 				\item Backend - API
@@ -68,20 +71,23 @@
 		\indent Backend - API, realizuje łączność między modułem frontendu a bazą danych, jest odpowiedzialny za przetwarzanie i udostępnianie danych. Backend udostępnia API
 			dzięki, któremu	moduł frontendu ma możliwość pobierania i wysyłania niezbędnych danych z bazy danych. Zastosowanie API pozwala w przyszłości rozbudować system o nową
 			funkcjonalność lub alternatywne moduły komunikacyjne z użytkownikiem. Budowa backendu uniemożliwia pobieranie zbędnych danych, dzięki czemu ruch sieciowy oraz wymagana moc
-			obliczeniowa jest ograniczona do niezbędnego minimum. Backend - API jest zbudowany na podstawie modelu przedstawionego na obrazku nr. \ref{fig:api_model}\\
-		\begin{figure}[ht]
+			obliczeniowa jest ograniczona do niezbędnego minimum. Rysunek nr. \ref{fig:api_model} przedstawia model budowy Backendu - API.\\
+		\begin{figure}[h]
 			\centering
-			\includegraphics[width=\textwidth]{./img/Backend-API_model.jpg}
+			\includegraphics[width=\textwidth]{img/Backend-API_model.jpg}
 			\caption{Model Backend - API}
 			\label{fig:api_model}
 		\end{figure}
-		\indent Baza danych realizuje funkcję gromadzenia danych wprowadzanych przez użytkowników. Dane wprowadzone do bazy danych są automatycznie archiwizowane
-			w kopii zapasowej na twardym dysku zgodnie z ustawionym harmonogramem.\\
-		\indent Frontend realizuje funkcje komunikacji pomiędzy użytkownikiem a modułem backendu. Frontend posiada przejrzysty i prosty interfejs użytkownika, przetwarza
+		\indent Baza danych realizuje funkcję gromadzenia danych wprowadzanych przez użytkowników. Dane wprowadzone do bazy danych są raz dziennie automatycznie archiwizowane
+			w kopii zapasowej na twardym dysku zgodnie z ustawionym harmonogramem. Model bazy danych przedstawia rysunek nr. \ref{fig:db_model}\\
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.9\textwidth]{img/model_bazy_danych.jpg}
+			\caption{Model bazy danych}
+		\label{fig:db_model}
+		\end{figure}
+		\indent Frontend realizuje funkcje komunikacji pomiędzy użytkownikiem a modułem backendu. Udostępnia prosty i przejrzysty interfejs użytkownika, przetwarza
 			dane pobrane z API w sposób przyjazny dla użytkownika, oraz umożliwia w łatwy sposób wprowadzanie nowych danych do systemu informatycznego.\\			  
-		\indent Dobór oraz zakup oprogramowania i podzespołów komputerowych, na którym będzie funkcjonował system informatyczny. \\ 
-		\indent Dostosowanie infrastruktury sieciowej - rozszerzenie i konfiguracji dotychczasowej infrastruktury sieciowej o możliwość podłączenia serwera udostępniającego
-			system informatyczny.\\		
 		\indent System informacyjny realizuje następującą funkcjonalność:
 			\begin{itemize}
 				\item Przyjazny interfejs użytkownika - interfejs użytkownika był projektowany i konsultowany wraz z użytkownikami przedsiębiorstwa, którzy będą go codziennie
@@ -97,7 +103,8 @@
 					wygenerowanych logów, dzięki czemu ma wgląd w działanie systemu informatycznego;  
 				\item Zabezpieczenie przed utratą danych - system operacyjny serwera został skonfigurowany w taki sposób aby była automatycznie tworzona kopia zapasowa danych,
 					kontrola jej integralności oraz aby możliwe było odtworzenie stanu sprzed awarii maksymalnie jednego twardego dysku.
-					Funkcje realizujące zabezpieczenie danych uruchamiają się automatycznie codziennie o godzinie 19:00 oraz powinny zakończyć się maksymalnie o godzinie 5:00;
+					Funkcja realizująca archiwizację danych uruchamia się automatycznie codziennie o godzinie 19:00 oraz powinna zakończyć się maksymalnie o godzinie 5:00, pozostałe funkcje
+					zabezpieczające działają ciągle w tle jako część systemu plików i macierzy RAID-Z;
 				\item Zabezpieczenie przed nieautoryzowanym dostępem do danych - dostęp do systemu informatycznego wymaga logowania, wszystkie dane przesyłane pomiędzy systemem informatycznym
 					a użytkownikiem są szyfrowane asynchronicznie. Dostęp do serwera wymaga autoryzacji, konto ,,root'' wymaga podania specjalnego hasła, wszystkie dane na dysku
 					są automatycznie szyfrowane. Dostęp do bazy danych wymaga autoryzacji, system nie jest dostępny poprzez sieć internetową - działa jedynie w lokalnej sieci Ethernet.
@@ -185,7 +192,20 @@
 			Quartz.NET może być używany do tworzenia prostych lub złożonych harmonogramów wykonywania
 			dziesiątek, setek, a nawet dziesiątek tysięcy zadań.
 			Quartz.NET jest portem biblioteki Quartz dla środowiska Java. 	 
-
+		
+		\subsection{RAID-Z}
+			\indent Zamiast sprzętowej macierzy RAID, ZFS wykorzystuje ,,miękki'' RAID, oferując RAID-Z(oparty na parzystości, taki jak RAID 5 i podobne) oraz dublowanie dysku
+			(podobne do RAID 1). RAID-Z to schemat dystrybucji danych/parzystości, taki jak RAID 5, ale wykorzystuje dynamiczną szerokość paska: każdy blok jest własnym paskiem
+			RAID, niezależnie od rozmiaru
+			bloku, co powoduje, że każdy zapis RAID-Z jest zapisem pełnym paskiem. To w połączeniu z transakcyjną semantyką kopiowania przy zapisie ZFS, eliminuje błąd dziury w zapisie.
+			RAID-Z jest również szybszy niż tradycyjny RAID 5, ponieważ nie wymaga wykonywania zwykłej sekwencji odczytu-modyfikacji-zapisu. Ponieważ wszystkie paski mają różne rozmiary,
+			rekonstrukcja RAID-Z musi przejść przez metadane systemu plików, aby określić rzeczywistą geometrię RAID-Z. Przeglądanie metadanych oznacza, że ZFS może na bieżąco
+			weryfikować każdy blok względem jego 256-bitowej sumy kontrolnej, podczas gdy tradycyjne produkty RAID zwykle nie mogą tego zrobić. Oprócz obsługi awarii całego dysku,
+			RAID-Z może również wykrywać i korygować ciche uszkodzenie danych, oferując ,,samo-naprawiające się dane'': podczas odczytu bloku RAID-Z ZFS porównuje go z jego sumą kontrolną,
+			a jeśli dyski nie zwraca prawidłowej odpowiedzi, ZFS odczytuje parzystość, a następnie sprawdza, który dysk zwrócił złe dane. Następnie naprawia uszkodzone dane i zwraca
+			dobre dane. RAID-Z i dublowanie nie wymagają żadnego specjalnego sprzętu: nie potrzebują NVRAM dla niezawodności i nie potrzebują buforowania zapisu dla dobrej wydajności
+			lub ochrony danych. Dzięki RAID-Z ZFS zapewnia szybkie i niezawodne przechowywanie danych przy użyciu tanich, standardowych dysków.
+						 
 		\subsection{Swashbuckle}
 			\indent Swashbuckle jest biblioteką, która dodaje zestaw narzędzi ,,Swagger" generujących automatycznie dokumentację API aplikacji,
 				wyposażoną w przejrzysty interfejs użytkownika. Swashbuckle umożliwia również testowanie API. Dokumentacja jest dostępna pod adresem: ,,/swagger"
@@ -206,22 +226,44 @@
 			przeznaczone dla platformy .NET Framework, napisane przez oryginalnego autora NUnit.
 			xUnit.net współpracuje z platformami Xamarin, ReSharper, CodeRush i TestDriven.NET.
 		
+		\subsection{ZFS}
+		\indent ZFS łączy system plików z menedżerem woluminów. Został opublikowany w 2001 roku jako część systemu operacyjnego Sun Microsystems Solaris, na licencji typu open source.
+			W latach 2005 - 2010 otwarta wersja ZFS została przeniesiona na Linux, Mac OS X (kontynuowany jako MacZFS) i FreeBSD.
+			Zarządzanie przechowywanymi danymi zazwyczaj obejmuje dwa aspekty: zarządzanie woluminami fizycznymi jednego lub większej liczby blokowych urządzeń magazynujących, takich jak dyski
+			twarde i karty SD, oraz ich organizację w logiczne urządzenia blokowe widziane przez system operacyjny(często z udziałem menedżera woluminów, kontrolera RAID, menedżera macierzy
+			lub odpowiedni sterownik urządzenia) oraz zarządzanie danymi i plikami, które są przechowywane na tych logicznych urządzeniach blokowych np. systemie plików). ZFS w
+			przeciwieństwie do większości innych systemów pamięci masowej ujednolica obie te role i działa zarówno jako menedżer woluminów, jak i system plików. W związku
+			z tym ma pełną wiedzę zarówno o dyskach fizycznych i woluminach, jak i o wszystkich przechowywanych na nich plikach. ZFS został zaprojektowany w celu zapewnienia, że dane
+			przechowywane na dyskach nie zostaną utracone z powodu błędów fizycznych lub niewłaściwego przetwarzania przez sprzęt, system operacyjny lub zdarzeń rotacji bitów oraz uszkodzenia
+			danych, które mogą się zdarzyć w czasie, a także posiada pełną kontrolę nad system pamięci masowej jest używany w celu zapewnienia, że każdy krok, niezależnie od tego,
+			czy jest związany z zarządzaniem plikami czy zarządzaniem dyskami, jest weryfikowany, potwierdzany, korygowany w razie potrzeby i optymalizowany w sposób, którego nie są
+			w stanie osiągnąć karty kontrolera pamięci oraz osobne menedżery woluminów i plików. ZFS zawiera także mechanizm tworzenia migawek na poziomie zbioru danych i puli oraz
+			replikacji, w tym klonowanie migawek, które jest opisane w dokumentacji FreeBSD jako jedna z jego ,,najpotężniejszych funkcji'', posiadając funkcje, których
+			,,brakuje nawet innym systemom plików z funkcją migawki''. Można wykonać bardzo dużą liczbę migawek bez obniżania wydajności, co pozwala na użycie migawek przed
+			ryzykownymi operacjami systemowymi i zmianami w oprogramowaniu lub wykonanie pełnej migawki całego produkcyjnego systemu plików(,,na żywo'') kilka razy na godzinę w celu
+			ograniczenia utraty danych z powodu błędu użytkownika lub złośliwej aktywności. Migawki można przywrócić ,,na żywo'' lub wyświetlać poprzednie stany systemu plików, nawet
+			w bardzo dużych systemach plików, co prowadzi do oszczędności w porównaniu z formalnymi procesami tworzenia kopii zapasowych i przywracania. Migawki można również klonować
+			w celu utworzenia nowych niezależnych systemów plików. Dostępna jest migawka na poziomie puli (nazywana ,,punktem kontrolnym''), która umożliwia wycofanie operacji, które mogą
+			wpłynąć na strukturę całej puli lub które dodają lub usuwają całe zestawy danych.
+			
 	\newpage
 	
 	%Sekcja piąta, tworzenie projektu z uwzględnieniem bezpieczeństwa
 	\section{Tworzenie projektu z uwzględnieniem bezpieczeństwa}
-		\indent Aplikacja została stworzona z uwzględnieniem wszystkich obowiązujących standardów bezpieczeństwa oraz obowiązujących przepisów RODO.
-		Przy projektowaniu zabezpieczeń aplikacji pomocna była książka \emph{Bezpieczeństwo aplikacji webowych}\cite{BAW} opisująca liczne mechanizmy i metody zabezpieczenia aplikacji
-		takich jak asynchroniczne szyfrowanie, autoryzacja itp. oraz liczne wpisy opisujące wpadki i ataki na serwisy www i aplikacje webowe opisane na blogach internetowych
-		\emph{Niebezpiecznik}\cite{Nieb}, \emph{Sekurak}\cite{Sek} i \emph{Zaufana Trzecia Strona}\cite{ZTS} dzięki, którym udało się wyeliminować dużą ilość potencjalnych wektorów ataków. 
-		Przy zabezpieczaniu serwera oraz bazy danych pomocna była książka \emph{Unix i Linux Przewodnik administratora systemów}\cite{Unix} oraz artykuły na blogu internetowym
-		\emph{Chris Titus Tech}\cite{CTT} przy pomocy, których udało się zabezpieczyć i zaszyfrować dane znajdujące się na serwerze przed nieautoryzowanym dostępem. Na serwerze
-		jest automatycznie tworzona kopia bezpieczeństwa, a dzięki wykorzystaniu macierzy RAID-Z, serwer jest odporny na całkowite uszkodzenie jednego z trzech podłączonych twardych dysków.
-		W przeciwieństwie do tradycyjnych macierzy RAID, RAID-Z jest macierzą opartą o system plików ZFS dzięki czemu rozszerzenie macierzy o dodatkowe dyski nie stanowi żadnego problemu
-		a przeniesie dysków do innego serwera nie jest uzależnione od obecności identycznego fizycznego kontrolera macierzy RAID.
-		\emph{Ogólne rozporządzenie o ochronie danych}\cite{RODO}, \emph{poradniki i wskazówki - UODO}\cite{UODO} wraz z rozmowami z pracownikami wskazały
-		zakres danych, które są niezbędne do przetworzenia zlecenia oraz, które w przypadku złamania i/lub ominięcia zabezpieczeń będą jak najmniej
-		narażać klientów firmy na wszelkiego rodzaju potencjalne straty.  
+		\indent Aplikacja została stworzona z uwzględnieniem wszystkich obowiązujących standardów bezpieczeństwa oraz obowiązujących przepisów RODO.\\
+		\indent Przy projektowaniu zabezpieczeń aplikacji pomocna była książka \emph{Bezpieczeństwo aplikacji webowych}\cite{BAW} opisująca liczne mechanizmy i metody zabezpieczenia
+			aplikacji takich jak asynchroniczne szyfrowanie, autoryzacja, uwierzytelnianie, logowanie akcji użytkownika itd. oraz liczne wpisy opisujące wpadki i ataki na serwisy www
+			i aplikacje webowe opisane na blogach internetowych	\emph{Niebezpiecznik}\cite{Nieb}, \emph{Sekurak}\cite{Sek} i \emph{Zaufana Trzecia Strona}\cite{ZTS} dzięki,
+			którym udało się wyeliminować dużą ilość potencjalnych wektorów ataków.\\
+		\indent Przy zabezpieczaniu serwera oraz bazy danych pomocna była książka \emph{Unix i Linux Przewodnik	administratora systemów}\cite{Unix} oraz artykuły na blogu internetowym
+			\emph{Chris Titus Tech}\cite{CTT} przy pomocy, których udało się zabezpieczyć i zaszyfrować dane znajdujące się na serwerze przed nieautoryzowanym dostępem. Na serwerze jest 
+			automatycznie tworzona kopia bezpieczeństwa, a dzięki wykorzystaniu	macierzy RAID-Z, serwer jest odporny na całkowite uszkodzenie jednego z trzech podłączonych
+			twardych dysków. W przeciwieństwie do tradycyjnych macierzy RAID, RAID-Z jest macierzą opartą o system plików ZFS dzięki czemu rozszerzenie macierzy o dodatkowe dyski nie
+			stanowi żadnego problemu a przeniesie dysków do innego serwera nie jest uzależnione od obecności identycznego fizycznego kontrolera macierzy RAID, wadą macierzy RAID-Z jest
+			minimalna obecność 3 nośników danych, w przeciwieństwie do zastosowania macierzy RAID 1, gdzie minimalna ilość nośników danych wynosi 2.\\
+		\indent \emph{Ogólne rozporządzenie o ochronie danych}\cite{RODO}, \emph{poradniki i wskazówki - UODO}\cite{UODO} wraz z rozmowami z pracownikami wskazały zakres danych, które są
+			niezbędne do przetworzenia zlecenia oraz, które w przypadku złamania i/lub ominięcia zabezpieczeń będą jak najmniej narażać klientów firmy na wszelkiego rodzaju potencjalne
+			straty.  
 	\newpage
 	
 	%Sekcja szósta, Oszacowanie kosztów - detale
