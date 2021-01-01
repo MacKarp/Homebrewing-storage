@@ -45,13 +45,14 @@
 
 	%sekcja druga, Analiza słabych, mocnych, szans i zagrożenia 
 	\section{Analiza SWOT}
-		\indent Analiza SWOT - Tabela
+		\indent Analiza SWOT
 	\newpage
 	
 	%Sekcja trzecia, analiza potrzeb
 	\section{Analiza potrzeb informacyjnych}
-		\indent Celem projektowanego systemu informatycznego jest usprawnienie realizacji umów z~kontrahentami poprzez skuteczne gromadzenie informacji
-			na temat zamówienia, tak aby dział realizujący zamówienie posiadał kompletną listę zamówionych elementów i inny rzeczy wymaganych do montażu u klienta, bez konieczności
+		\indent Lider projektu Adam Mertuszka jest jednocześnie pracownikiem firmy, posiada wiedzę dotyczącą procedur i obiegu dokumentów w firmie. Celem projektowanego systemu
+			informatycznego jest usprawnienie realizacji umów z~kontrahentami poprzez poprawę obiegu dokumentów oraz skuteczne gromadzenie informacji na temat zamówienia, tak aby dział
+			realizujący zamówienie posiadał kompletną listę zamówionych elementów i inny rzeczy wymaganych do montażu u klienta, bez konieczności
 			przeglądania umów przez pracownika magazynu w dziale sprzedaży. Model działania systemu informatycznego przedstawia rysunek nr. \ref{fig:sys_model}\\
 			\begin{figure}[H]
 			\centering
@@ -111,7 +112,8 @@
 					Zapora sieciowa na serwerze automatycznie blokuje wszelki ruch na portach, które nie są wykorzystywane w realizacji zadań systemu informatycznego, systemu operacyjnego
 					oraz usługi konteneryzacji Docker;
 			\end{itemize}
-					
+		\indent System informatyczny musi działać na wszystkich komputerach znajdujących się w firmie - zrealizowane jest to dzięki zrealizowaniu frontendu systemu jako aplikacji
+				webowej, która do uruchomienia wymaga jedynie współczesnej przeglądarki internetowej.		
 	\newpage
 	
 	%Sekcja czawarta, wybór narzędzi
@@ -186,6 +188,10 @@
 		 	zapytań	Transact-SQL, który jest rozwinięciem standardu ANSI/ISO. W projekcie wykorzystano wersje 2019 Express, która jest bezpłatną edycją programu Microsoft SQL Server, oferująca
 		 	podstawowy silnik bazy danych, nieposiadający ograniczenia ilości obsługiwanych baz lub użytkowników. Ograniczenia, występujące w wersji Express to  m.in.:
 		 	korzystanie z~jednego procesora, 1 GB pamięci RAM, 10GB plików bazy danych czy brak SQL Agent.
+			
+		\subsection{Miro}
+			\indent Miro to platforma do współpracy online, która umożliwia rozproszonym zespołom efektywną współpracę, od burzy mózgów z cyfrowymi karteczkami samoprzylepnymi
+					po planowanie i zarządzanie elastycznymi przepływami pracy.
 		
 		\subsection{Quartz.NET}
 			\indent Quartz.NET jest otwarto źródłową biblioteką do planowania zadań.
@@ -209,7 +215,19 @@
 		\subsection{Swashbuckle}
 			\indent Swashbuckle jest biblioteką, która dodaje zestaw narzędzi ,,Swagger" generujących automatycznie dokumentację API aplikacji,
 				wyposażoną w przejrzysty interfejs użytkownika. Swashbuckle umożliwia również testowanie API. Dokumentacja jest dostępna pod adresem: ,,/swagger"
-
+		
+		\subsection{Timeshift}
+			\indent TimeShift to specjalistyczna aplikacja dla systemów Linux, która odpowiada za wykonywanie okresowych migawek systemu plików.
+			W razie awarii można bezproblemowo przywrócić wcześniej utworzone kopie zapasowe. Program działa podobnie do funkcji Przywracanie Systemu w Windows oraz narzędzia
+			Time Machine w OS X. Migawki są robione przy użyciu narzędzi rsync i hard-links. Te same pliki są współdzielone pomiędzy różnymi wersjami, aby zaoszczędzić miejsce.
+			Każda migawka to pełna kopia zapasowa, którą można przeglądać przy użyciu menedżera plików. TimeShift został zaprojektowany do ochrony systemu plików i ustawień.
+			
+		\subsection{Trello}
+			\indent Trello to internetowa aplikacja do tworzenia list w stylu Kanban. Użytkownicy mogą tworzyć swoje tablice zadań z różnymi kolumnami i przenosić zadania
+		między nimi. Zazwyczaj kolumny zawierają statusy zadań, takie jak ,,Do zrobienia'', ,,W toku'', ,,Gotowe''. Narzędzie może być wykorzystywane do celów osobistych i biznesowych,
+		w tym do zarządzania nieruchomościami, zarządzania projektami oprogramowania, tablic ogłoszeń szkolnych, planowania lekcji, księgowości, projektowania stron internetowych,
+		gier i zarządzania sprawami w kancelarii prawnej.
+		
 		\subsection{Ubuntu 20.04}		
 		\indent Ubuntu 20.04 LTS (Focal Fossa) server jest kompletną dystrybucją systemu operacyjnego GNU/Linux, przeznaczoną dla serwerów. Ubuntu bazuje na niestabilnej gałęzi ,,Sid''
 			dystrybucji Debian. Projekt rozwijany jest przed przedsiębiorstwo Canonical Ltd. oraz fundację Ubuntu Foundation. Najważniejszymi cechami dystrybucji jest:
@@ -365,16 +383,20 @@
 		systemu operacyjnego, zajęło około dwóch godzin. Następnie przystąpiono do konfiguracji dostępu SSH, stworzenia i skonfigurowania macierzy dyskowej RAID-Z,
 		zainstalowania i skonfigurowania zapory sieciowej, uruchomienia pełnego szyfrowania dysków. Po wstępnym przygotowaniu serwera został on podłączony w docelowej lokalizacji,
 		a kolejne etapy	wdrażania zostały przeprowadzone zdalnie poprzez konsolę SSH. Po podłączeniu serwera do sieci Ethernet, został skonfigurowany znajdujący się w przedsiębiorstwie
-		serwer DHCP	oraz switch. Kolejnymi krokami w wdrażaniu aplikacji było zainstalowanie i skonfigurowanie usługi konteneryzacji Docker oraz pobranie i instalacja stworzonej aplikacji.
-		Dzięki modułowej budowie aplikacji, po kolei były uruchamiane i konfigurowane poszczególne elementy systemu aplikacji tj. baza danych MS SQL, Backend-API i Frontend.
-		Instalacja, zabezpieczenie bazy danych i konfiguracja aplikacji potrwała około jednej godziny. Po zakończeniu instalacji i konfiguracji aplikacji, został skonfigurowany 
-		harmonogram systemu \emph{cron} w celu automatycznego uruchamiania skryptu tworzącego kopię bezpieczeństwa a następnie weryfikującego poprawność utworzonej kopii.
+		serwer DHCP	oraz switch. Kolejnymi krokami w wdrażaniu aplikacji było zainstalowanie i skonfigurowanie usługi konteneryzacji Docker oraz pobranie i instalacja pierwszej wersji
+		testowej stworzonej aplikacji. Dzięki modułowej budowie aplikacji, po kolei były uruchamiane i konfigurowane poszczególne elementy systemu aplikacji tj. baza danych MS SQL,
+		Backend-API i Frontend.	Instalacja, zabezpieczenie bazy danych i konfiguracja aplikacji potrwała około jednej godziny. Po zakończeniu instalacji i konfiguracji aplikacji,
+		uruchomione zostały testy aplikacji skłądające się z 5 testów integracyjnych i 54 testów jednostkowych. Następnie został skonfigurowany harmonogram systemu \emph{cron}
+		w celu automatycznego uruchamiania skryptu tworzącego kopię bezpieczeństwa a następnie weryfikującego poprawność utworzonej kopii.
 		Ze względu na wykorzystanie systemu plików ZFS, nie było potrzeby tworzenia skryptu sprawdzających integralność wcześniej wykonanych kopii zapasowych
 		- system plików automatycznie sprawdza integralność wszystkich plików i w razie potrzeby dokonuje stosownej korekty. Po zakończeniu konfiguracji wszystkich usług i aplikacji,
 		nastąpił etap testowania integralności całego systemu tj. sprawdzono poziomy dostępu do systemu operacyjnego, bazy danych i aplikacji, autoryzację, wszystkie funkcjonalności aplikacji,
 		przeprowadzono test jakości kopii zapasowej oraz przeprowadzono symulację uszkodzenia twardego dysku oraz odbudowę macierzy dyskowej,
 		sprawdzono konfigurację infrastruktury sieciowej. W przypadku wykrycia nieprawidłowości od razu były wprowadzane niezbędne poprawki do konfiguracji, a następnie ponownie
-		sprawdzano czy wszystko działa prawidłowo. Po zakończeniu testów rozpoczęliśmy szkolenie pracowników z wykorzystania aplikacji.
+		sprawdzano czy wszystko działa prawidłowo. Po zakończeniu testów rozpoczęliśmy szkolenie pracowników z wykorzystania testowej wersji aplikacji. Test pierwszej wersji aplikacji
+		trwał tydzień, po zakończeniu, którego zebrano informację od pracowników na temat błędów oraz innych ewentualnych poprawek. Po wprowadzeniu poprawek udostępniono poprawioną
+		wersję do kolejnych tygodniowych testów, po których ponownie zebrano informację na temat pozostałych występujących błędów. Po wyeliminowaniu błędów oddano ostateczną wersję
+		aplikacji do eksploatacji.
 	\newpage
 	
 	%Sekcja ósma, Źródła z których były tworzone
