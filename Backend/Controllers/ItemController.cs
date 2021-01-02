@@ -3,6 +3,8 @@ using AutoMapper;
 using Backend.Data;
 using Backend.Dtos;
 using Backend.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +24,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public ActionResult<IEnumerable<ItemReadDto>> GetAllItems()
         {
             var item = _repository.GetAllItems();
