@@ -57,15 +57,15 @@ namespace Backend.Data
             return _context.Storages.Include(user => user.IdUser).FirstOrDefault(p => p.StorageId == id);
         }
 
-        public IEnumerable<User> GetAllUsers()
-        {
-            return _context.Users.ToList();
-        }
+        //public IEnumerable<User> GetAllUsers()
+        //{
+        //    return _context.Users.ToList();
+        //}
         
-        public User GetUserById(int id)
-        {
-            return _context.Users.FirstOrDefault(p => p.UserId == id);
-        }
+        //public User GetUserById(int id)
+        //{
+        //    return _context.Users.FirstOrDefault(p => p.UserId == id);
+        //}
 
         public IEnumerable<Expire> GetExpiresByUserId(int userId)
         {
@@ -118,15 +118,15 @@ namespace Backend.Data
             _context.Storages.Add(storage);
         }
 
-        public void CreateUser(User user)
-        {
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
+        //public void CreateUser(User user)
+        //{
+        //    if (user == null)
+        //    {
+        //        throw new ArgumentNullException(nameof(user));
+        //    }
 
-            _context.Users.Add(user);
-        }
+        //    _context.Users.Add(user);
+        //}
 
         //UPDATE methods
         public void UpdateCategory(Category category)
@@ -149,10 +149,10 @@ namespace Backend.Data
             // Nothing
         }
 
-        public void UpdateUser(User user)
-        {
-            // Nothing
-        }
+        //public void UpdateUser(User user)
+        //{
+        //    // Nothing
+        //}
 
         //DELETE methods
         public void DeleteCategory(Category category)
@@ -192,14 +192,14 @@ namespace Backend.Data
         }
 
 
-        public void DeleteUser(User user)
-        {
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
-            _context.Users.Remove(user);
-        }
+        //public void DeleteUser(User user)
+        //{
+        //    if (user == null)
+        //    {
+        //        throw new ArgumentNullException(nameof(user));
+        //    }
+        //    _context.Users.Remove(user);
+        //}
 
         //Saving cahanges to DB method
         public bool SaveChanges()

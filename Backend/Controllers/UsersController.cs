@@ -23,110 +23,110 @@ namespace Backend.Controllers
         }
         
         
-        [HttpGet] //GET api/users
-        [HttpGet("/users")] // GET users
-        public ActionResult<IEnumerable<UserReadDto>> GetAllUsers()
-        {
-            var user = _repository.GetAllUsers();
-            if (user != null)
-            {
-                return Ok(_mapper.Map<IEnumerable<UserReadDto>>(user));
-            }
-            else return NotFound();
-        }
+        //[HttpGet] //GET api/users
+        //[HttpGet("/users")] // GET users
+        //public ActionResult<IEnumerable<UserReadDto>> GetAllUsers()
+        //{
+        //    var user = _repository.GetAllUsers();
+        //    if (user != null)
+        //    {
+        //        return Ok(_mapper.Map<IEnumerable<UserReadDto>>(user));
+        //    }
+        //    else return NotFound();
+        //}
         
-        //GET api/users/{id}
-        [HttpGet("{id}", Name = "GetUserById")]
-        public ActionResult<UserReadDto> GetUserById(int id)
-        {
-            var user = _repository.GetUserById(id);
-            if (user != null)
-            {
-                return Ok(_mapper.Map<UserReadDto>(user));
-            }
-            else return NotFound();
-        }
+        ////GET api/users/{id}
+        //[HttpGet("{id}", Name = "GetUserById")]
+        //public ActionResult<UserReadDto> GetUserById(int id)
+        //{
+        //    var user = _repository.GetUserById(id);
+        //    if (user != null)
+        //    {
+        //        return Ok(_mapper.Map<UserReadDto>(user));
+        //    }
+        //    else return NotFound();
+        //}
 
-        //GET api/users/GetUser
-        [HttpGet("GetUser")]
-        public ActionResult<UserReadDto>GetUser()
-        {
-            string emailAdress = HttpContext.User.Identity.Name;
-            var user = _repository.GetAllUsers().Where(user => user.UserEmail == emailAdress);
-            if (user != null)
-            {
-                return Ok(_mapper.Map<UserReadDto>(user));
-            }
-            else return NotFound();
-        }
+        ////GET api/users/GetUser
+        //[HttpGet("GetUser")]
+        //public ActionResult<UserReadDto>GetUser()
+        //{
+        //    string emailAdress = HttpContext.User.Identity.Name;
+        //    var user = _repository.GetAllUsers().Where(user => user.UserEmail == emailAdress);
+        //    if (user != null)
+        //    {
+        //        return Ok(_mapper.Map<UserReadDto>(user));
+        //    }
+        //    else return NotFound();
+        //}
         
-        //POST api/users
-        [HttpPost]
-        public ActionResult<UserReadDto> CreateUser(UserCreateDto userCreateDto)
-        {
-            var model = _mapper.Map<User>(userCreateDto);
-            _repository.CreateUser(model);
-            _repository.SaveChanges();
+        ////POST api/users
+        //[HttpPost]
+        //public ActionResult<UserReadDto> CreateUser(UserCreateDto userCreateDto)
+        //{
+        //    var model = _mapper.Map<User>(userCreateDto);
+        //    _repository.CreateUser(model);
+        //    _repository.SaveChanges();
 
-            var readDto = _mapper.Map<UserReadDto>(model);
+        //    var readDto = _mapper.Map<UserReadDto>(model);
 
-            return CreatedAtRoute(nameof(GetUserById), new { Id = readDto.UserId }, readDto);
-        }
+        //    return CreatedAtRoute(nameof(GetUserById), new { Id = readDto.UserId }, readDto);
+        //}
 
-        //POST api/users/{id}
-        [HttpPut("{id}")]
-        public ActionResult UpdateUser(int id, UserUpdateDto userUpdateDto)
-        {
-            var modelFromRepo = _repository.GetUserById(id);
-            if (modelFromRepo == null)
-            {
-                return NotFound();
-            }
+        ////POST api/users/{id}
+        //[HttpPut("{id}")]
+        //public ActionResult UpdateUser(int id, UserUpdateDto userUpdateDto)
+        //{
+        //    var modelFromRepo = _repository.GetUserById(id);
+        //    if (modelFromRepo == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _mapper.Map(userUpdateDto, modelFromRepo);
-            _repository.UpdateUser(modelFromRepo);
-            _repository.SaveChanges();
+        //    _mapper.Map(userUpdateDto, modelFromRepo);
+        //    _repository.UpdateUser(modelFromRepo);
+        //    _repository.SaveChanges();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        //PATCH api/users/{id}
-        [HttpPatch("{id}")]
-        public ActionResult PartialUpdateUser(int id, JsonPatchDocument<UserUpdateDto> patchDocument)
-        {
-            var modelFromRepo = _repository.GetUserById(id);
-            if (modelFromRepo == null)
-            {
-                return NotFound();
-            }
+        ////PATCH api/users/{id}
+        //[HttpPatch("{id}")]
+        //public ActionResult PartialUpdateUser(int id, JsonPatchDocument<UserUpdateDto> patchDocument)
+        //{
+        //    var modelFromRepo = _repository.GetUserById(id);
+        //    if (modelFromRepo == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var toPatch = _mapper.Map<UserUpdateDto>(modelFromRepo);
-            patchDocument.ApplyTo(toPatch, ModelState);
-            if (!TryValidateModel(toPatch))
-            {
-                return ValidationProblem(ModelState);
-            }
+        //    var toPatch = _mapper.Map<UserUpdateDto>(modelFromRepo);
+        //    patchDocument.ApplyTo(toPatch, ModelState);
+        //    if (!TryValidateModel(toPatch))
+        //    {
+        //        return ValidationProblem(ModelState);
+        //    }
 
-            _mapper.Map(toPatch, modelFromRepo);
-            _repository.UpdateUser(modelFromRepo);
-            _repository.SaveChanges();
+        //    _mapper.Map(toPatch, modelFromRepo);
+        //    _repository.UpdateUser(modelFromRepo);
+        //    _repository.SaveChanges();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
         
-        //DELETE api/users/{id}
-        [HttpDelete("{id}")]
-        public ActionResult DeleteUser(int id)
-        {
-            var modelFromRepo = _repository.GetUserById(id);
-            if (modelFromRepo == null)
-            {
-                return NotFound();
-            }
-            _repository.DeleteUser(modelFromRepo);
-            _repository.SaveChanges();
+        ////DELETE api/users/{id}
+        //[HttpDelete("{id}")]
+        //public ActionResult DeleteUser(int id)
+        //{
+        //    var modelFromRepo = _repository.GetUserById(id);
+        //    if (modelFromRepo == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    _repository.DeleteUser(modelFromRepo);
+        //    _repository.SaveChanges();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
     }
 }
