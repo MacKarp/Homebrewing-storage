@@ -43,39 +43,39 @@ namespace Backend.Controllers
             else return NotFound();
         }
 
-        [HttpPost]
-        public ActionResult<StorageReadDto> CreateStorage(StorageCreateDto storageCreateDto)
-        {
-            var model = new Storage()
-            {
-                IdUser = _repository.GetUserById(storageCreateDto.UserId),
-                StorageName = storageCreateDto.StorageName,
-            };
-            _repository.CreateStorage(model);
-            _repository.SaveChanges();
+        //[HttpPost]
+        //public ActionResult<StorageReadDto> CreateStorage(StorageCreateDto storageCreateDto)
+        //{
+        //    var model = new Storage()
+        //    {
+        //        IdUser = _repository.GetUserById(storageCreateDto.UserId),
+        //        StorageName = storageCreateDto.StorageName,
+        //    };
+        //    _repository.CreateStorage(model);
+        //    _repository.SaveChanges();
 
-            var readDto = _mapper.Map<StorageReadDto>(model);
+        //    var readDto = _mapper.Map<StorageReadDto>(model);
 
-            return CreatedAtRoute(nameof(GetStorageById), new { Id = readDto.StorageId }, readDto);
-        }
+        //    return CreatedAtRoute(nameof(GetStorageById), new { Id = readDto.StorageId }, readDto);
+        //}
 
-        [HttpPut("{id}")]
-        public ActionResult UpdateStorage(int id, StorageUpdateDto storageUpdateDto)
-        {
-            var modelFromRepo = _repository.GetStorageById(id);
-            if (modelFromRepo == null)
-            {
-                return NotFound();
-            }
+        //[HttpPut("{id}")]
+        //public ActionResult UpdateStorage(int id, StorageUpdateDto storageUpdateDto)
+        //{
+        //    var modelFromRepo = _repository.GetStorageById(id);
+        //    if (modelFromRepo == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            modelFromRepo.IdUser = _repository.GetUserById(storageUpdateDto.UserId);
-            modelFromRepo.StorageName = storageUpdateDto.StorageName;
+        //    modelFromRepo.IdUser = _repository.GetUserById(storageUpdateDto.UserId);
+        //    modelFromRepo.StorageName = storageUpdateDto.StorageName;
 
-            _repository.UpdateStorage(modelFromRepo);
-            _repository.SaveChanges();
+        //    _repository.UpdateStorage(modelFromRepo);
+        //    _repository.SaveChanges();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         [HttpPatch("{id}")]
         public ActionResult PartialUpdateStorage(int id, JsonPatchDocument<StorageUpdateDto> patchDocument)

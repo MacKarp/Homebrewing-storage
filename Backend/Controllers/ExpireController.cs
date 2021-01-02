@@ -44,42 +44,42 @@ namespace Backend.Controllers
             else return NotFound();
         }
 
-        [HttpPost]
-        public ActionResult<ExpireReadDto> CreateExpire(ExpireCreateDto expireCreateDto)
-        {
-            var model = new Expire()
-            {
-                ExpirationDate = expireCreateDto.ExpirationDate.Date,
-                IdUser = _repository.GetUserById(expireCreateDto.UserId),
-                IdItem = _repository.GetItemById(expireCreateDto.IdItem),
-                IdStorage = _repository.GetStorageById(expireCreateDto.IdStorage),
-            };
-            _repository.CreateExpire(model);
-            _repository.SaveChanges();
+        //[HttpPost]
+        //public ActionResult<ExpireReadDto> CreateExpire(ExpireCreateDto expireCreateDto)
+        //{
+        //    var model = new Expire()
+        //    {
+        //        ExpirationDate = expireCreateDto.ExpirationDate.Date,
+        //        IdUser = _repository.GetUserById(expireCreateDto.UserId),
+        //        IdItem = _repository.GetItemById(expireCreateDto.IdItem),
+        //        IdStorage = _repository.GetStorageById(expireCreateDto.IdStorage),
+        //    };
+        //    _repository.CreateExpire(model);
+        //    _repository.SaveChanges();
 
-            var readDto = _mapper.Map<ExpireReadDto>(model);
+        //    var readDto = _mapper.Map<ExpireReadDto>(model);
 
-            return CreatedAtRoute(nameof(GetExpireById), new { Id = readDto.ExpireId }, readDto);
-        }
+        //    return CreatedAtRoute(nameof(GetExpireById), new { Id = readDto.ExpireId }, readDto);
+        //}
 
-        [HttpPut("{id}")]
-        public ActionResult UpdateExpire(int id, ExpireUpdateDto expireUpdateDto)
-        {
-            var modelFromRepo = _repository.GetExpireById(id);
-            if (modelFromRepo == null)
-            {
-                return NotFound();
-            }
+        //[HttpPut("{id}")]
+        //public ActionResult UpdateExpire(int id, ExpireUpdateDto expireUpdateDto)
+        //{
+        //    var modelFromRepo = _repository.GetExpireById(id);
+        //    if (modelFromRepo == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            modelFromRepo.IdUser = _repository.GetUserById(expireUpdateDto.UserId);
-            modelFromRepo.IdStorage = _repository.GetStorageById(expireUpdateDto.IdStorage);
-            modelFromRepo.IdItem = _repository.GetItemById(expireUpdateDto.IdItem);
-            modelFromRepo.ExpirationDate = expireUpdateDto.ExpirationDate.Date;
-            _repository.UpdateExpire(modelFromRepo);
-            _repository.SaveChanges();
+        //    modelFromRepo.IdUser = _repository.GetUserById(expireUpdateDto.UserId);
+        //    modelFromRepo.IdStorage = _repository.GetStorageById(expireUpdateDto.IdStorage);
+        //    modelFromRepo.IdItem = _repository.GetItemById(expireUpdateDto.IdItem);
+        //    modelFromRepo.ExpirationDate = expireUpdateDto.ExpirationDate.Date;
+        //    _repository.UpdateExpire(modelFromRepo);
+        //    _repository.SaveChanges();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         [HttpPatch("{id}")]
         public ActionResult PartialUpdateExpire(int id, JsonPatchDocument<ExpireUpdateDto> patchDocument)

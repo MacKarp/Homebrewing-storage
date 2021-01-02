@@ -3,7 +3,6 @@ using System.Text;
 using AutoMapper;
 using Backend.Data;
 using Backend.Email;
-using Backend.Handler;
 using Backend.Jobs;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
