@@ -150,10 +150,15 @@ namespace Backend.Data
             // Nothing
         }
 
-        //public void UpdateUser(User user)
-        //{
-        //    // Nothing
-        //}
+        public void UpdateUser(IdentityUser user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            _context.Users.Update(user);
+        }
 
         //DELETE methods
         public void DeleteCategory(Category category)
@@ -193,14 +198,14 @@ namespace Backend.Data
         }
 
 
-        //public void DeleteUser(User user)
-        //{
-        //    if (user == null)
-        //    {
-        //        throw new ArgumentNullException(nameof(user));
-        //    }
-        //    _context.Users.Remove(user);
-        //}
+        public void DeleteUser(IdentityUser user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+            _context.Users.Remove(user);
+        }
 
         //Saving cahanges to DB method
         public bool SaveChanges()

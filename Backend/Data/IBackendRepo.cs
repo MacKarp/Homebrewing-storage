@@ -37,13 +37,13 @@ namespace Backend.Data
         void UpdateExpire(Expire expire);
         void UpdateItem(Item item);
         void UpdateStorage(Storage storage);
-      //  void UpdateUser(User user);
+        void UpdateUser(IdentityUser user);
 
         //DELETE methods
         void DeleteCategory(Category category);
         void DeleteExpire(Expire expire);
         void DeleteItem(Item item);
         void DeleteStorage(Storage storage);
-     //  void DeleteUser(User user);
+        void DeleteUser(IdentityUser user);
     }
 }
