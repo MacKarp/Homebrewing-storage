@@ -1,9 +1,10 @@
 ﻿using Backend.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Data
 {
-    public class BackendContext : DbContext
+    public class BackendContext : IdentityDbContext
     {
         public BackendContext(DbContextOptions<BackendContext> options) : base(options)
         {
@@ -14,6 +15,5 @@ namespace Backend.Data
         public DbSet<Item> Items { get; set; }
         public DbSet<Storage> Storages { get; set; }
         public DbSet<Expire> Expires { get; set; }
-        public DbSet<User> Users { get; set; }
     }
 }

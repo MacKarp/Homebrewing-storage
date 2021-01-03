@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Backend.Controllers;
+using Backend.Dtos;
 using Backend.Models;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +13,8 @@ namespace Backend.Data
 {
     public static class PrepDb
     {
+        //static readonly UserManager<IdentityUser> userManager;
+               
         public static void PrepPopulation(IApplicationBuilder app)
         {
             using (var serviceScope = app.ApplicationServices.CreateScope())
@@ -20,24 +25,39 @@ namespace Backend.Data
 
         public static void SeedData(BackendContext context)
         {
+            
+
             System.Console.WriteLine("Applying Migrations...");
             context.Database.Migrate();
 
             //Populating Database
+
             if (!context.Users.Any())
             {
                 System.Console.WriteLine("Adding Users...");
-                var item = new List<User>
+
+                var items = new List<IdentityUser>
                 {
-                    new User { UserName = "User 1", UserEmail = "user1@test.test", UserPassword = "user1password"},
-                    new User { UserName = "User 2", UserEmail = "user2@test.test", UserPassword = "user2password"},
-                    new User { UserName = "User 3", UserEmail = "user3@test.test", UserPassword = "user3password"},
-                    new User { UserName = "User 4", UserEmail = "user4@test.test", UserPassword = "user4password"},
-                    new User { UserName = "User 5", UserEmail = "user5@test.test", UserPassword = "user5password"},
+                    
+                    new IdentityUser { UserName = "admin",  NormalizedUserName = "ADMIN", Email = "admin@admin.pl", PasswordHash = null}, 
+                    new IdentityUser { UserName = "user2@test.test", Email = "user2@test.test"}, //pass: User1password!
+                    new IdentityUser { UserName = "user3@test.test", Email = "user3@test.test"}, //pass: User1password!
+                    new IdentityUser { UserName = "user4@test.test", Email = "user4@test.test"}, //pass: User1password!
+                    //new User { UserName = "User 2", UserEmail = "user2@test.test", UserPassword = "user2password"},
+                    //new User { UserName = "User 3", UserEmail = "user3@test.test", UserPassword = "user3password"},
+                    //new User { UserName = "User 4", UserEmail = "user4@test.test", UserPassword = "user4password"},
+                    //new User { UserName = "User 5", UserEmail = "user5@test.test", UserPassword = "user5password"},
                 };
-                context.AddRange(item);
+
+                //foreach(var item in items)
+                //{
+                //   context.Users.Add(item);
+                //}
+
+                context.AddRange(items);
                 context.SaveChanges();
             }
+
             if (!context.Categories.Any())
             {
                 System.Console.WriteLine("Adding Categories...");
@@ -56,15 +76,20 @@ namespace Backend.Data
             if (!context.Storages.Any())
             {
                 System.Console.WriteLine("Adding Storage...");
-                var item = new List<Storage>
+                var storages = new List<Storage>();
+                int i=1;
+                foreach (var user in context.Users)
                 {
-                    new Storage {IdUser = context.Users.Find(1), StorageName = "Storage 1"},
-                    new Storage {IdUser = context.Users.Find(2), StorageName = "Storage 2"},
-                    new Storage {IdUser = context.Users.Find(3), StorageName = "Storage 3"},
-                    new Storage {IdUser = context.Users.Find(4), StorageName = "Storage 4"},
-                    new Storage {IdUser = context.Users.Find(5), StorageName = "Storage 5"},
+                     storages.Add(new Storage { IdUser = user, StorageName = "Storage " + i });
+                     i++;
                 };
-                context.AddRange(item);
+                //{
+                //    new Storage {IdUser = context.Users.Find(1), StorageName = "Storage 1"},
+                //    new Storage {IdUser = context.Users.Find(2), StorageName = "Storage 2"},
+                //    new Storage {IdUser = context.Users.Find(3), StorageName = "Storage 3"},
+                   
+                //};
+                context.AddRange(storages);
                 context.SaveChanges();
             }
 
@@ -83,17 +108,13 @@ namespace Backend.Data
                 context.SaveChanges();
             }
 
-
             if (!context.Expires.Any())
             {
                 System.Console.WriteLine("Adding Expire...");
-                var item = new List<Expire>
+                var item = new List<Expire>();
+                foreach(var user in context.Users)
                 {
-                    new Expire { IdUser = context.Users.Find(1), IdStorage = context.Storages.Find(1), IdItem = context.Items.Find(1), ExpirationDate = DateTime.Today},
-                    new Expire { IdUser = context.Users.Find(2), IdStorage = context.Storages.Find(1), IdItem = context.Items.Find(1), ExpirationDate = DateTime.Today},
-                    new Expire { IdUser = context.Users.Find(3), IdStorage = context.Storages.Find(1), IdItem = context.Items.Find(1), ExpirationDate = DateTime.Today},
-                    new Expire { IdUser = context.Users.Find(4), IdStorage = context.Storages.Find(1), IdItem = context.Items.Find(1), ExpirationDate = DateTime.Today},
-                    new Expire { IdUser = context.Users.Find(5), IdStorage = context.Storages.Find(1), IdItem = context.Items.Find(1), ExpirationDate = DateTime.Today},
+                    item.Add(new Expire { IdUser = user, IdStorage = context.Storages.Find(1), IdItem = context.Items.Find(1), ExpirationDate = DateTime.Today });
                 };
                 context.AddRange(item);
                 context.SaveChanges();

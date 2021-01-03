@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace Backend.Dtos
 {
-    public class UserReadDto
+    public class UserInfo
     {
-        [Key]
-        public string UserId { get; set; }
+        [EmailAddress]
         [Required]
-        public string UserName { get; set; }
+        public string EmailAddress { get; set; }
         [Required]
-        public string UserEmail { get; set; }
+        public string Password { get; set; }
     }
 }

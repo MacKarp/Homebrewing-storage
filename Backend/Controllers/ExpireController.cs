@@ -119,7 +119,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet("byUserId/{id}",Name = "GetExpireByUserId")]
-        public ActionResult<IEnumerable<ExpireReadDto>> GetExpireByUserId(int id)
+        public ActionResult<IEnumerable<ExpireReadDto>> GetExpireByUserId(string id)
         {
             var item = _repository.GetExpiresByUserId(id);
             if (item.Count() != 0)

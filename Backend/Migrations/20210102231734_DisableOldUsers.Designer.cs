@@ -4,14 +4,16 @@ using Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Backend.Migrations
 {
     [DbContext(typeof(BackendContext))]
-    partial class BackendContextModelSnapshot : ModelSnapshot
+    [Migration("20210102231734_DisableOldUsers")]
+    partial class DisableOldUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,22 +47,22 @@ namespace Backend.Migrations
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("Date");
 
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int?>("ItemId")
                         .HasColumnType("int");
 
                     b.Property<int?>("StorageId")
                         .HasColumnType("int");
 
-                    b.HasKey("ExpireId");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("Id");
+                    b.HasKey("ExpireId");
 
                     b.HasIndex("ItemId");
 
                     b.HasIndex("StorageId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Expires");
                 });
@@ -93,18 +95,42 @@ namespace Backend.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("StorageName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("StorageId");
 
-                    b.HasIndex("Id");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Storages");
+                });
+
+            modelBuilder.Entity("Backend.Models.User", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("UserEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserPassword")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -305,10 +331,6 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("Backend.Models.Expire", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdUser")
-                        .WithMany()
-                        .HasForeignKey("Id");
-
                     b.HasOne("Backend.Models.Item", "IdItem")
                         .WithMany()
                         .HasForeignKey("ItemId");
@@ -316,6 +338,10 @@ namespace Backend.Migrations
                     b.HasOne("Backend.Models.Storage", "IdStorage")
                         .WithMany()
                         .HasForeignKey("StorageId");
+
+                    b.HasOne("Backend.Models.User", "IdUser")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Backend.Models.Item", b =>
@@ -327,9 +353,9 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("Backend.Models.Storage", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdUser")
+                    b.HasOne("Backend.Models.User", "IdUser")
                         .WithMany()
-                        .HasForeignKey("Id");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

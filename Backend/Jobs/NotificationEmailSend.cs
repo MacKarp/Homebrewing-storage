@@ -28,7 +28,7 @@ namespace Backend.Jobs
                 EmailAddress toEmailAddress = new EmailAddress
                 {
                     Name = expireItem.IdUser.UserName,
-                    Address = expireItem.IdUser.UserEmail
+                    Address = expireItem.IdUser.Email
                 };
 
                 // tworzenie wiadomosci dodawanie nadawcy, odbiorcy, tematu i treści wiadomości

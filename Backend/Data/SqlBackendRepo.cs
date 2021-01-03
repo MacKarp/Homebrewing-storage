@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Backend.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Data
@@ -57,25 +60,31 @@ namespace Backend.Data
             return _context.Storages.Include(user => user.IdUser).FirstOrDefault(p => p.StorageId == id);
         }
 
-        public IEnumerable<User> GetAllUsers()
+        public IEnumerable<IdentityUser> GetAllUsers()
         {
             return _context.Users.ToList();
         }
-        
-        public User GetUserById(int id)
+
+        public IdentityUser GetUserById(string idGuid)
         {
-            return _context.Users.FirstOrDefault(p => p.UserId == id);
+            return _context.Users.FirstOrDefault(p => p.Id == idGuid);
         }
 
-        public IEnumerable<Expire> GetExpiresByUserId(int userId)
+        public IEnumerable<Expire> GetExpiresByUserId(string userId)
         {
-            return _context.Expires.Where(user=>user.IdUser.UserId==userId).Include(storage => storage.IdStorage).Include(item => item.IdItem).Include(user => user.IdUser).ToList();
+            return _context.Expires.Where(user=>user.IdUser.Id==userId).Include(storage => storage.IdStorage).Include(item => item.IdItem).Include(user => user.IdUser).ToList();
         }
 
         public IEnumerable<Expire> GetAllExpiresByExpirationTimeLeft(double days)
         {
             return _context.Expires.Where(p => p.ExpirationDate >= DateTime.Now.Date && p.ExpirationDate <= DateTime.Now.AddDays(days)).Include(storage => storage.IdStorage).Include(item => item.IdItem).Include(user => user.IdUser).ToList();
         }
+
+        public List<IdentityRole> GetRoles()
+        {
+            return _context.Roles.ToList();
+        }
+
 
         //CREATE methods
         public void CreateCategory(Category category)
@@ -118,7 +127,7 @@ namespace Backend.Data
             _context.Storages.Add(storage);
         }
 
-        public void CreateUser(User user)
+        public void CreateUser(IdentityUser user)
         {
             if (user == null)
             {
@@ -149,9 +158,14 @@ namespace Backend.Data
             // Nothing
         }
 
-        public void UpdateUser(User user)
+        public void UpdateUser(IdentityUser user)
         {
-            // Nothing
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            _context.Users.Update(user);
         }
 
         //DELETE methods
@@ -192,7 +206,7 @@ namespace Backend.Data
         }
 
 
-        public void DeleteUser(User user)
+        public void DeleteUser(IdentityUser user)
         {
             if (user == null)
             {
@@ -206,7 +220,5 @@ namespace Backend.Data
         {
             return (_context.SaveChanges() >= 0);
         }
-
-        //GetAllExpiresByExpirationTimeLeft przeniesione wyżej do sekcji GET
     }
 }
