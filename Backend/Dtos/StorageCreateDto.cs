@@ -5,7 +5,7 @@ namespace Backend.Dtos
     public class StorageCreateDto
     {
         [Required]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         [Required]
         public string StorageName { get; set; }
     }

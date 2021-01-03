@@ -7,16 +7,10 @@ namespace Backend.Profiles
 {
     public class UserProfile : Profile
     {
-        //private readonly UserManager<IdentityUser> userManager;
-        //private readonly SignInManager<IdentityUser> signInManager;
+       
 
-        public UserProfile(
-               // UserManager<IdentityUser> userManager,
-               // SignInManager<IdentityUser> signInManager
-               )
+        public UserProfile()
         {
-            //this.userManager = userManager;
-            //this.signInManager = signInManager;
 
             CreateMap<UserCreateDto, IdentityUser>()
                 .ForMember(x => x.Email, options => options.MapFrom(x => x.UserEmail))

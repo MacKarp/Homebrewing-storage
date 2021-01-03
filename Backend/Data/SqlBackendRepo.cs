@@ -212,7 +212,5 @@ namespace Backend.Data
         {
             return (_context.SaveChanges() >= 0);
         }
-
-        //GetAllExpiresByExpirationTimeLeft przeniesione wyżej do sekcji GET
     }
 }

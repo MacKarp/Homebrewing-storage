@@ -46,9 +46,6 @@ namespace Backend.Controllers
 
 
 
-
-
-
         [HttpGet] //GET api/users
         [HttpGet("/users")] // GET users
         public ActionResult<IEnumerable<UserReadDto>> GetAllUsers()
@@ -87,22 +84,6 @@ namespace Backend.Controllers
         }
 
         //POST api/users     ---------------- 1st CREATE USER METHOD
-        [HttpPost]
-        public ActionResult<UserReadDto> CreateUser([FromBody] UserCreateDto user)
-        {
-            var model = _mapper.Map<IdentityUser>(user);
-            
-            model.PasswordHash = _userManager.PasswordHasher.HashPassword(model, user.UserPassword);
-            _repository.CreateUser(model);
-            _repository.SaveChanges();
-
-            var readDto = _mapper.Map<UserReadDto>(model);
-
-            return CreatedAtRoute(nameof(GetUserById), new { Id = readDto.UserId }, readDto);
-        }
-
-
-        //POST api/users     ---------------- 2nd CREATE USER METHOD
         [HttpPost("Create")]
         public async Task<ActionResult<UserToken>> CreateUser([FromBody] UserInfo model)
         {
@@ -118,6 +99,21 @@ namespace Backend.Controllers
                 return BadRequest(result.Errors);
             }
         }
+
+        //POST api/users     ---------------- 2nd CREATE USER METHOD
+        //[HttpPost]
+        //public ActionResult<UserReadDto> CreateUser([FromBody] UserCreateDto user)
+        //{
+        //    var model = _mapper.Map<IdentityUser>(user);
+
+        //    model.PasswordHash = _userManager.PasswordHasher.HashPassword(model, user.UserPassword);
+        //    _repository.CreateUser(model);
+        //    _repository.SaveChanges();
+
+        //    var readDto = _mapper.Map<UserReadDto>(model);
+
+        //    return CreatedAtRoute(nameof(GetUserById), new { Id = readDto.UserId }, readDto);
+        //}
 
         [HttpPost("Login")]
         public async Task<ActionResult<UserToken>> Login([FromBody] UserInfo model)

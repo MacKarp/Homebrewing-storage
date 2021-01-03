@@ -44,23 +44,23 @@ namespace Backend.Controllers
             else return NotFound();
         }
 
-        //[HttpPost]
-        //public ActionResult<ExpireReadDto> CreateExpire(ExpireCreateDto expireCreateDto)
-        //{
-        //    var model = new Expire()
-        //    {
-        //        ExpirationDate = expireCreateDto.ExpirationDate.Date,
-        //        IdUser = _repository.GetUserById(expireCreateDto.UserId),
-        //        IdItem = _repository.GetItemById(expireCreateDto.IdItem),
-        //        IdStorage = _repository.GetStorageById(expireCreateDto.IdStorage),
-        //    };
-        //    _repository.CreateExpire(model);
-        //    _repository.SaveChanges();
+        [HttpPost]
+        public ActionResult<ExpireReadDto> CreateExpire(ExpireCreateDto expireCreateDto)
+        {
+            var model = new Expire()
+            {
+                ExpirationDate = expireCreateDto.ExpirationDate.Date,
+                IdUser = _repository.GetUserById(expireCreateDto.UserId),
+                IdItem = _repository.GetItemById(expireCreateDto.IdItem),
+                IdStorage = _repository.GetStorageById(expireCreateDto.IdStorage),
+            };
+            _repository.CreateExpire(model);
+            _repository.SaveChanges();
 
-        //    var readDto = _mapper.Map<ExpireReadDto>(model);
+            var readDto = _mapper.Map<ExpireReadDto>(model);
 
-        //    return CreatedAtRoute(nameof(GetExpireById), new { Id = readDto.ExpireId }, readDto);
-        //}
+            return CreatedAtRoute(nameof(GetExpireById), new { Id = readDto.ExpireId }, readDto);
+        }
 
         //[HttpPut("{id}")]
         //public ActionResult UpdateExpire(int id, ExpireUpdateDto expireUpdateDto)
