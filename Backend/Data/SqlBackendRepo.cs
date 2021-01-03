@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Backend.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -83,6 +84,7 @@ namespace Backend.Data
         {
             return _context.Roles.ToList();
         }
+
 
         //CREATE methods
         public void CreateCategory(Category category)

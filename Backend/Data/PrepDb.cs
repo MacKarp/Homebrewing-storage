@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Backend.Controllers;
+using Backend.Dtos;
 using Backend.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -27,33 +29,34 @@ namespace Backend.Data
 
             System.Console.WriteLine("Applying Migrations...");
             context.Database.Migrate();
-            
+
             //Populating Database
-            //if (!context.Users.Any())
-            //{
-            //    System.Console.WriteLine("Adding Users...");
 
+            if (!context.Users.Any())
+            {
+                System.Console.WriteLine("Adding Users...");
 
-            //    var items = new List<IdentityUser>
-            //    {
-            //        new IdentityUser { UserName = "user1@test.test", Email = "user1@test.test"}, //pass: User1password!
-            //        new IdentityUser { UserName = "user2@test.test", Email = "user2@test.test"}, //pass: User1password!
-            //        new IdentityUser { UserName = "user3@test.test", Email = "user3@test.test"}, //pass: User1password!
-            //        new IdentityUser { UserName = "user4@test.test", Email = "user4@test.test"}, //pass: User1password!
-            //        //new User { UserName = "User 2", UserEmail = "user2@test.test", UserPassword = "user2password"},
-            //        //new User { UserName = "User 3", UserEmail = "user3@test.test", UserPassword = "user3password"},
-            //        //new User { UserName = "User 4", UserEmail = "user4@test.test", UserPassword = "user4password"},
-            //        //new User { UserName = "User 5", UserEmail = "user5@test.test", UserPassword = "user5password"},
-            //    };
-                
-            //    //foreach(var item in items)
-            //    //{
-            //    //   context.Users.Add(item);
-            //    //}
+                var items = new List<IdentityUser>
+                {
+                    
+                    new IdentityUser { UserName = "admin",  NormalizedUserName = "ADMIN", Email = "admin@admin.pl", PasswordHash = null}, 
+                    new IdentityUser { UserName = "user2@test.test", Email = "user2@test.test"}, //pass: User1password!
+                    new IdentityUser { UserName = "user3@test.test", Email = "user3@test.test"}, //pass: User1password!
+                    new IdentityUser { UserName = "user4@test.test", Email = "user4@test.test"}, //pass: User1password!
+                    //new User { UserName = "User 2", UserEmail = "user2@test.test", UserPassword = "user2password"},
+                    //new User { UserName = "User 3", UserEmail = "user3@test.test", UserPassword = "user3password"},
+                    //new User { UserName = "User 4", UserEmail = "user4@test.test", UserPassword = "user4password"},
+                    //new User { UserName = "User 5", UserEmail = "user5@test.test", UserPassword = "user5password"},
+                };
 
-            //    context.AddRange(items);
-            //    context.SaveChanges();
-            //}
+                //foreach(var item in items)
+                //{
+                //   context.Users.Add(item);
+                //}
+
+                context.AddRange(items);
+                context.SaveChanges();
+            }
 
             if (!context.Categories.Any())
             {

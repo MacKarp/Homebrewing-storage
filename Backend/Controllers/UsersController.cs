@@ -45,6 +45,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet("roles")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult<List<string>> GetRoles()
         {
             var roles = _repository.GetRoles();
@@ -65,6 +66,7 @@ namespace Backend.Controllers
         }
 
         [HttpPost("RemoveRole")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<ActionResult> RemoveRole(EditRoleDto editRoleDto)
         {
             var user = await _userManager.FindByIdAsync(editRoleDto.UserId);
@@ -76,8 +78,8 @@ namespace Backend.Controllers
             return NoContent();
         }
 
-        [HttpGet("users")] //GET api/users
-        //[HttpGet("/users")] // GET users
+        [HttpGet] //GET api/users
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public ActionResult<IEnumerable<UserReadDto>> GetAllUsers()
         {
             var user = _repository.GetAllUsers();
@@ -90,6 +92,7 @@ namespace Backend.Controllers
 
         //GET api/users/{id}
         [HttpGet("{id}", Name = "GetUserById")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public ActionResult<UserReadDto> GetUserById(string id)
         {
             var user = _repository.GetUserById(id);
@@ -102,6 +105,7 @@ namespace Backend.Controllers
 
         //GET api/users/GetUser   GETs the data of actual user on whose behalf the code is running
         [HttpGet("GetActiveUser")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult<UserReadDto> GetActiveUser()
         {
             string emailAdress = HttpContext.User.Identity.Name;
@@ -119,7 +123,27 @@ namespace Backend.Controllers
         {
             var user = new IdentityUser { UserName = model.EmailAddress, Email = model.EmailAddress };
             var result = await _userManager.CreateAsync(user, model.Password);
+                        
+            await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "User"));
+            if (result.Succeeded)
+            {
+                return await BuildToken(model);
+            }
+            else
+            {
+                return BadRequest(result.Errors);
+            }
+        }
 
+        //POST api/users     ---------------- Temporary method --- to be deleted
+        [HttpPost("CreateAdmin")]
+        public async Task<ActionResult<UserToken>> CreateAdmin([FromBody] UserInfo model)
+        {
+            var user = new IdentityUser { UserName = model.EmailAddress, Email = model.EmailAddress };
+            var result = await _userManager.CreateAsync(user, model.Password);
+            
+            //await _userManager.AddToRoleAsync(user, "Admin");
+            await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Admin"));
             if (result.Succeeded)
             {
                 return await BuildToken(model);
@@ -164,6 +188,7 @@ namespace Backend.Controllers
         }
 
         [HttpPost("RenewToken")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public async Task<ActionResult<UserToken>> Renew()
         {
             var userInfo = new UserInfo
@@ -175,6 +200,7 @@ namespace Backend.Controllers
 
         //POST api/users/{id}
         [HttpPut("{id}", Name = "PutUpdateUser")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult UpdateUser([FromRoute]string id, UserCreateDto userUpdateDto)
         {
             var modelFromRepo = _repository.GetUserById(id);
@@ -192,6 +218,7 @@ namespace Backend.Controllers
 
         //PATCH api/users/{id}
         [HttpPatch("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult PartialUpdateUser(string id, JsonPatchDocument<UserCreateDto> patchDocument)
         {
             var modelFromRepo = _repository.GetUserById(id);
@@ -250,6 +277,7 @@ namespace Backend.Controllers
 
         //DELETE api/users/{id}
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public ActionResult DeleteUser(string id)
         {
             var modelFromRepo = _repository.GetUserById(id);
