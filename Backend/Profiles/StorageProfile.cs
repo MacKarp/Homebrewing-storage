@@ -14,11 +14,11 @@ namespace Backend.Profiles
         {
             Console.WriteLine("StorageProfile constructor");
             CreateMap<Storage, StorageReadDto>()
-                .ForMember(dest => dest.IdUser, opt => opt.MapFrom(src => src.IdUser.UserId));
+                .ForMember(dest => dest.IdUser, opt => opt.MapFrom(src => src.IdUser.Id));
             CreateMap<StorageUpdateDto, Storage>()
-                .ForPath(dest => dest.IdUser.UserId, opt => opt.MapFrom(src => src.UserId));
+                .ForPath(dest => dest.IdUser.Id, opt => opt.MapFrom(src => src.UserId));
             CreateMap<Storage, StorageUpdateDto>()
-                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.IdUser.UserId));
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.IdUser.Id));
         }
     }
 }

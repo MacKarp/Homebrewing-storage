@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Backend.Models
@@ -7,8 +8,8 @@ namespace Backend.Models
     {
         [Key]
         public int StorageId { get; set; }
-        [ForeignKey("UserId")]
-        public virtual User IdUser { get; set; }
+        [ForeignKey("Id")]
+        public virtual IdentityUser IdUser { get; set; }
         [Required]
         public string StorageName { get; set; }
     }

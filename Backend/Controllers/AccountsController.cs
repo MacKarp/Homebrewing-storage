@@ -47,7 +47,7 @@ namespace Backend.Controllers
             }
         }
 
-        [HttpPost("login")]
+        [HttpPost("Login")]
         public async Task<ActionResult<UserToken>> Login([FromBody] UserInfo model)
         {
             var result = await signInManager.PasswordSignInAsync(

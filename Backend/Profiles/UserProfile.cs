@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Backend.Dtos;
 using Backend.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Backend.Profiles
 {
@@ -8,10 +9,10 @@ namespace Backend.Profiles
     {
         public UserProfile()
         {
-            CreateMap<User, UserReadDto>();
-            CreateMap<UserCreateDto, User>();
-            CreateMap<UserUpdateDto, User>();
-            CreateMap<User, UserUpdateDto>();
+            CreateMap<IdentityUser, UserReadDto>();
+            CreateMap<UserCreateDto, IdentityUser>();
+            CreateMap<UserUpdateDto, IdentityUser>();
+            CreateMap<IdentityUser, UserUpdateDto>();
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Backend.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Backend.Data
 {
@@ -13,13 +14,13 @@ namespace Backend.Data
         Category GetCategoryById(int id);
         IEnumerable<Expire> GetAllExpires();
         Expire GetExpireById(int id);
-        IEnumerable<Expire> GetExpiresByUserId(int userId);
+        IEnumerable<Expire> GetExpiresByUserId(string userId);
         IEnumerable<Item> GetAllItems();
         Item GetItemById(int id);
         IEnumerable<Storage> GetAllStorages();
         Storage GetStorageById(int id);
-       // IEnumerable<User> GetAllUsers();
-       // User GetUserById(int id);
+        IEnumerable<IdentityUser> GetAllUsers();
+        IdentityUser GetUserById(string id);
 
 
         IEnumerable<Expire> GetAllExpiresByExpirationTimeLeft(double days);  
@@ -29,7 +30,7 @@ namespace Backend.Data
         void CreateExpire(Expire expire);
         void CreateItem(Item item);
         void CreateStorage(Storage storage);
-       // void CreateUser(User user);
+        void CreateUser(IdentityUser user);
 
         //UPDATE methods
         void UpdateCategory(Category category);

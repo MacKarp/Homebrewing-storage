@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Backend.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Data
@@ -57,19 +58,19 @@ namespace Backend.Data
             return _context.Storages.Include(user => user.IdUser).FirstOrDefault(p => p.StorageId == id);
         }
 
-        //public IEnumerable<User> GetAllUsers()
-        //{
-        //    return _context.Users.ToList();
-        //}
-        
-        //public User GetUserById(int id)
-        //{
-        //    return _context.Users.FirstOrDefault(p => p.UserId == id);
-        //}
-
-        public IEnumerable<Expire> GetExpiresByUserId(int userId)
+        public IEnumerable<IdentityUser> GetAllUsers()
         {
-            return _context.Expires.Where(user=>user.IdUser.UserId==userId).Include(storage => storage.IdStorage).Include(item => item.IdItem).Include(user => user.IdUser).ToList();
+            return _context.Users.ToList();
+        }
+
+        public IdentityUser GetUserById(string idGuid)
+        {
+            return _context.Users.FirstOrDefault(p => p.Id == idGuid);
+        }
+
+        public IEnumerable<Expire> GetExpiresByUserId(string userId)
+        {
+            return _context.Expires.Where(user=>user.IdUser.Id==userId).Include(storage => storage.IdStorage).Include(item => item.IdItem).Include(user => user.IdUser).ToList();
         }
 
         public IEnumerable<Expire> GetAllExpiresByExpirationTimeLeft(double days)
@@ -118,15 +119,15 @@ namespace Backend.Data
             _context.Storages.Add(storage);
         }
 
-        //public void CreateUser(User user)
-        //{
-        //    if (user == null)
-        //    {
-        //        throw new ArgumentNullException(nameof(user));
-        //    }
+        public void CreateUser(IdentityUser user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
 
-        //    _context.Users.Add(user);
-        //}
+            _context.Users.Add(user);
+        }
 
         //UPDATE methods
         public void UpdateCategory(Category category)
