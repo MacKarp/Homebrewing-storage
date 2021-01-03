@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Backend.Models;
 using Microsoft.AspNetCore.Identity;
 
@@ -21,10 +20,9 @@ namespace Backend.Data
         Storage GetStorageById(int id);
         IEnumerable<IdentityUser> GetAllUsers();
         IdentityUser GetUserById(string id);
+        IEnumerable<Expire> GetAllExpiresByExpirationTimeLeft(double days);
+        List<IdentityRole> GetRoles();
 
-
-        IEnumerable<Expire> GetAllExpiresByExpirationTimeLeft(double days);  
-      
         //CREATE methods
         void CreateCategory(Category category);
         void CreateExpire(Expire expire);

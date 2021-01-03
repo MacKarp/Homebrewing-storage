@@ -2,6 +2,8 @@
 using Backend.Data;
 using Backend.Dtos;
 using Backend.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -42,12 +44,40 @@ namespace Backend.Controllers
             _configuration = configuration;
         }
 
+        [HttpGet("roles")]
+        public ActionResult<List<string>> GetRoles()
+        {
+            var roles = _repository.GetRoles();
+            return roles. Select(x => x.Name).ToList();        
+        }
 
+        [HttpPost("AssignRole")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        public async Task<ActionResult> AssignRole(EditRoleDto editRoleDto)
+        {
+            var user = await _userManager.FindByIdAsync(editRoleDto.UserId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, editRoleDto.RoleName));
+            return NoContent();
+        }
 
+        [HttpPost("RemoveRole")]
+        public async Task<ActionResult> RemoveRole(EditRoleDto editRoleDto)
+        {
+            var user = await _userManager.FindByIdAsync(editRoleDto.UserId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            await _userManager.RemoveClaimAsync(user, new Claim(ClaimTypes.Role, editRoleDto.RoleName));
+            return NoContent();
+        }
 
-
-        [HttpGet] //GET api/users
-        [HttpGet("/users")] // GET users
+        [HttpGet("users")] //GET api/users
+        //[HttpGet("/users")] // GET users
         public ActionResult<IEnumerable<UserReadDto>> GetAllUsers()
         {
             var user = _repository.GetAllUsers();
@@ -71,8 +101,8 @@ namespace Backend.Controllers
         }
 
         //GET api/users/GetUser   GETs the data of actual user on whose behalf the code is running
-        [HttpGet("GetUser")]
-        public ActionResult<UserReadDto> GetUser()
+        [HttpGet("GetActiveUser")]
+        public ActionResult<UserReadDto> GetActiveUser()
         {
             string emailAdress = HttpContext.User.Identity.Name;
             var user = _repository.GetAllUsers().Where(user => user.Email == emailAdress).FirstOrDefault();
@@ -83,7 +113,7 @@ namespace Backend.Controllers
             else return NotFound();
         }
 
-        //POST api/users     ---------------- 1st CREATE USER METHOD
+        //POST api/users     ---------------- 1st CREATE USER METHOD (with token build)
         [HttpPost("Create")]
         public async Task<ActionResult<UserToken>> CreateUser([FromBody] UserInfo model)
         {
@@ -92,7 +122,7 @@ namespace Backend.Controllers
 
             if (result.Succeeded)
             {
-                return BuildToken(model);
+                return await BuildToken(model);
             }
             else
             {
@@ -100,7 +130,7 @@ namespace Backend.Controllers
             }
         }
 
-        //POST api/users     ---------------- 2nd CREATE USER METHOD
+        //POST api/users     ---------------- 2nd CREATE USER METHOD (without token)
         //[HttpPost]
         //public ActionResult<UserReadDto> CreateUser([FromBody] UserCreateDto user)
         //{
@@ -125,7 +155,7 @@ namespace Backend.Controllers
                                                     lockoutOnFailure: false);
             if (result.Succeeded)
             {
-                return BuildToken(model);
+                return await BuildToken(model);
             }
             else
             {
@@ -133,6 +163,15 @@ namespace Backend.Controllers
             }
         }
 
+        [HttpPost("RenewToken")]
+        public async Task<ActionResult<UserToken>> Renew()
+        {
+            var userInfo = new UserInfo
+            {
+                EmailAddress = HttpContext.User.Identity.Name
+            };
+            return await BuildToken(userInfo);
+        }
 
         //POST api/users/{id}
         [HttpPut("{id}", Name = "PutUpdateUser")]
@@ -177,13 +216,17 @@ namespace Backend.Controllers
 
                
 
-        private UserToken BuildToken(UserInfo userInfo)
+        private async Task<UserToken> BuildToken(UserInfo userInfo)
         {
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Name, userInfo.EmailAddress),
                 new Claim(ClaimTypes.Email, userInfo.EmailAddress)
             };
+
+            var identityUser = await _userManager.FindByEmailAsync(userInfo.EmailAddress);
+            var claimsDB = await _userManager.GetClaimsAsync(identityUser);
+            claims.AddRange(claimsDB);
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["jwt:key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

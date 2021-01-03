@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Backend.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -76,6 +77,11 @@ namespace Backend.Data
         public IEnumerable<Expire> GetAllExpiresByExpirationTimeLeft(double days)
         {
             return _context.Expires.Where(p => p.ExpirationDate >= DateTime.Now.Date && p.ExpirationDate <= DateTime.Now.AddDays(days)).Include(storage => storage.IdStorage).Include(item => item.IdItem).Include(user => user.IdUser).ToList();
+        }
+
+        public List<IdentityRole> GetRoles()
+        {
+            return _context.Roles.ToList();
         }
 
         //CREATE methods

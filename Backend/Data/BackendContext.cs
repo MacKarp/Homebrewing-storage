@@ -15,6 +15,5 @@ namespace Backend.Data
         public DbSet<Item> Items { get; set; }
         public DbSet<Storage> Storages { get; set; }
         public DbSet<Expire> Expires { get; set; }
-        //public DbSet<User> Users { get; set; }
     }
 }

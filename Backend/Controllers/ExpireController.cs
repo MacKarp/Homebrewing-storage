@@ -62,24 +62,24 @@ namespace Backend.Controllers
             return CreatedAtRoute(nameof(GetExpireById), new { Id = readDto.ExpireId }, readDto);
         }
 
-        //[HttpPut("{id}")]
-        //public ActionResult UpdateExpire(int id, ExpireUpdateDto expireUpdateDto)
-        //{
-        //    var modelFromRepo = _repository.GetExpireById(id);
-        //    if (modelFromRepo == null)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpPut("{id}")]
+        public ActionResult UpdateExpire(int id, ExpireUpdateDto expireUpdateDto)
+        {
+            var modelFromRepo = _repository.GetExpireById(id);
+            if (modelFromRepo == null)
+            {
+                return NotFound();
+            }
 
-        //    modelFromRepo.IdUser = _repository.GetUserById(expireUpdateDto.UserId);
-        //    modelFromRepo.IdStorage = _repository.GetStorageById(expireUpdateDto.IdStorage);
-        //    modelFromRepo.IdItem = _repository.GetItemById(expireUpdateDto.IdItem);
-        //    modelFromRepo.ExpirationDate = expireUpdateDto.ExpirationDate.Date;
-        //    _repository.UpdateExpire(modelFromRepo);
-        //    _repository.SaveChanges();
+            modelFromRepo.IdUser = _repository.GetUserById(expireUpdateDto.UserId);
+            modelFromRepo.IdStorage = _repository.GetStorageById(expireUpdateDto.IdStorage);
+            modelFromRepo.IdItem = _repository.GetItemById(expireUpdateDto.IdItem);
+            modelFromRepo.ExpirationDate = expireUpdateDto.ExpirationDate.Date;
+            _repository.UpdateExpire(modelFromRepo);
+            _repository.SaveChanges();
 
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
 
         [HttpPatch("{id}")]
         public ActionResult PartialUpdateExpire(int id, JsonPatchDocument<ExpireUpdateDto> patchDocument)

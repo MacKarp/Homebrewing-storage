@@ -11,7 +11,7 @@ namespace Backend.Data
 {
     public static class PrepDb
     {
-        static readonly UserManager<IdentityUser> userManager;
+        //static readonly UserManager<IdentityUser> userManager;
                
         public static void PrepPopulation(IApplicationBuilder app)
         {
