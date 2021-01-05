@@ -15,8 +15,6 @@ namespace Backend.Data
 {
     public static class PrepDb
     {
-        //static readonly UserManager<IdentityUser> userManager;
-               
         public static void PrepPopulation(IApplicationBuilder app)
         {
             using (var serviceScope = app.ApplicationServices.CreateScope())
@@ -106,8 +104,8 @@ namespace Backend.Data
 
             List<Storage> storagesList = context.Storages.ToList(); 
             List<Item> itemsList = context.Items.ToList();
-            int idS = storagesList[0].StorageId; // takes 1st Id from DB
-            int idI = itemsList[0].ItemId;       // takes 1st Id from DB
+            int idS = storagesList[0].StorageId; // takes 1st storage Id from DB
+            int idI = itemsList[0].ItemId;       // takes 1st item Id from DB
 
             if (!context.Expires.AnyAsync().Result)
             {
@@ -116,7 +114,10 @@ namespace Backend.Data
                 
                 foreach (var user in context.Users)
                 {
-                    item.Add(new Expire { IdUser = user, IdStorage = context.Storages.Find(idS), IdItem = context.Items.Find(idI), ExpirationDate = DateTime.Today });
+                    item.Add(new Expire { IdUser = user, 
+                                          IdStorage = context.Storages.Find(idS), 
+                                          IdItem = context.Items.Find(idI), 
+                                          ExpirationDate = DateTime.Today.AddDays(4) });
                 };
                 context.AddRange(item);
                 context.SaveChanges();

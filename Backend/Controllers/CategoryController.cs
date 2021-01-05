@@ -23,7 +23,6 @@ namespace Backend.Controllers
             _mapper = mapper;
         }
 
-
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult<IEnumerable<CategoryReadDto>> GetAllCategories()
