@@ -1,0 +1,160 @@
+%ustawienia
+\documentclass[12pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage[polish]{babel}
+\usepackage{polski}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[left=3.5cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{indentfirst} 
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[most]{tcolorbox}
+\usepackage{fancyhdr}
+\setlength{\parindent}{0.7cm}
+\hypersetup{
+	colorlinks = true,
+	linkcolor = black,
+	filecolor = magenta,
+	urlcolor = blue,
+	}
+\urlstyle{same}	
+	
+\author{
+	\\\includegraphics[width=0.7\linewidth]{img/logoPWSZ.eps} \\\\\\\\
+	\hfill Karpiński Maciej\\
+	\hfill Krysa Marcin\\
+	\hfill Kuczma Łukasz\\
+	\hfill Mertuszka Adam\\\\
+	\hfill Prowadzący mgr inż. Marcin Tracz
+	}
+\title{\textbf{Wprowadzenie do zarządzania projektami deweloperskimi}\\\line(1,0){400}\\\textbf{laboratorium}}
+\date{}
+
+\begin{document}
+
+	%Stron tytułowa
+	\maketitle
+	\thispagestyle{fancy}
+	\fancyhf{}
+	\rhead{\textcolor{gray}{\footnotesize Państwowa Wyższa Szkoła Zawodowa im. Witelona w Legnicy\\Informatyka, rok III\\Semestr zimowy 2020/2021}}	
+	\renewcommand{\headrulewidth}{0pt}
+	\clearpage
+
+	%Spis treści
+	\pagestyle{fancy}
+	\rfoot{\thepage}	
+	\tableofcontents
+	\newpage
+
+	%opis projektu
+	\section{Opis projektu}
+		\indent Projekt nazwaProjektu jest aplikacją internetową przeznaczoną dla pasjonatów warzących piwo w domu, którzy chcieliby posiadać listę posiadanych składników
+		wraz z terminami ważności.    
+	\newpage
+	
+	%Opis poszczególnych ról w grupie, kto za co był odpowiedzialny
+	\section{Role w grupie}
+	\newpage
+	
+	%Opis wymagań i założeń projektowych
+	\section{Wymagania i założenia projektowe}
+		Wymagania projektowe:
+		\begin{itemize}
+			\item Uwierzytelnianie (w tym poprzez social media);
+			\item Przechowywanie różnych typów produktów;
+			\item Powiadomienia;
+			\item Poręczny interfejs;
+			\item Separacja backendu i frontendu;
+			\item Logi.
+		\end{itemize}
+		Założenia:
+		\begin{itemize}
+			\item Użytkownik może tworzyć swoje własne schowki;
+			\item Użytkownik wybiera składnik z listy składników i dodaje go do swojego schowka;
+			\item Użytkownik wprowadza termin ważności składnika;
+			\item Użytkownik dostaje powiadomienie o zbliżającym się terminie ważności;
+			\item Przyjazny interfejs użytkownika;
+		\end{itemize}				 
+	\newpage
+	
+	%Opis działania aplikacji / systemu
+	\section{Opis działania}
+	\newpage
+	
+	%Opis wykorzystanych technologii, narzędzi i rozwiązań technicznych
+	\section{Wykorzystana technologia i narzędzia}
+	\indent skopiować finalny
+	\newpage
+
+	%Opis event stormingu + zrzuty z modelowania (wyraźne)
+	\section{Event storming}
+		\indent Event Storming został przeprowadzony na portalu ,,Miro'' \url{https://miro.com/}, w dniu 05.12.2020 było to nowe i ciekawe doświadczenie dla każdego z członków zespołu.
+		Projekt w momencie przeprowadzenia event stormingu był już w zaawansowanej formie, wraz z rozpisanymi zadaniami więc wykorzystaliśmy spotkanie
+		do stworzenia modelu pracy aplikacji. Podczas tworzenia wizualizacji okazało się, że rozumienie aspektów działania i reagowania aplikacji na niektóre zdarzenia
+		różnią się między poszczególnymi członkami zespołu, ujawnione różnice w wyobrażeniu na temat funkcjonowania poszczególnych komponentów aplikacji udało się wybrać
+		najlepsze rozwiązania. Podczas spotkania wyraźnie było widać brak doświadczenia w tego typu zadaniu, na początku często przerywaliśmy sobie wypowiedzi ale dość szybko
+		doszliśmy do porozumienia i zapanował porządek. Wspólnie doszliśmy do wniosku że było to ciekawe doświadczenie, chodź lepszym byłoby spotkanie ,,twarzą w twarz''
+		wraz z osobą doświadczoną, która mogłaby poprowadzić takie spotkanie. W miarę rozwoju aplikacji do modelu aplikacji były dodawane kolejne szczegóły. 
+		Wynikiem event stormingu jest spójny model działania aplikacji, dzięki czemu każdy członek zespołu może prześledzić przepływ informacji.  
+	\newpage
+	
+	%Backlog
+	\section{Backlog}
+	\newpage
+	
+	%Estymata
+	\section{Estymata}
+	\newpage
+
+	%Opis sprintów + zrzuty
+	\section{Sprinty}
+	\newpage
+	
+	%Interfejs aplikacji (zrzuty) + krótki opis
+	\section{Interfejs aplikacji}
+	\newpage
+	
+	%Informacje uruchomieniowe w środowisku developerskim (instrukcja, co zrobić aby po ściągnięciu projektu z repozytorium GIT, móc uruchomić go na lokalnej maszynie)
+	\section{Uruchomienie w środowisku developerskim}
+		\indent Repozytorium kodu projektu i jego dokumentacja znajdują się w serwisie ,,GitHub'' pod adresem: 
+			\begin{tcolorbox}[minipage,colback=white,arc=0pt,outer arc=0pt, fontupper=\scriptsize]
+				\url{https://github.com/MacKarp/Homebrewing-storage}
+			\end{tcolorbox}
+		\indent Do uruchomienia systemu wymagana jest działająca platforma konteneryzacji ,,Docker''
+			oraz narzędzie ,,Docker Compose'' szczegóły instalacji i konfiguracji wymaganych
+			komponentów, można sprawdzić na stronie internetowej: \url{https://docs.docker.com/}.
+		\indent Po ściągnięciu repozytorium w katalogu głównym projektu znajdują się pliki wsadowe, umożliwiające kompilację i uruchomienie ,,frontendu'' i ,,backendu''
+		wraz z bazą danych.
+		Pliki wsadowe dla systemu Windows:
+		\begin{itemize}
+			\item Backend-Start.bat
+			\item Backend-Start-DEV.bat
+			\item Backend-Stop.bat
+			\item Backend-Stop-DEV.bat
+		\end{itemize}
+		Pliki dla systemu Linux:
+		\begin{itemize}
+			\item Backend-Start.sh
+			\item Backend-Start-DEV.sh
+			\item Backend-Stop.sh
+			\item Backend-Stop-DEV.sh
+		\end{itemize}
+		Pliki ,,Backend-Start.bat'', ,,Backend-Stop.bat'' oraz ,,Backend-Start.sh'' i ,,Backend-Stop.sh'' służą do uruchomiania i zatrzymywania ,,backendu'' w wersji produkcyjnej,
+		która pobierze i uruchomi najnowszą stabilną wersję ,,backendu'' aplikacji i bazę danych z serwisu ,,Docker Hub'', w przypadku pliku z przyrostkiem ,,DEV''
+		zostanie uruchomiona kompilacja wersji deweloperskiej znajdującej się w lokalnym katalogu ,,Backend'' a następnie zostanie utworzony kontener z działającą aplikacją.
+		W przypadku chęci zmiany ustawień ,,backendu'' aplikacji lub kontenera należy edytować - zachowując odpowiednie formatowanie plików yaml - plik w wersji produkcyjnej
+		lub deweloperskiej:
+		\begin{itemize}
+			\item docker-compose-backend.yaml
+			\item docker-compose-backend-dev.yaml		
+		\end{itemize}
+	\newpage	
+	
+	%Podsumowanie, wnioski
+	\section{Podsumowanie}		
+\end{document}
