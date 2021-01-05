@@ -57,7 +57,9 @@ namespace Backend.Data
 
         public Storage GetStorageById(int id)
         {
-            return _context.Storages.Include(user => user.IdUser).FirstOrDefault(p => p.StorageId == id);
+            return _context.Storages
+                .Include(user => user.IdUser)
+                .FirstOrDefault(p => p.StorageId == id);
         }
 
         public IEnumerable<IdentityUser> GetAllUsers()
@@ -77,7 +79,12 @@ namespace Backend.Data
 
         public IEnumerable<Expire> GetAllExpiresByExpirationTimeLeft(double days)
         {
-            return _context.Expires.Where(p => p.ExpirationDate >= DateTime.Now.Date && p.ExpirationDate <= DateTime.Now.AddDays(days)).Include(storage => storage.IdStorage).Include(item => item.IdItem).Include(user => user.IdUser).ToList();
+            return _context.Expires
+                .Where(p => p.ExpirationDate >= DateTime.Now.Date && p.ExpirationDate <= DateTime.Now.AddDays(days))
+                .Include(storage => storage.IdStorage)
+                .Include(item => item.IdItem)
+                .Include(user => user.IdUser)
+                .ToList();
         }
 
         public List<IdentityRole> GetRoles()
