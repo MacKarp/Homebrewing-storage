@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using Backend.Controllers;
 using Backend.Dtos;
 using Backend.Models;
@@ -19,46 +21,45 @@ namespace Backend.Data
         {
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
-                SeedData(serviceScope.ServiceProvider.GetService<BackendContext>());
+                SeedData(serviceScope.ServiceProvider.GetService<BackendContext>(), 
+                         serviceScope.ServiceProvider.GetService<UserManager<IdentityUser>>());
             }
         }
 
-        public static void SeedData(BackendContext context)
-        {
-            
-
+        public static void SeedData(BackendContext context, UserManager<IdentityUser> userManager)
+        {    
             System.Console.WriteLine("Applying Migrations...");
             context.Database.Migrate();
 
             //Populating Database
-
-            if (!context.Users.Any())
+           
+            if (!context.Users.AnyAsync().Result)
             {
                 System.Console.WriteLine("Adding Users...");
-
+                
                 var items = new List<IdentityUser>
                 {
-                    
-                    new IdentityUser { UserName = "admin",  NormalizedUserName = "ADMIN", Email = "admin@admin.pl", PasswordHash = null}, 
-                    new IdentityUser { UserName = "user2@test.test", Email = "user2@test.test"}, //pass: User1password!
-                    new IdentityUser { UserName = "user3@test.test", Email = "user3@test.test"}, //pass: User1password!
-                    new IdentityUser { UserName = "user4@test.test", Email = "user4@test.test"}, //pass: User1password!
+                    new IdentityUser { UserName = "admin@admin.pl", Email = "admin@admin.pl" }, 
+                    new IdentityUser { UserName = "user1@test.test", Email = "user1@test.test"}, 
+                    new IdentityUser { UserName = "user2@test.test", Email = "user2@test.test"}, 
+                    new IdentityUser { UserName = "user3@test.test", Email = "user3@test.test"}, 
                     //new User { UserName = "User 2", UserEmail = "user2@test.test", UserPassword = "user2password"},
                     //new User { UserName = "User 3", UserEmail = "user3@test.test", UserPassword = "user3password"},
                     //new User { UserName = "User 4", UserEmail = "user4@test.test", UserPassword = "user4password"},
                     //new User { UserName = "User 5", UserEmail = "user5@test.test", UserPassword = "user5password"},
                 };
-
-                //foreach(var item in items)
-                //{
-                //   context.Users.Add(item);
-                //}
-
-                context.AddRange(items);
-                context.SaveChanges();
+                foreach(var it in items)
+                {
+                    userManager.CreateAsync(it, "Aa123456!");
+                    userManager.AddClaimAsync(it, new Claim(ClaimTypes.Role, "User"));
+                }
+                userManager.AddClaimAsync(items[0], new Claim(ClaimTypes.Role, "Admin"));
+                
+                //context.AddRange(items);
+                //context.SaveChanges();
             }
 
-            if (!context.Categories.Any())
+            if (!context.Categories.AnyAsync().Result)
             {
                 System.Console.WriteLine("Adding Categories...");
                 var item = new List<Category>
@@ -73,7 +74,7 @@ namespace Backend.Data
                 context.SaveChanges();
             }
 
-            if (!context.Storages.Any())
+            if (!context.Storages.AnyAsync().Result)
             {
                 System.Console.WriteLine("Adding Storage...");
                 var storages = new List<Storage>();
@@ -83,17 +84,12 @@ namespace Backend.Data
                      storages.Add(new Storage { IdUser = user, StorageName = "Storage " + i });
                      i++;
                 };
-                //{
-                //    new Storage {IdUser = context.Users.Find(1), StorageName = "Storage 1"},
-                //    new Storage {IdUser = context.Users.Find(2), StorageName = "Storage 2"},
-                //    new Storage {IdUser = context.Users.Find(3), StorageName = "Storage 3"},
-                   
-                //};
+               
                 context.AddRange(storages);
                 context.SaveChanges();
             }
 
-            if (!context.Items.Any())
+            if (!context.Items.AnyAsync().Result)
             {
                 System.Console.WriteLine("Adding Item...");
                 var item = new List<Item>
@@ -108,13 +104,19 @@ namespace Backend.Data
                 context.SaveChanges();
             }
 
-            if (!context.Expires.Any())
+            List<Storage> storagesList = context.Storages.ToList(); 
+            List<Item> itemsList = context.Items.ToList();
+            int idS = storagesList[0].StorageId; // takes 1st Id from DB
+            int idI = itemsList[0].ItemId;       // takes 1st Id from DB
+
+            if (!context.Expires.AnyAsync().Result)
             {
                 System.Console.WriteLine("Adding Expire...");
                 var item = new List<Expire>();
-                foreach(var user in context.Users)
+                
+                foreach (var user in context.Users)
                 {
-                    item.Add(new Expire { IdUser = user, IdStorage = context.Storages.Find(1), IdItem = context.Items.Find(1), ExpirationDate = DateTime.Today });
+                    item.Add(new Expire { IdUser = user, IdStorage = context.Storages.Find(idS), IdItem = context.Items.Find(idI), ExpirationDate = DateTime.Today });
                 };
                 context.AddRange(item);
                 context.SaveChanges();

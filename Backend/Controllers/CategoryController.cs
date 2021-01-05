@@ -3,6 +3,8 @@ using AutoMapper;
 using Backend.Data;
 using Backend.Dtos;
 using Backend.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +25,7 @@ namespace Backend.Controllers
 
 
         [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult<IEnumerable<CategoryReadDto>> GetAllCategories()
         {
             var item = _repository.GetAllCategories();
@@ -34,6 +37,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet("{id}", Name = "GetCategoryById")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult<CategoryReadDto> GetCategoryById(int id)
         {
             var item = _repository.GetCategoryById(id);
@@ -45,6 +49,7 @@ namespace Backend.Controllers
         }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult<CategoryReadDto> CreateCategory(CategoryCreateDto categoryCreateDto)
         {
             var model = _mapper.Map<Category>(categoryCreateDto);
@@ -57,6 +62,7 @@ namespace Backend.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult UpdateCategory(int id, CategoryUpdateDto categoryUpdateDto)
         {
             var modelFromRepo = _repository.GetCategoryById(id);
@@ -73,6 +79,7 @@ namespace Backend.Controllers
         }
 
         [HttpPatch("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult PartialUpdateCategory(int id, JsonPatchDocument<CategoryUpdateDto> patchDocument)
         {
             var modelFromRepo = _repository.GetCategoryById(id);
@@ -96,6 +103,7 @@ namespace Backend.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult DeleteCategory(int id)
         {
             var modelFromRepo = _repository.GetCategoryById(id);
