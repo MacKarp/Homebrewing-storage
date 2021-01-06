@@ -1,0 +1,13 @@
+\babel@toc {polish}{}
+\contentsline {section}{\numberline {1}Opis projektu}{3}{section.1}%
+\contentsline {section}{\numberline {2}Role w grupie}{4}{section.2}%
+\contentsline {section}{\numberline {3}Wymagania i założenia projektowe}{5}{section.3}%
+\contentsline {section}{\numberline {4}Opis działania}{6}{section.4}%
+\contentsline {section}{\numberline {5}Wykorzystana technologia i narzędzia}{7}{section.5}%
+\contentsline {section}{\numberline {6}Event storming}{8}{section.6}%
+\contentsline {section}{\numberline {7}Backlog}{9}{section.7}%
+\contentsline {section}{\numberline {8}Estymata}{10}{section.8}%
+\contentsline {section}{\numberline {9}Sprinty}{11}{section.9}%
+\contentsline {section}{\numberline {10}Interfejs aplikacji}{12}{section.10}%
+\contentsline {section}{\numberline {11}Uruchomienie w środowisku developerskim}{13}{section.11}%
+\contentsline {section}{\numberline {12}Podsumowanie}{14}{section.12}%

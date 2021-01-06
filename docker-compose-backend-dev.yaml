@@ -11,7 +11,7 @@ services:
         depends_on:
             - db
         environment:
-            DBServer: Database
+            DBServer: DevDatabase
             DBPort: 1433
             DBUser: SA
             DBPassword: ThisIsNotSuperSecretP@55w0rd
@@ -33,9 +33,10 @@ services:
             ACCEPT_EULA: Y
             SA_PASSWORD: ThisIsNotSuperSecretP@55w0rd
             MSSQL_PID: Express
-        container_name: Database
+        container_name: DevDatabase
         ports: 
             - "14331:1433"            
+
     seq:
         image: datalust/seq:latest
         restart: always
