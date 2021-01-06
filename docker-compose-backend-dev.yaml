@@ -36,3 +36,13 @@ services:
         container_name: Database
         ports: 
             - "14331:1433"            
+    seq:
+        image: datalust/seq:latest
+        restart: always
+        environment:
+            ACCEPT_EULA: Y
+        volumes:
+            - /data
+        ports:
+            - "8081:80"
+   

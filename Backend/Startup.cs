@@ -61,7 +61,7 @@ namespace Backend
                 .AddJwtBearer(options =>
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    // Token configuration1
+                    // Token configuration
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateLifetime = true,
@@ -88,7 +88,7 @@ namespace Backend
 
             services.AddScoped<IBackendRepo, SqlBackendRepo>();
 
-            var notificationSchedule = Configuration["NotificationSchedule"] ?? "0/30 * * * * ?";
+            var notificationSchedule = Configuration["NotificationSchedule"] ?? "5/00 * * * * ?";
             Console.WriteLine("NotificationSchedule: " + notificationSchedule);
             services.AddQuartz(q =>
             {
