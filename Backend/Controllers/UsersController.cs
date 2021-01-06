@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace Backend.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly ILogger<UsersController> _logger;
         private readonly IConfiguration _configuration;
 
         public UsersController(
@@ -34,6 +36,7 @@ namespace Backend.Controllers
             IMapper mapper, 
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
+            ILogger<UsersController> logger,
             IConfiguration configuration
             )
         {
@@ -41,6 +44,7 @@ namespace Backend.Controllers
             _mapper = mapper;
             _userManager = userManager;
             _signInManager = signInManager;
+            _logger = logger;
             _configuration = configuration;
         }
 
@@ -82,10 +86,11 @@ namespace Backend.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public ActionResult<IEnumerable<UserReadDto>> GetAllUsers()
         {
-            var user = _repository.GetAllUsers();
-            if (user != null)
+            var users = _repository.GetAllUsers();
+            if (users != null)
             {
-                return Ok(_mapper.Map<IEnumerable<UserReadDto>>(user));
+                _logger.LogInformation($"{DateTime.UtcNow} - Getting users list by {HttpContext.User.Identity.Name}");
+                return Ok(_mapper.Map<IEnumerable<UserReadDto>>(users));
             }
             else return NotFound();
         }
@@ -127,6 +132,7 @@ namespace Backend.Controllers
             await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "User"));
             if (result.Succeeded)
             {
+                
                 return await BuildToken(model);
             }
             else

@@ -17,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using Quartz;
+using Serilog;
 
 namespace Backend
 {
@@ -46,9 +47,9 @@ namespace Backend
             var emailServer = Configuration["SmtpServer"] ?? "DefaultEmailServer";
             var emailPort = (Configuration["SmtpPort"]) ?? "0";
             var emailSsl = (Configuration["SSL"]) ?? "true";
-            var emailUserName = Configuration["SmtpUserName"] ?? "DefaultUserName";
+            var emailUserName = Configuration["SmtpUserName"] ?? "DefaultUserName@DefaultEmailServer";
             var emailPassword = Configuration["SmtpUserPassword"] ?? "DefaultUserPassword";
-
+            
             services.AddSingleton<IEmailConfiguration>(new EmailConfiguration() { SmtpServer = emailServer, SmtpPort = int.Parse(emailPort), Ssl = Boolean.Parse(emailSsl), SmtpUserName = emailUserName, SmtpPassword = emailPassword });
             services.AddTransient<IEmailService, EmailService>();
 
@@ -60,7 +61,7 @@ namespace Backend
                 .AddJwtBearer(options =>
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    // Token configuration1
+                    // Token configuration
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateLifetime = true,
@@ -87,7 +88,7 @@ namespace Backend
 
             services.AddScoped<IBackendRepo, SqlBackendRepo>();
 
-            var notificationSchedule = Configuration["NotificationSchedule"] ?? "0/30 * * * * ?";
+            var notificationSchedule = Configuration["NotificationSchedule"] ?? "5/00 * * * * ?";
             Console.WriteLine("NotificationSchedule: " + notificationSchedule);
             services.AddQuartz(q =>
             {
@@ -124,9 +125,10 @@ namespace Backend
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSerilogRequestLogging();
+
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
 
