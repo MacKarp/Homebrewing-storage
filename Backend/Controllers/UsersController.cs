@@ -89,7 +89,7 @@ namespace Backend.Controllers
             var users = _repository.GetAllUsers();
             if (users != null)
             {
-                _logger.LogInformation($"Getting users list by {HttpContext.User.Identity.Name} - {DateTime.UtcNow}");
+                _logger.LogInformation($"{DateTime.UtcNow} - Getting users list by {HttpContext.User.Identity.Name}");
                 return Ok(_mapper.Map<IEnumerable<UserReadDto>>(users));
             }
             else return NotFound();

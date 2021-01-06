@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using MailKit.Net.Smtp;
+using Microsoft.Extensions.Logging;
 using MimeKit;
 using MimeKit.Text;
 
@@ -8,10 +9,12 @@ namespace Backend.Email
     public class EmailService : IEmailService
     {
         private readonly IEmailConfiguration _emailConfiguration;
+        private readonly ILogger<EmailService> _logger;
 
-        public EmailService(IEmailConfiguration emailConfiguration)
+        public EmailService(IEmailConfiguration emailConfiguration, ILogger<EmailService> logger)
         {
             _emailConfiguration = emailConfiguration;
+            _logger = logger;
         }
 
         public void Send(EmailMessage emailMessage)
@@ -33,11 +36,19 @@ namespace Backend.Email
                 Debug.WriteLine(_emailConfiguration.SmtpServer);
                 Debug.WriteLine(_emailConfiguration.SmtpPort);
                 Debug.WriteLine(_emailConfiguration.Ssl);
-                emailClient.Connect(_emailConfiguration.SmtpServer, _emailConfiguration.SmtpPort,
+                try
+                {
+                    emailClient.Connect(_emailConfiguration.SmtpServer, _emailConfiguration.SmtpPort,
                     _emailConfiguration.Ssl);
-                emailClient.Authenticate(_emailConfiguration.SmtpUserName, _emailConfiguration.SmtpPassword);
-                emailClient.Send(message);
-                emailClient.Disconnect(true);
+                    emailClient.Authenticate(_emailConfiguration.SmtpUserName, _emailConfiguration.SmtpPassword);
+                    emailClient.Send(message);
+                    emailClient.Disconnect(true);
+                }
+                catch (System.Exception ex)
+                {
+                    _logger.LogError("Email sending service error. Exception: {exException}", ex.Message);
+                }
+                
             }
 
         }
