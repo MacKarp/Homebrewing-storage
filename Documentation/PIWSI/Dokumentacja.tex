@@ -23,9 +23,14 @@
 	}
 \urlstyle{same}	
 	
-\author{Projektowanie i wdrażanie systemów informatycznych\\\\\\\\\\\\\includegraphics[width=0.7\linewidth]{img/logoPWSZ.eps}\\\\\\\\Karpiński Maciej\\Krysa Marcin\\Kuczma Łukasz\\Mertuszka Adam\\\\\\\\}
-\title{}
-
+\author{\\\\\\\\\includegraphics[width=0.7\linewidth]{img/logoPWSZ.eps}\\\\\\\\
+	Karpiński Maciej\\
+	Krysa Marcin\\
+	Kuczma Łukasz\\
+	Mertuszka Adam\\\\\\\\
+	Projektowanie i wdrażanie systemów informatycznych}
+\title{Projekt i wdrożenie systemu wspomagania realizacji zamówień w firmie UNI-PLAST w Lubaniu}
+\date{}
 \begin{document}
 
 	%Stron tytułowa
@@ -42,9 +47,10 @@
 	\section{Prezentacja firmy}
 		\indent UNI-PLAST to firma zajmująca się sprzedażą oraz montażem wszelkiego rodzaju stolarki otworowej tj. stolarki PVC, drewnianej, aluminiowej, rolet zewnętrznych,
 			bram garażowych i przemysłowych, jak i drobniejszymi elementami wykończenia budynków w stanach deweloperskich, jak sprzedaż i montaż parapetów wewnętrznych i zewnętrznych
-			wykonanych z wszelakich materiałów (granitów, marmurów, konglomeratów czy kwarców). Firma posiada swoją siedzibę Lubaniu, przy ulicy Dąbrowskiego 2, swoją działalność prowadzi
-			na terenie województwa dolnośląskiego, lubuskiego, wielkopolskiego i opolskiego a także od 2018 roku na terenie Niemiec i Czech. Firma UNI-PLAST obsługuje zarówno klientów
-			indywidualnych jak i klientów inwestycyjnych. Przedsiębiorstwo posiada również swoją stronę internetową znajdującą się pod adresem: \url{https://www.uni-plast.eu/},
+			wykonanych z wszelakich materiałów (granitów, marmurów, konglomeratów czy kwarców). Firma posiada swoją siedzibę Lubaniu, przy ulicy Dąbrowskiego 2, prowadzi
+			działalność od 1998 roku na terenach województwa dolnośląskiego, lubuskiego, wielkopolskiego i opolskiego a także od 2018 roku na terenie Niemiec i Czech.
+			Firma UNI-PLAST obsługuje zarówno klientów indywidualnych jak i klientów inwestycyjnych. Przedsiębiorstwo posiada również swoją stronę internetową
+			znajdującą się pod adresem: \url{https://www.uni-plast.eu/},
 			na której znajduje się m.in.:
 		\begin{itemize}
 			\item katalog produktów,
@@ -54,11 +60,19 @@
 		\indent Ze względów logistycznych firmę można podzielić na dwie części - część biurową, oraz część magazynową i montażową.\\
 		\indent Część biurowa zajmuje się wszelkiego rodzaju doradztwem technicznym, pozyskiwaniem klienta, obsługą reklamacji a przede wszystkim koordynacji zamówień,
 			w tym podpisywanie umów oraz przekazywaniem zamówień materiałowych na produkcję w celu realizacji tych umów.
-			Pracownicy biurowi zajmują się również częścią logistyczną polegająca na ustaleniu optymalnej trasy montażowej, serwisowej. Dodatkowo muszą zadbać o w miarę oszczędną trasę
-			dla pomiarowców, którzy zajmują się wykonywaniem indywidualnych pomiarów u klienta w celu bezproblemowych realizacji zamówień. Ostatnim z obowiązków pracowników biurowych
+			Pracownicy biurowi zajmują się również częścią logistyczną polegająca na ustaleniu optymalnej trasy montażowej i serwisowej. Dodatkowo muszą również zadbać o~w~miarę
+			optymalną trasę
+			dla pomiarowców, którzy zajmują się wykonywaniem indywidualnych pomiarów u klienta w celu bezproblemowych realizacji zamówień. Ostatnim z~obowiązków pracowników biurowych
 			jest archiwizacja dokumentów wraz z faktoringiem.\\
-		\indent Część magazynowa i montażowa zajmuje się przyjmowaniem towaru, wykonywanie serwisów, napraw i montażem wszystkich wymienionych wyżej elementów bezpośrednio
+		\indent Część magazynowa i montażowa zajmuje się przyjmowaniem towaru, wykonywaniem serwisów, napraw i montażem wszystkich wymienionych wyżej elementów bezpośrednio
 			u klienta.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.8\textwidth]{img/siedziba.jpg}
+			\caption{Siedziba firmy UNI-PLAST}
+			\label{fig:lokalizacja}
+		\end{figure}
+
 	\newpage
 
 	%sekcja druga, Analiza słabych, mocnych, szans i zagrożenia 
@@ -100,8 +114,9 @@
 		\indent Lider projektu Adam Mertuszka jest jednocześnie pracownikiem firmy UNI-PLAST w~dziale obsługi klienta, posiada wiedzę dotyczącą procedur
 			i obiegu dokumentów w firmie. Celem projektowanego systemu
 			informatycznego jest usprawnienie realizacji umów z~kontrahentami poprzez poprawę obiegu dokumentów oraz skuteczne gromadzenie informacji na temat zamówienia, tak aby dział
-			realizujący zamówienie posiadał kompletną listę zamówionych elementów i inny rzeczy wymaganych do montażu u klienta, bez konieczności
-			przeglądania umów przez pracownika magazynu w dziale sprzedaży. Model działania systemu informatycznego przedstawia rysunek nr. \ref{fig:sys_model}\\
+			montażowy realizujący zamówienie posiadał kompletną listę zamówionych elementów i innych rzeczy wymaganych do montażu u klienta, bez konieczności
+			ręcznego przygotowywania dokumentów przez pracownika biurowego zawierające wszystkie dane wymagane do realizacji zamówienia. Model działania systemu informatycznego
+			przedstawia rysunek nr. \ref{fig:sys_model}\\
 			\begin{figure}[H]
 			\centering
 			\includegraphics[width=\textwidth]{img/model_systemu_informatycznego.jpg}
@@ -118,6 +133,7 @@
 				\item Baza danych
 				\item Frontend
 			\end{itemize}
+		\subsection{Backend - API}
 		\indent Backend - API, realizuje łączność między modułem frontendu a bazą danych, jest odpowiedzialny za przetwarzanie i udostępnianie danych. Backend udostępnia API
 			dzięki, któremu	moduł frontendu ma możliwość pobierania i wysyłania niezbędnych danych z bazy danych. Zastosowanie API pozwala w przyszłości rozbudować system o nową
 			funkcjonalność lub alternatywne moduły komunikacyjne z użytkownikiem. Budowa backendu uniemożliwia pobieranie zbędnych danych, dzięki czemu ruch sieciowy oraz wymagana moc
@@ -128,6 +144,7 @@
 			\caption{Model Backend - API}
 			\label{fig:api_model}
 		\end{figure}
+		\subsection{Baza danych}
 		\indent Baza danych realizuje funkcję gromadzenia danych wprowadzanych przez użytkowników. Dane wprowadzone do bazy danych są raz dziennie automatycznie archiwizowane
 			w kopii zapasowej na twardym dysku zgodnie z ustawionym harmonogramem. Model bazy danych przedstawia rysunek nr. \ref{fig:db_model}\\
 		\begin{figure}[H]
@@ -136,8 +153,10 @@
 			\caption{Model bazy danych}
 		\label{fig:db_model}
 		\end{figure}
+		\subsection{Frontend}
 		\indent Frontend realizuje funkcje komunikacji pomiędzy użytkownikiem a modułem backendu. Udostępnia prosty i przejrzysty interfejs użytkownika, przetwarza
-			dane pobrane z API w sposób przyjazny dla użytkownika, oraz umożliwia w łatwy sposób wprowadzanie nowych danych do systemu informatycznego.\\			  
+			dane pobrane z API w sposób przyjazny dla użytkownika, oraz umożliwia w łatwy sposób wprowadzanie nowych danych do systemu informatycznego.\\	
+		\subsection{Funkcjonalność systemu informatycznego}		  
 		\indent System informacyjny realizuje następującą funkcjonalność:
 			\begin{itemize}
 				\item Przyjazny interfejs użytkownika - interfejs użytkownika był projektowany i konsultowany wraz z użytkownikami przedsiębiorstwa, którzy będą go codziennie
@@ -161,12 +180,24 @@
 					Zapora sieciowa na serwerze automatycznie blokuje wszelki ruch na portach, które nie są wykorzystywane w realizacji zadań systemu informatycznego, systemu operacyjnego
 					oraz usługi konteneryzacji Docker;
 			\end{itemize}
-		\indent System informatyczny musi działać na wszystkich komputerach znajdujących się w firmie - zrealizowane jest to dzięki zrealizowaniu frontendu systemu jako aplikacji
-				webowej, która do uruchomienia wymaga jedynie współczesnej przeglądarki internetowej.		
+		\subsection{Wymagania techniczne klienta systemu}
+			\begin{itemize}
+				\item Przeglądarka internetowa w wersji co najmniej: Google Chrome 26, Mozilla Firefox 21, Internet Explorer 9, Safari 6.1, Microsoft Edge 12, Opera 15;
+				\item Połączenie z siecią LAN w przedsiębiorstwie.
+			\end{itemize}
+		\subsection{Wymagania techniczne serwera systemu}
+			\begin{itemize}
+				\item System operacyjny obsługujący platformę konteneryzacji Docker,
+				\item Procesor min. 2GHz dual-core x64,  				
+				\item min. 4GB RAM,
+				\item min. 50GB wolnej przestrzeni dyskowej, rozłożonej między minimum 3 dyski,
+				\item połączenie z siecią LAN w przedsiębiorstwie.
+			\end{itemize}				 	
 	\newpage
 	
 	%Sekcja czawarta, wybór narzędzi
 	\section{Wybór narzędzi}
+		\indent Do stworzenia systemu informatycznego wykorzystano następujące narzędzia i biblioteki:
 		\subsection{ASP.NET Core 3.1}
 			\indent ASP.Net Core jest wysokowydajnym frameworkiem, do budowania nowoczesnych aplikacji internetowych wykorzystujących moc obliczeniową chmur. ASP.Net Core jest technologią
 			open - source, wykorzystującą silnik html Razor, dzięki której możliwe jest tworzenie aplikacji mulitplaformowych, które mogą być używane na każdym urządzeniu wyposażonym
@@ -335,9 +366,9 @@
 	
 	%Sekcja szósta, Oszacowanie kosztów - detale
 	\section{Oszacowanie kosztów}
-		\indent Łączny koszt wdrożenia aplikacji w firmie wyniósł: 13 068zł, na którą składały się poszczególne pozycje:
+		\indent Łączny koszt wdrożenia aplikacji w firmie wyniósł: 18 113zł, na którą składały się poszczególne pozycje:
 		\begin{itemize}
-			\item Projektowanie i programowanie aplikacji: 10 055zł
+			\item Projektowanie i programowanie aplikacji: 15 100zł
 			\item Wdrożenie na produkcję: 1 300zł
 			\item Serwer: 1 713zł
 		\end{itemize}
@@ -352,21 +383,21 @@
 				\hline
 				Projekt aplikacji & 5 & 50zł & 250zł\\
 				\hline
-				Programowanie frontendu & 80 & 30zł & 2 400zł\\
+				Programowanie frontendu & 80 & 60zł & 4 800zł\\
 				\hline
-				Programowanie backendu & 100 & 60zł & 6 000zł\\
+				Programowanie backendu & 100 & 80zł & 8 000zł\\
 				\hline
-				Programowanie testów & 10 & 30zł & 300zł\\
+				Programowanie testów & 10 & 60zł & 600zł\\
 				\hline
-				DevOps & 5 & 35zł & 175zł\\
+				DevOps & 5 & 50zł & 250zł\\
 				\hline
-				Poprawki 1 & 10 & 40zł & 400zł\\
+				Poprawki 1 & 10 & 50zł & 500zł\\
 				\hline
-				Poprawki 2 & 5 & 40zł & 200zł\\
+				Poprawki 2 & 5 & 50zł & 250zł\\
 				\hline
-				Dokumentacja & 6 & 30zł & 180zł\\
+				Dokumentacja & 6 & 50zł & 300zł\\
 				\hline
-				\multicolumn{3}{|l|}{Razem:} & 10 055zł\\
+				\multicolumn{3}{|l|}{Razem:} & 15 100zł\\
 				\hline
 			\end{tabular}
 			\caption{Koszt projektu i programowania aplikacji}
@@ -469,7 +500,7 @@
 	\newpage
 	
 	%Sekcja dziewiąta, spis tabel i obrazków
-	\section{Spis tabel i obrazków}
-		\listoftables
+	\section{Spis tabel i rysunków}
 		\listoffigures
+		\listoftables
 \end{document}

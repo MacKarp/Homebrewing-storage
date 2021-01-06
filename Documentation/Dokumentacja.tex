@@ -24,7 +24,7 @@
 \urlstyle{same}	
 	
 \author{Karpiński Maciej\\Krysa Marcin\\Kuczma Łukasz\\Mertuszka Adam\\\\\\\includegraphics[width=0.7\linewidth]{img/logoPWSZ.eps}\\\\\\\\Projektowanie i programowanie systemów internetowych II}
-\title{Nazwa aplikacji}
+\title{Magazynek piwosza}
 
 \begin{document}
 
@@ -40,21 +40,24 @@
 
 	%Początek pierwszej sekcji opisującej system
 	\section{Opis funkcjonalny systemu}
-		\indent jest aplikacją internetową pozwalającą zarejestrowanemu i zalogowanemu użytkownikowi na tworzenie swoich wirtualnych magazynów i dodawania
-		do nich swoich posiadanych składników wraz z ich datami ważności. Funkcjonalność aplikacji obejmuje:
+		\indent Projekt ,,Magazynek piwosza'' jest aplikacją internetową przeznaczoną dla pasjonatów warzących piwo w domu, którzy chcieliby posiadać listę posiadanych składników.\\
+		\indent ,,Magazynek piwosza'' pozwala zarejestrowanemu i zalogowanemu użytkownikowi na tworzenie swoich wirtualnych ,,schowków'' i przypisywania do nich
+		składników wraz z ich datami ważności.\\
+		\indent Funkcjonalność aplikacji obejmuje:
 		\begin{itemize}
 			\item Dostęp do aplikacji poprzez przeglądarkę www (PC, smartphone)
 			\item rejestrację i logowanie użytkowników,
 			\item dodawanie, modyfikowanie i usuwanie kategorii przedmiotów,
 			\item dodawanie, modyfikowanie i usuwanie przedmiotów,
-			\item dodawanie, modyfikowanie i usuwanie magazynów,
+			\item dodawanie, modyfikowanie i usuwanie schowków,
 			\item wysyłanie powiadomień o zbliżającym się terminie ważności,
+			\item logowanie akcji użytkownika.
 		\end{itemize}
 	\newpage
 
 	%sekcja druga, opis wykorzystanych technologii
 	\section{Opis technologiczny}
-		\indent Przy tworzeniu projektu aplikacji wykorzystano następujące technologie:
+		\indent Przy tworzeniu projektu aplikacji ,,Magazynek piwosza'' wykorzystano następujące technologie:
 
 		\subsection{ASP.NET Core 3.1}
 			\indent ASP.Net Core jest wysokowydajnym frameworkiem, do budowania nowoczesnych aplikacji internetowych wykorzystujących moc obliczeniową chmur. ASP.Net Core jest technologią
@@ -135,7 +138,11 @@
 
 		\subsection{Swashbuckle}
 			\indent Swashbuckle jest biblioteką, która dodaje zestaw narzędzi ,,Swagger" generujących automatycznie dokumentację API aplikacji,
-				wyposażoną w przejrzysty interfejs użytkownika. Swashbuckle umożliwia również testowanie API. Dokumentacja jest dostępna pod adresem: ,,/swagger"
+				wyposażoną w przejrzysty interfejs użytkownika. Swashbuckle umożliwia również testowanie API. Dokumentacja jest dostępna pod adresem internetowym:
+			\begin{tcolorbox}[minipage,colback=white,arc=0pt,outer arc=0pt, fontupper=\scriptsize]
+				\center					
+				\url{http://homebrew.tplinkdns.com:81/swagger}
+			\end{tcolorbox}
 
 		\subsection{xUnit.net}
 			\indent xUnit.net to darmowe narzędzie typu open source służące do testowania jednostkowego
@@ -147,15 +154,23 @@
 	%Sekcja trzecia, instrukcja lokalnego i zdalnego uruchomienia systemu
 	\section{Instrukcja lokalnego i zdalnego uruchomienia systemu}
 		\subsection{Lokalne uruchomienie systemu}
-			\indent Aplikacja ,,nazwa aplikacji'' jest systemem internetowym, który jest dostępny
+			\indent Aplikacja ,,Magazynek piwosza'' jest systemem internetowym, który jest dostępny
 			poprzez dowolną współczesną przeglądarkę internetową. Aby skorzystać z aplikacji należy
-			uruchomić przeglądarkę internetową a następnie udać się pod adres \url{www}.
+			uruchomić przeglądarkę internetową a następnie udać się pod adres internetowy:
+				\begin{tcolorbox}[minipage,colback=white,arc=0pt,outer arc=0pt, fontupper=\scriptsize]
+					\center					
+					\url{http://homebrew.tplinkdns.com}
+				\end{tcolorbox}
 			
 		\subsection{Zdalne uruchomienie systemu}
 			\indent Do uruchomienia systemu wymagana jest działająca platforma konteneryzacji ,,Docker''
 			oraz narzędzie ,,Docker Compose'' szczegóły instalacji i konfiguracji wymaganych
-			komponentów, można sprawdzić na stronie internetowej: \url{https://docs.docker.com/}.
-			Po poprawnym zainstalowaniu i skonfigurowaniu narzędzi należy utworzyć plik ,,docker-compose.yaml'',
+			komponentów, można sprawdzić na stronie internetowej:
+			\begin{tcolorbox}[minipage,colback=white,arc=0pt,outer arc=0pt, fontupper=\scriptsize]
+				\center					
+				\url{https://docs.docker.com/}
+			\end{tcolorbox}			
+			Po poprawnym zainstalowaniu i skonfigurowaniu narzędzi należy utworzyć plik o nazwie: ,,docker-compose.yaml'',
 			z następującą przykładową konfiguracją:  
 			\begin{tcolorbox}[minipage,colback=white,arc=0pt,outer arc=0pt, fontupper=\footnotesize]
 				\begin{tabbing}
@@ -194,7 +209,7 @@
 					\end{tabbing}
 				\end{tcolorbox}	
 				\begin{tcolorbox}[minipage,colback=white,arc=0pt,outer arc=0pt, fontupper=\scriptsize]
-					Uwaga! Plik konfiguracyjny wymaga odpowiedniego formatowania, przykładowe pliki konfiguracyjne są dostępne w repozytorium projektu
+					Uwaga! Plik konfiguracyjny wymaga odpowiedniego formatowania, przykładowe pliki konfiguracyjne są dostępne w repozytorium projektu:
 					\url{https://github.com/MacKarp/Homebrewing-storage}
 				\end{tcolorbox}
 				Po zapisaniu pliku konfiguracyjnego należy uruchomić następujące konsolowe polecenie w folderze zawierającym plik ,,docker-compose.yaml'':
@@ -225,12 +240,14 @@
 	\section{Repozytorium kodu i dokumentacja techniczna}
 		\indent Repozytorium kodu projektu i jego dokumentacja znajdują się w serwisie GitHub pod adresem: 
 			\begin{tcolorbox}[minipage,colback=white,arc=0pt,outer arc=0pt, fontupper=\scriptsize]
+				\center									
 				\url{https://github.com/MacKarp/Homebrewing-storage}
 			\end{tcolorbox}
 		\indent Dokumentacja API dostępna jest pod adresem:
-			\begin{tcolorbox}[minipage,colback=white,arc=0pt,outer arc=0pt, fontupper=\scriptsize]
-				\url{http://adres:81/swagger}
-			\end{tcolorbox}
+				\begin{tcolorbox}[minipage,colback=white,arc=0pt,outer arc=0pt, fontupper=\scriptsize]
+					\center					
+					\url{http://homebrew.tplinkdns.com:81/swagger}
+				\end{tcolorbox}
 	\newpage
 	
 	\section{Wnioski projektowe}
