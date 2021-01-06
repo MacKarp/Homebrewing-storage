@@ -46,9 +46,9 @@ namespace Backend
             var emailServer = Configuration["SmtpServer"] ?? "DefaultEmailServer";
             var emailPort = (Configuration["SmtpPort"]) ?? "0";
             var emailSsl = (Configuration["SSL"]) ?? "true";
-            var emailUserName = Configuration["SmtpUserName"] ?? "DefaultUserName";
+            var emailUserName = Configuration["SmtpUserName"] ?? "DefaultUserName@DefaultEmailServer";
             var emailPassword = Configuration["SmtpUserPassword"] ?? "DefaultUserPassword";
-
+            
             services.AddSingleton<IEmailConfiguration>(new EmailConfiguration() { SmtpServer = emailServer, SmtpPort = int.Parse(emailPort), Ssl = Boolean.Parse(emailSsl), SmtpUserName = emailUserName, SmtpPassword = emailPassword });
             services.AddTransient<IEmailService, EmailService>();
 
