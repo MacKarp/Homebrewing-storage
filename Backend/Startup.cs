@@ -17,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using Quartz;
+using Serilog;
 
 namespace Backend
 {
@@ -124,9 +125,10 @@ namespace Backend
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSerilogRequestLogging();
+
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
 
