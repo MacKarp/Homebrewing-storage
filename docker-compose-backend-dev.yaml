@@ -38,11 +38,12 @@ services:
             - "14331:1433"            
     seq:
         image: datalust/seq:latest
-        restart: always
+        container_name: Seq_Logs
+        restart: unless-stopped
         environment:
             ACCEPT_EULA: Y
         volumes:
-            - /data
+             - "./Backend/LocalLog:/data:rw"
         ports:
             - "8081:80"
    
