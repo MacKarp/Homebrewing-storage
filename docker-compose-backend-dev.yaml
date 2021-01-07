@@ -39,7 +39,7 @@ services:
 
     seq:
         image: datalust/seq:latest
-        container_name: Seq_Logs
+        container_name: Seq_Logs_DEV
         restart: unless-stopped
         environment:
             ACCEPT_EULA: Y
