@@ -5,9 +5,9 @@
 \contentsline {section}{\numberline {4}Opis działania}{6}{section.4}%
 \contentsline {section}{\numberline {5}Wykorzystana technologia i narzędzia}{7}{section.5}%
 \contentsline {section}{\numberline {6}Event storming}{8}{section.6}%
-\contentsline {section}{\numberline {7}Backlog}{9}{section.7}%
-\contentsline {section}{\numberline {8}Estymata}{10}{section.8}%
-\contentsline {section}{\numberline {9}Sprinty}{11}{section.9}%
-\contentsline {section}{\numberline {10}Interfejs aplikacji}{12}{section.10}%
-\contentsline {section}{\numberline {11}Uruchomienie w środowisku developerskim}{13}{section.11}%
-\contentsline {section}{\numberline {12}Podsumowanie}{14}{section.12}%
+\contentsline {section}{\numberline {7}Backlog}{11}{section.7}%
+\contentsline {section}{\numberline {8}Estymata}{12}{section.8}%
+\contentsline {section}{\numberline {9}Sprinty}{13}{section.9}%
+\contentsline {section}{\numberline {10}Interfejs aplikacji}{17}{section.10}%
+\contentsline {section}{\numberline {11}Uruchomienie w środowisku developerskim}{18}{section.11}%
+\contentsline {section}{\numberline {12}Podsumowanie}{19}{section.12}%
