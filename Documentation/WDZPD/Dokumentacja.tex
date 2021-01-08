@@ -68,6 +68,31 @@
 	
 	%Opis poszczególnych ról w grupie, kto za co był odpowiedzialny
 	\section{Role w grupie}
+	\indent Każdy z członków zespołu posiada następujące role:
+	\begin{itemize}
+		\item Karpiński Maciej:
+			\begin{itemize}
+				\item Backend
+				\item Baza danych
+				\item DevOps
+				\item Dokumentacja
+				\item Testy integracyjne
+			\end{itemize}
+		\item Krysa Marcin
+			\begin{itemize}
+				\item Frontend
+			\end{itemize}
+		\item Kuczma Łukasz
+			\begin{itemize}
+				\item Backend
+			\end{itemize}
+		\item Mertuszka Adam
+			\begin{itemize}
+				\item Frontend
+				\item Lider
+				\item Project Manager
+			\end{itemize}
+	\end{itemize}		
 	\newpage
 	
 	%Opis wymagań i założeń projektowych
@@ -102,26 +127,118 @@
 
 	%Opis event stormingu + zrzuty z modelowania (wyraźne)
 	\section{Event storming}
-		\indent Event Storming został przeprowadzony na portalu ,,Miro'' \url{https://miro.com/}, w dniu 05.12.2020 było to nowe i ciekawe doświadczenie dla każdego z członków zespołu.
+		\indent Event Storming został przeprowadzony na portalu ,,Miro'' \url{https://miro.com/}, w dniu 13.12.2020 było to nowe i ciekawe doświadczenie dla każdego z członków zespołu.
 		Projekt w momencie przeprowadzenia event stormingu był już w zaawansowanej formie, wraz z rozpisanymi zadaniami więc wykorzystaliśmy spotkanie
-		do stworzenia modelu pracy aplikacji. Podczas tworzenia wizualizacji okazało się, że rozumienie aspektów działania i reagowania aplikacji na niektóre zdarzenia
-		różnią się między poszczególnymi członkami zespołu, ujawnione różnice w wyobrażeniu na temat funkcjonowania poszczególnych komponentów aplikacji udało się wybrać
-		najlepsze rozwiązania. Podczas spotkania wyraźnie było widać brak doświadczenia w tego typu zadaniu, na początku często przerywaliśmy sobie wypowiedzi ale dość szybko
-		doszliśmy do porozumienia i zapanował porządek. Wspólnie doszliśmy do wniosku że było to ciekawe doświadczenie, chodź lepszym byłoby spotkanie ,,twarzą w twarz''
-		wraz z osobą doświadczoną, która mogłaby poprowadzić takie spotkanie. W miarę rozwoju aplikacji do modelu aplikacji były dodawane kolejne szczegóły. 
-		Wynikiem event stormingu jest spójny model działania aplikacji, dzięki czemu każdy członek zespołu może prześledzić przepływ informacji.  
+		do stworzenia modelu pracy aplikacji.\\
+		\indent Podczas tworzenia wizualizacji okazało się, że rozumienie aspektów działania i reagowania aplikacji na niektóre zdarzenia
+		różnią się między poszczególnymi członkami zespołu, ujawnione różnice w wyobrażeniu na temat funkcjonowania poszczególnych komponentów aplikacji spowodowały dyskusje
+		nad wyborem najlepszego rozwiązania. Podczas spotkania wyraźnie było widać brak doświadczenia w tego typu zadaniu, na początku często przerywaliśmy sobie wypowiedzi ale dość szybko
+		doszliśmy do porozumienia i zapanował porządek. W miarę rozwoju aplikacji do modelu były dodawane kolejne szczegóły. 
+		Wynikiem event stormingu jest spójny model działania aplikacji, dzięki czemu każdy członek zespołu może prześledzić przepływ informacji.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.6\textwidth]{img/miro_2.jpg}
+			\caption{Miro - Legenda}
+			\label{fig:miro-legenda}
+		\end{figure}				
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{img/miro_1.jpg}
+			\caption{Miro - Schemat działania aplikacji}
+			\label{fig:miro-ogolne}
+		\end{figure}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{img/miro_4.jpg}
+			\caption{Miro - Frontend aplikacji}
+			\label{fig:miro-front}
+		\end{figure}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{img/miro_3.jpg}
+			\caption{Miro - Backend aplikacji}
+			\label{fig:miro-backend}
+		\end{figure}
 	\newpage
 	
 	%Backlog
 	\section{Backlog}
+		\indent Backlog zaplanowanych działań został rozpisany na platformie ,,Trello''
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.3\textwidth]{img/spotkania.png}
+			\caption{Terminy spotkań}
+			\label{fig:trello-spotkania}
+		\end{figure}
+		
 	\newpage
 	
 	%Estymata
 	\section{Estymata}
+		\indent Szacowana estymacja poszczególnych części realizacji projektu:
+		\begin{itemize}
+			\item Backend:
+				\begin{itemize}
+					\item Autoryzacja: 10 godzin,
+					\item Data Transfer Object (DTO): 2 godziny,
+					\item DevOps: 5 godzin,
+					\item End Point: 15 godzin,
+					\item Harmonogram: 3 godziny,
+					\item Logi: 10 godzin,
+					\item Programowanie logiki aplikacji: 50 godzin,
+					\item SQL Repozytorium: 3 godziny,
+					\item Testy integracyjne: 10 godzin,
+					\item Uwierzytelnianie: 10 godzin, 
+					\item Wysyłanie e-maili: 30 minut,
+				\end{itemize}
+			\item Baza danych:
+				\begin{itemize}
+					\item Konfiguracja: 30 minut,
+					\item Projekt tabel: 2 godziny,
+				\end{itemize}
+			\item Dokumentacja projektu: 5 godzin,
+			\item Frontend: 
+				\begin{itemize}
+					\item DevOps: 3 godzinny,
+				\end{itemize}
+			\item Zarządzanie projektem:
+				\begin{itemize}
+					\item Rozpisanie backlogu: 2 godziny,
+					\item Rozpisanie sprintów: 2 godziny,
+				\end{itemize}
+		\end{itemize}				
+
 	\newpage
 
 	%Opis sprintów + zrzuty
 	\section{Sprinty}
+		\indent Ze względu na różne harmonogramy pracy zawodowej poszczególnych członków zespołu, trudno było wyznaczyć szczegółowy termin realizacji pojedynczych komponentów aplikacji,
+		więc zostały wyznaczone jedynie ostateczne terminy elementów, na których bazują inne części aplikacji. Pozostałe elementy były realizowane w drugiej kolejności.\\
+		\indent Backend:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{img/DBSprint.png}
+			\caption{Sprinty - Baza danych}
+			\label{fig:sprint-db}
+		\end{figure}
+				\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{img/SQLRepo_Sprint.png}
+			\caption{Sprinty - Repozytorium SQL}
+			\label{fig:sprint-SQLRepo}
+		\end{figure}
+				\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{img/DTO_Sprint.png}
+			\caption{Sprinty - Data Transfer Object}
+			\label{fig:sprint-dto}
+		\end{figure}
+				\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{img/Email_sprint.png}
+			\caption{Sprinty - usługa wysyłania e-maili}
+			\label{fig:sprint-email}
+		\end{figure}
 	\newpage
 	
 	%Interfejs aplikacji (zrzuty) + krótki opis
@@ -132,11 +249,12 @@
 	\section{Uruchomienie w środowisku developerskim}
 		\indent Repozytorium kodu projektu i jego dokumentacja znajdują się w serwisie ,,GitHub'' pod adresem: 
 			\begin{tcolorbox}[minipage,colback=white,arc=0pt,outer arc=0pt, fontupper=\scriptsize]
+				\center
 				\url{https://github.com/MacKarp/Homebrewing-storage}
 			\end{tcolorbox}
 		\indent Do uruchomienia systemu wymagana jest działająca platforma konteneryzacji ,,Docker''
 			oraz narzędzie ,,Docker Compose'' szczegóły instalacji i konfiguracji wymaganych
-			komponentów, można sprawdzić na stronie internetowej: \url{https://docs.docker.com/}.
+			komponentów, można sprawdzić na stronie internetowej: \url{https://docs.docker.com/}.\\
 		\indent Po ściągnięciu repozytorium w katalogu głównym projektu znajdują się pliki wsadowe, umożliwiające kompilację i uruchomienie ,,frontendu'' i ,,backendu''
 		wraz z bazą danych.
 		Pliki wsadowe dla systemu Windows:
@@ -154,7 +272,7 @@
 			\item Backend-Stop-DEV.sh
 		\end{itemize}
 		Pliki ,,Backend-Start.bat'', ,,Backend-Stop.bat'' oraz ,,Backend-Start.sh'' i ,,Backend-Stop.sh'' służą do uruchomiania i zatrzymywania ,,backendu'' w wersji produkcyjnej,
-		która pobierze i uruchomi najnowszą stabilną wersję ,,backendu'' aplikacji i bazę danych z serwisu ,,Docker Hub'', w przypadku pliku z przyrostkiem ,,DEV''
+		która pobierze i~uruchomi najnowszą stabilną wersję ,,backendu'' aplikacji i bazę danych z serwisu ,,Docker Hub'', w przypadku pliku z przyrostkiem ,,DEV''
 		zostanie uruchomiona kompilacja wersji deweloperskiej znajdującej się w lokalnym katalogu ,,Backend'' a następnie zostanie utworzony kontener z działającą aplikacją.
 		W przypadku chęci zmiany ustawień ,,backendu'' aplikacji lub kontenera należy edytować - zachowując odpowiednie formatowanie plików yaml - plik w wersji produkcyjnej
 		lub deweloperskiej:
@@ -165,5 +283,16 @@
 	\newpage	
 	
 	%Podsumowanie, wnioski
-	\section{Podsumowanie}		
+	\section{Podsumowanie}
+		\indent Sprawne zarządzanie projektem jest trudnym zadaniem i wymaga aby lider projektu był osobą charyzmatyczną.\\
+		\indent Zarządzanie zespołem, w którym każdy z członków
+		posiada różny harmonogram pracy zawodowej sprawiło wiele problemów organizacyjnych, często każdy z członków zespołu był dostępny w innym terminie,
+		przez co ustalenie terminu spotkania online, w którym każdy z członków zespołu byłby dostępny było trudnym zadaniem, z tego powodu w czasie trwania projektu dominowała
+		komunikacja pisana. Z tych samych względów rozpisywanie sprintów ograniczyło się jedynie do określenia nieprzekraczalnego terminu ukończenia elementów, od których inne
+		komponenty projektowanej aplikacji były uzależnione, pozostałe elementy nie posiadały ściśle określonego terminu i były realizowane w drugiej kolejności.\\
+		\indent Każdy z członków zespołu zdobył dużo wiedzy na temat pracy w zorganizowanym zespole, a także poznał narzędzia ułatwiające pracę w takim zespole.\\
+		\indent Wspólnie doszliśmy do wniosku że Event Storming był nowym i  ciekawym doświadczeniem, chodź lepszym byłoby spotkanie ,,twarzą w twarz''
+		wraz z osobą doświadczoną, która mogłaby poprowadzić takie spotkanie.\\
+		\indent Wszyscy członkowie zespołu zgodnie stwierdzili że największym problem podczas pracy był problem z bieżącą komunikacją oraz z początkowym brakiem zrozumienia działania
+		tablic na platformie ,,Trello'', raz zdarzyło się nawet	że dwie osoby zrobiły tą samą część aplikacji - na szczęście strata czasu w tym wypadku była mała. 	
 \end{document}
