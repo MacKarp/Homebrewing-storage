@@ -53,6 +53,8 @@ namespace Backend
             services.AddSingleton<IEmailConfiguration>(new EmailConfiguration() { SmtpServer = emailServer, SmtpPort = int.Parse(emailPort), Ssl = Boolean.Parse(emailSsl), SmtpUserName = emailUserName, SmtpPassword = emailPassword });
             services.AddTransient<IEmailService, EmailService>();
 
+            services.AddLogging(a => a.AddSerilog());
+
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<BackendContext>()
                 .AddDefaultTokenProviders();

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Backend.Controllers
 {
@@ -16,11 +17,13 @@ namespace Backend.Controllers
     {
         private readonly IBackendRepo _repository;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
-        public ItemController(IBackendRepo repository, IMapper mapper)
+        public ItemController(IBackendRepo repository, IMapper mapper, ILogger logger)
         {
             _repository = repository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -44,7 +47,11 @@ namespace Backend.Controllers
             {
                 return Ok(_mapper.Map<ItemReadDto>(item));
             }
-            else return NotFound();
+            else
+            {
+                _logger.LogWarning("{item} with ID: {Itemid} is null", item, id);
+                return NotFound();
+            }
         }
 
         [HttpPost]
@@ -56,8 +63,18 @@ namespace Backend.Controllers
                 IdCategory = _repository.GetCategoryById(itemCreateDto.CategoryId),
                 ItemName = itemCreateDto.ItemName,
             };
-            _repository.CreateItem(model);
-            _repository.SaveChanges();
+            
+            try
+            {
+                _repository.CreateItem(model);
+                _repository.SaveChanges();
+                _logger.LogInformation("Item created by {HttpUser}", HttpContext.User.Identity.Name);
+            }
+            catch (System.Exception ex)
+            {
+                _logger.LogInformation("Item creation failed. Exception:", ex.Message);
+            }
+            
 
             var readDto = _mapper.Map<ItemReadDto>(model);
 
@@ -79,6 +96,7 @@ namespace Backend.Controllers
 
             _repository.UpdateItem(modelFromRepo);
             _repository.SaveChanges();
+            _logger.LogInformation("Item with ID: {id} UPDATED by {HttpUser} ", id, HttpContext.User.Identity.Name);
 
             return NoContent();
         }
@@ -90,6 +108,7 @@ namespace Backend.Controllers
             var modelFromRepo = _repository.GetItemById(id);
             if (modelFromRepo == null)
             {
+                
                 return NotFound();
             }
 
@@ -103,6 +122,7 @@ namespace Backend.Controllers
             _mapper.Map(toPatch, modelFromRepo);
             _repository.UpdateItem(modelFromRepo);
             _repository.SaveChanges();
+            _logger.LogInformation("Item with ID: {id} UPDATED by {HttpUser} ", id, HttpContext.User.Identity.Name);
 
             return NoContent();
         }
@@ -118,7 +138,7 @@ namespace Backend.Controllers
             }
             _repository.DeleteItem(modelFromRepo);
             _repository.SaveChanges();
-
+            _logger.LogInformation("Item with ID: {id} DELETED by {HttpUser} ", id, HttpContext.User.Identity.Name);
             return NoContent();
         }
     }
