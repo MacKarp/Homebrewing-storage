@@ -89,7 +89,7 @@ namespace Backend.Controllers
             var users = _repository.GetAllUsers();
             if (users != null)
             {
-                _logger.LogInformation($"{DateTime.UtcNow} - Getting users list by {HttpContext.User.Identity.Name}");
+                _logger.LogInformation("Getting users list by {HttpUser}", HttpContext.User.Identity.Name);
                 return Ok(_mapper.Map<IEnumerable<UserReadDto>>(users));
             }
             else return NotFound();
@@ -132,11 +132,12 @@ namespace Backend.Controllers
             await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "User"));
             if (result.Succeeded)
             {
-                
+                _logger.LogInformation("Account with role User CREATED. New user email: {UserEmail}.", user.Email);
                 return await BuildToken(model);
             }
             else
             {
+                _logger.LogWarning("Account NOT CREATED ({UserEmail}).", user.Email);
                 return BadRequest(result.Errors);
             }
         }
@@ -185,10 +186,12 @@ namespace Backend.Controllers
                                                     lockoutOnFailure: false);
             if (result.Succeeded)
             {
+                _logger.LogInformation("User loggged: {email}", model.EmailAddress);
                 return await BuildToken(model);
             }
             else
             {
+                _logger.LogInformation("Invalid login attempt: {email}", model.EmailAddress);
                 return BadRequest("Invalid login attempt");
             }
         }
@@ -289,10 +292,20 @@ namespace Backend.Controllers
             var modelFromRepo = _repository.GetUserById(id);
             if (modelFromRepo == null)
             {
+                _logger.LogInformation("DELETE USER failed. No user with {id}",id);
                 return NotFound();
             }
-            _repository.DeleteUser(modelFromRepo);
-            _repository.SaveChanges();
+            try
+            {
+                _repository.DeleteUser(modelFromRepo);
+                _repository.SaveChanges();
+                _logger.LogError("DELETE USER with {UserId} succesfull.", id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("DELETE USER with ID:{UserId} failed. Exception: {exException}", id, ex.Message);
+            }
+            
 
             return NoContent();
         }
