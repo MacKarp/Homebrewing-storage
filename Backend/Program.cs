@@ -23,6 +23,7 @@ namespace Backend
 
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
+                .WriteTo.Seq("http://localhost:8081")
                 .CreateLogger();
 
             try
