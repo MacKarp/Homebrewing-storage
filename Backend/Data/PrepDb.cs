@@ -16,6 +16,9 @@ namespace Backend.Data
 {
     public static class PrepDb
     {
+
+
+        //ILogger<PrepDb> logger= new ILogger<PrepDb>();
         public static void PrepPopulation(IApplicationBuilder app)
         {
             using (var serviceScope = app.ApplicationServices.CreateScope())
@@ -27,14 +30,16 @@ namespace Backend.Data
 
         public static void SeedData(BackendContext context, UserManager<IdentityUser> userManager)
         {
+
+            Log.Logger = new LoggerConfiguration()
+               .WriteTo.Seq("http://seq:5341")
+               .CreateLogger();
+
             System.Console.WriteLine("Applying Migrations...");
             context.Database.Migrate();
-
+            
             //Populating Database
-            try
-            {
-
-
+           
                 if (!context.Users.AnyAsync().Result)
                 {
                     System.Console.WriteLine("Adding Users...");
@@ -50,6 +55,8 @@ namespace Backend.Data
                     //new User { UserName = "User 4", UserEmail = "user4@test.test", UserPassword = "user4password"},
                     //new User { UserName = "User 5", UserEmail = "user5@test.test", UserPassword = "user5password"},
                 };
+                try
+                {
                     foreach (var it in items)
                     {
                         userManager.CreateAsync(it, "Aa123456!");
@@ -59,6 +66,11 @@ namespace Backend.Data
 
                     //context.AddRange(items);
                     //context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Log.Information("Error while filling database with USER test data (SeedData). Exception: {exception}", ex.Message);
+                    Console.WriteLine("Error while filling database with USER test data.");
                 }
 
                 if (!context.Categories.AnyAsync().Result)
@@ -72,8 +84,18 @@ namespace Backend.Data
                     new Category {CategoryName = "Category 4"},
                     new Category {CategoryName = "Category 5"},
                 };
-                    context.AddRange(item);
-                    context.SaveChanges();
+                    try
+                    {
+                        context.AddRange(item);
+                        context.SaveChanges();
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                        Log.Information("Error while filling database with CATEGORY test data (SeedData). Exception: {exception}", ex.Message);
+                        Console.WriteLine("Error while filling database with CATEGORY test data.");
+                    }
                 }
 
                 if (!context.Storages.AnyAsync().Result)
@@ -86,9 +108,16 @@ namespace Backend.Data
                         storages.Add(new Storage { IdUser = user, StorageName = "Storage " + i });
                         i++;
                     };
-
-                    context.AddRange(storages);
-                    context.SaveChanges();
+                    try
+                    {
+                        context.AddRange(storages);
+                        context.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Information("Error while filling database with STORAGES test data (SeedData). Exception: {exception}", ex.Message);
+                        Console.WriteLine("Error while filling database with STORAGES test data.");
+                    }
                 }
 
                 if (!context.Items.AnyAsync().Result)
@@ -102,8 +131,16 @@ namespace Backend.Data
                     new Item { ItemName = "Item 4", IdCategory = context.Categories.Find(4)},
                     new Item { ItemName = "Item 5", IdCategory = context.Categories.Find(5)},
                 };
+                    try
+                    {
                     context.AddRange(item);
                     context.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Information("Error while filling database with ITEMS test data (SeedData). Exception: {exception}", ex.Message);
+                        Console.WriteLine("Error while filling database with ITEMS test data.");
+                    }
                 }
 
                 List<Storage> storagesList = context.Storages.ToList();
@@ -131,10 +168,7 @@ namespace Backend.Data
                 }
 
             }
-            catch (Exception)
-            {
-                Console.WriteLine("Error while filling database with test data.");
-            }
+           
 
         }
     }

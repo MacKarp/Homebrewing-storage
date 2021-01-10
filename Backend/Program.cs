@@ -23,6 +23,7 @@ namespace Backend
 
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
+                .WriteTo.Seq("http://seq:5341")
                 .CreateLogger();
 
             try

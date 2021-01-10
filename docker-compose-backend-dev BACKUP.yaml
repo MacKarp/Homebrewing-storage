@@ -44,7 +44,7 @@ services:
         environment:
             ACCEPT_EULA: Y
         volumes:
-             - ./Backend/LocalLog:/data
+             - ./Backend/LocalLog:/data:rw
         ports:
-            - "5341:80"
+            - "8081:80"
    

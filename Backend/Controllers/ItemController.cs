@@ -19,7 +19,7 @@ namespace Backend.Controllers
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public ItemController(IBackendRepo repository, IMapper mapper, ILogger logger)
+        public ItemController(IBackendRepo repository, IMapper mapper, ILogger<ItemController> logger)
         {
             _repository = repository;
             _mapper = mapper;
@@ -49,7 +49,7 @@ namespace Backend.Controllers
             }
             else
             {
-                _logger.LogWarning("{item} with ID: {Itemid} is null", item, id);
+                _logger.LogWarning("Item name: {itemName} with ID: {itemId} is null", item.ItemName, id);
                 return NotFound();
             }
         }

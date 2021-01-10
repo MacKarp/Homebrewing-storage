@@ -63,9 +63,11 @@ namespace Backend.Controllers
             var user = await _userManager.FindByIdAsync(editRoleDto.UserId);
             if (user == null)
             {
+                _logger.LogInformation("User not found in database.");
                 return NotFound();
             }
             await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, editRoleDto.RoleName));
+            _logger.LogInformation(" Role: {Role} assigned to User {ForUser}.", editRoleDto.RoleName, user.UserName);
             return NoContent();
         }
 
