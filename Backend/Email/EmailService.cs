@@ -42,6 +42,7 @@ namespace Backend.Email
                     _emailConfiguration.Ssl);
                     emailClient.Authenticate(_emailConfiguration.SmtpUserName, _emailConfiguration.SmtpPassword);
                     emailClient.Send(message);
+                    _logger.LogError("Email send to: {user}", _emailConfiguration.SmtpUserName);
                     emailClient.Disconnect(true);
                 }
                 catch (System.Exception ex)
