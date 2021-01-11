@@ -14,6 +14,7 @@ env:
 
 on:
   push:
+    branches: [ Test ]
   pull_request:
     branches: [ Test ]
 
