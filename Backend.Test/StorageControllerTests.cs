@@ -15,7 +15,7 @@ namespace Backend.Test
         private static readonly StorageCreateDto NewStorage = new StorageCreateDto()
         {
             StorageName = "New Test Storage",
-            UserId = 1
+            UserId = "1"
         };
 
         private static readonly string Json = JsonConvert.SerializeObject(NewStorage);
@@ -91,8 +91,11 @@ namespace Backend.Test
         public async Task UpdateStorage(int id)
         {
             // Arrange
+            var oldStorageHttpResponseMessage = await TestClient.GetAsync(Url + id);
+            var oldStorage = await oldStorageHttpResponseMessage.Content.ReadAsStringAsync();
+            var old = JsonConvert.DeserializeObject<ExpireReadDto>(oldStorage);
             var storageName = "Updated Test Storage " + id;
-            StorageUpdateDto storageUpdate = new StorageUpdateDto() { StorageName = storageName };
+            StorageUpdateDto storageUpdate = new StorageUpdateDto() { UserId = old.IdUser, StorageName = storageName };
             var json = JsonConvert.SerializeObject(storageUpdate);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -108,8 +111,11 @@ namespace Backend.Test
         public async Task UpdateStorage_NotFound(int id)
         {
             // Arrange
+            var oldStorageHttpResponseMessage = await TestClient.GetAsync(Url + "1");
+            var oldStorage = await oldStorageHttpResponseMessage.Content.ReadAsStringAsync();
+            var old = JsonConvert.DeserializeObject<ExpireReadDto>(oldStorage);
             var storageName = "Updated Test Storage " + id;
-            StorageUpdateDto storageUpdate = new StorageUpdateDto() { StorageName = storageName };
+            StorageUpdateDto storageUpdate = new StorageUpdateDto() { UserId = old.IdUser, StorageName = storageName };
             var json = JsonConvert.SerializeObject(storageUpdate);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -141,7 +147,7 @@ namespace Backend.Test
             await TestClient.PostAsync(Url, Content);
 
             // Act
-            var response = await TestClient.DeleteAsync(Url + 6);
+            var response = await TestClient.DeleteAsync(Url + 5);
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NoContent);
         }

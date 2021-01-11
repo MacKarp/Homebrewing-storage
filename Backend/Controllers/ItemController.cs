@@ -49,7 +49,7 @@ namespace Backend.Controllers
             }
             else
             {
-                _logger.LogWarning("Item name: {itemName} with ID: {itemId} is null", item.ItemName, id);
+                 _logger.LogWarning("Item with ID: {id} was not found", id);
                 return NotFound();
             }
         }
