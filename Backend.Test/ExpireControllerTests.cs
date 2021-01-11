@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -17,7 +18,7 @@ namespace Backend.Test
             ExpirationDate = DateTime.Now.Date,
             IdItem = 1,
             IdStorage = 1,
-            UserId = 1
+            UserId = "1"
         };
 
         private static readonly string Json = JsonConvert.SerializeObject(NewExpire);
@@ -93,8 +94,11 @@ namespace Backend.Test
         public async Task UpdateExpire(int id)
         {
             // Arrange
+            var oldExpireHttpResponseMessage = await TestClient.GetAsync(Url + id);
+            var oldExpire = await oldExpireHttpResponseMessage.Content.ReadAsStringAsync();
+            var old = JsonConvert.DeserializeObject<ExpireReadDto>(oldExpire);
             var newExpireDate = DateTime.Now.Date.AddDays(id);
-            ExpireUpdateDto expireUpdateDto = new ExpireUpdateDto() { ExpirationDate = newExpireDate };
+            ExpireUpdateDto expireUpdateDto = new ExpireUpdateDto() { IdItem = old.IdItem, UserId = old.IdUser, ExpirationDate = newExpireDate };
             var json = JsonConvert.SerializeObject(expireUpdateDto);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -110,8 +114,11 @@ namespace Backend.Test
         public async Task UpdateExpire_NotFound(int id)
         {
             // Arrange
+            var oldExpireHttpResponseMessage = await TestClient.GetAsync(Url + "1");
+            var oldExpire = await oldExpireHttpResponseMessage.Content.ReadAsStringAsync();
+            var old = JsonConvert.DeserializeObject<ExpireReadDto>(oldExpire);
             var newExpireDate = DateTime.Now.Date.AddDays(id);
-            ExpireUpdateDto expireUpdateDto = new ExpireUpdateDto() { ExpirationDate = newExpireDate };
+            ExpireUpdateDto expireUpdateDto = new ExpireUpdateDto() { IdItem = old.IdItem, UserId = old.IdUser, ExpirationDate = newExpireDate };
             var json = JsonConvert.SerializeObject(expireUpdateDto);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -141,9 +148,8 @@ namespace Backend.Test
         {
             // Arrange
             await TestClient.PostAsync(Url, Content);
-
             // Act
-            var response = await TestClient.DeleteAsync(Url + 6);
+            var response = await TestClient.DeleteAsync(Url + 5);
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NoContent);
         }
@@ -159,15 +165,16 @@ namespace Backend.Test
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
-        [Theory]
-        [InlineData(1)]
-        public async Task GetExpireByUserId_UserExists(int id)
+        [Fact]
+        public async Task GetExpireByUserId_UserExists()
         {
             // Arrange
-
+            var userIdResponseMessage = await TestClient.GetAsync("api/users/");
+            var userIdContent = await userIdResponseMessage.Content.ReadAsStringAsync();
+            var userIdJson = JsonConvert.DeserializeObject<List<UserReadDto>>(userIdContent);
+            var id = userIdJson[0].UserId;
             // Act
-            var response = await TestClient.GetAsync(Url+"byUserId/" + id);
-
+            var response = await TestClient.GetAsync(Url + "byUserId/" + id);
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
@@ -179,7 +186,7 @@ namespace Backend.Test
             // Arrange
 
             // Act
-            var response = await TestClient.GetAsync(Url+"byUserId/" + id);
+            var response = await TestClient.GetAsync(Url + "byUserId/" + id);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);

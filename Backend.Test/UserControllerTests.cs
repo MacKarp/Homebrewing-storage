@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -12,11 +12,11 @@ namespace Backend.Test
 {
     public class UserControllerTests : IntegrationTest
     {
-        private static readonly UserCreateDto NewUser = new UserCreateDto()
+
+        private static readonly UserInfo NewUser = new UserInfo()
         {
-            UserEmail = "test.email@test.email.com",
-            UserName = "Test User Name",
-            UserPassword = "Test User Password"
+            EmailAddress = "newTestUser@test.test",
+            Password = "String!!!2334",
         };
 
         private static readonly string Json = JsonConvert.SerializeObject(NewUser);
@@ -35,14 +35,16 @@ namespace Backend.Test
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
-        [Theory]
-        [InlineData(1)]
-        public async Task GetUserById_UserExists(int id)
+        [Fact]
+        public async Task GetUserById_UserExists()
         {
             // Arrange
-
+            var getUserHttpResponseMessage = await TestClient.GetAsync(Url);
+            var allUsers = await getUserHttpResponseMessage.Content.ReadAsStringAsync();
+            var users = JsonConvert.DeserializeObject<List<UserReadDto>>(allUsers);
+            var userId = users[0].UserId;
             // Act
-            var response = await TestClient.GetAsync(Url + id);
+            var response = await TestClient.GetAsync(Url + userId);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -87,10 +89,10 @@ namespace Backend.Test
             // Arrange
 
             // Act
-            var response = await TestClient.PostAsync(Url, Content);
+            var response = await TestClient.PostAsync(Url + "Create/", Content);
 
             // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.Created);
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
         [Fact]
@@ -101,26 +103,26 @@ namespace Backend.Test
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await TestClient.PostAsync(Url, content);
+            var response = await TestClient.PostAsync(Url + "Create/", content);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
-        [Theory]
-        [InlineData(1)]
-        public async Task UpdateUser(int id)
+        [Fact]
+        public async Task UpdateUser()
         {
             // Arrange
-            var userName = "Updated Test User Name" + id;
-            var userEmail = "updated_test@email." + id;
-            var userPassword = "Updated Test User Password" + id;
-            UserUpdateDto userUpdate = new UserUpdateDto() { UserName = userName, UserEmail = userEmail, UserPassword = userPassword };
+            var getUserHttpResponseMessage = await TestClient.GetAsync(Url);
+            var allUsers = await getUserHttpResponseMessage.Content.ReadAsStringAsync();
+            var users = JsonConvert.DeserializeObject<List<UserReadDto>>(allUsers);
+            var oldUser = users[0];
+            UserCreateDto userUpdate = new UserCreateDto() { UserEmail = oldUser.UserEmail + "updated", UserName = oldUser.UserName, UserPassword = "String!!!2334", UserNormalizedName = oldUser.UserName.ToUpper(), UserNormalizedEmail = (oldUser.UserEmail + "updated").ToUpper(), UserLockoutEnabled = true };
             var json = JsonConvert.SerializeObject(userUpdate);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await TestClient.PutAsync(Url + id, content);
+            var response = await TestClient.PutAsync(Url + oldUser.UserId, content);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NoContent);
@@ -145,16 +147,19 @@ namespace Backend.Test
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
-        [Theory]
-        [InlineData(1)]
-        public async Task UpdateUser_BadRequest(int id)
+        [Fact]
+        public async Task UpdateUser_BadRequest()
         {
             // Arrange
-            var json = JsonConvert.SerializeObject("Update User BadRequest");
+            var getUserHttpResponseMessage = await TestClient.GetAsync(Url);
+            var allUsers = await getUserHttpResponseMessage.Content.ReadAsStringAsync();
+            var users = JsonConvert.DeserializeObject<List<UserReadDto>>(allUsers);
+            var oldUser = users[0];
+            var json = "Bad request";
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await TestClient.PutAsync(Url + id, content);
+            var response = await TestClient.PutAsync(Url + oldUser.UserId, content);
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
@@ -163,10 +168,13 @@ namespace Backend.Test
         public async Task DeleteUser()
         {
             // Arrange
-            await TestClient.PostAsync(Url, Content);
+            var getUserHttpResponseMessage = await TestClient.GetAsync(Url);
+            var allUsers = await getUserHttpResponseMessage.Content.ReadAsStringAsync();
+            var users = JsonConvert.DeserializeObject<List<UserReadDto>>(allUsers);
+            var userId = users[0].UserId;
 
             // Act
-            var response = await TestClient.DeleteAsync(Url + 6);
+            var response = await TestClient.DeleteAsync(Url + userId);
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NoContent);
         }
