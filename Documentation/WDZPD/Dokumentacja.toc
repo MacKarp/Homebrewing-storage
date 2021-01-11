@@ -4,10 +4,27 @@
 \contentsline {section}{\numberline {3}Wymagania i założenia projektowe}{5}{section.3}%
 \contentsline {section}{\numberline {4}Opis działania}{6}{section.4}%
 \contentsline {section}{\numberline {5}Wykorzystana technologia i narzędzia}{7}{section.5}%
-\contentsline {section}{\numberline {6}Event storming}{8}{section.6}%
-\contentsline {section}{\numberline {7}Backlog}{11}{section.7}%
-\contentsline {section}{\numberline {8}Estymata}{12}{section.8}%
-\contentsline {section}{\numberline {9}Sprinty}{13}{section.9}%
-\contentsline {section}{\numberline {10}Interfejs aplikacji}{17}{section.10}%
-\contentsline {section}{\numberline {11}Uruchomienie w środowisku developerskim}{18}{section.11}%
-\contentsline {section}{\numberline {12}Podsumowanie}{19}{section.12}%
+\contentsline {subsection}{\numberline {5.1}ASP.NET Core 3.1}{7}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}AutoMapper}{7}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}C\#}{7}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Coverlet}{7}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}CSS}{8}{subsection.5.5}%
+\contentsline {subsection}{\numberline {5.6}Docker}{8}{subsection.5.6}%
+\contentsline {subsection}{\numberline {5.7}Entity Framework}{8}{subsection.5.7}%
+\contentsline {subsection}{\numberline {5.8}Fluent Assertions}{8}{subsection.5.8}%
+\contentsline {subsection}{\numberline {5.9}HTML}{9}{subsection.5.9}%
+\contentsline {subsection}{\numberline {5.10}JavaScript}{9}{subsection.5.10}%
+\contentsline {subsection}{\numberline {5.11}MailKit}{9}{subsection.5.11}%
+\contentsline {subsection}{\numberline {5.12}Microsoft SQL Server}{10}{subsection.5.12}%
+\contentsline {subsection}{\numberline {5.13}Node.js}{10}{subsection.5.13}%
+\contentsline {subsection}{\numberline {5.14}Quartz.NET}{10}{subsection.5.14}%
+\contentsline {subsection}{\numberline {5.15}React.js}{10}{subsection.5.15}%
+\contentsline {subsection}{\numberline {5.16}Swashbuckle}{10}{subsection.5.16}%
+\contentsline {subsection}{\numberline {5.17}xUnit.net}{11}{subsection.5.17}%
+\contentsline {section}{\numberline {6}Event storming}{12}{section.6}%
+\contentsline {section}{\numberline {7}Backlog}{15}{section.7}%
+\contentsline {section}{\numberline {8}Estymata}{16}{section.8}%
+\contentsline {section}{\numberline {9}Sprinty}{17}{section.9}%
+\contentsline {section}{\numberline {10}Interfejs aplikacji}{21}{section.10}%
+\contentsline {section}{\numberline {11}Uruchomienie w środowisku developerskim}{22}{section.11}%
+\contentsline {section}{\numberline {12}Podsumowanie}{23}{section.12}%
