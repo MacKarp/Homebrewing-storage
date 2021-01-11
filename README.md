@@ -1,4 +1,4 @@
-# Backend
+# Backend ![Backend CI](https://github.com/MacKarp/Homebrewing-storage/workflows/Backend%20CI/badge.svg?branch=Tests)
 ## Requirements:
 Docker and Docker Compose
 
