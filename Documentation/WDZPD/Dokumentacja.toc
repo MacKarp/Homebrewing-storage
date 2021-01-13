@@ -19,12 +19,15 @@
 \contentsline {subsection}{\numberline {5.13}Node.js}{10}{subsection.5.13}%
 \contentsline {subsection}{\numberline {5.14}Quartz.NET}{10}{subsection.5.14}%
 \contentsline {subsection}{\numberline {5.15}React.js}{10}{subsection.5.15}%
-\contentsline {subsection}{\numberline {5.16}Swashbuckle}{10}{subsection.5.16}%
-\contentsline {subsection}{\numberline {5.17}xUnit.net}{11}{subsection.5.17}%
+\contentsline {subsection}{\numberline {5.16}SEQ}{10}{subsection.5.16}%
+\contentsline {subsection}{\numberline {5.17}Serilog}{11}{subsection.5.17}%
+\contentsline {subsection}{\numberline {5.18}Swashbuckle}{11}{subsection.5.18}%
+\contentsline {subsection}{\numberline {5.19}xUnit.net}{11}{subsection.5.19}%
 \contentsline {section}{\numberline {6}Event storming}{12}{section.6}%
 \contentsline {section}{\numberline {7}Backlog}{15}{section.7}%
-\contentsline {section}{\numberline {8}Estymata}{16}{section.8}%
-\contentsline {section}{\numberline {9}Sprinty}{17}{section.9}%
-\contentsline {section}{\numberline {10}Interfejs aplikacji}{21}{section.10}%
-\contentsline {section}{\numberline {11}Uruchomienie w środowisku developerskim}{22}{section.11}%
-\contentsline {section}{\numberline {12}Podsumowanie}{23}{section.12}%
+\contentsline {section}{\numberline {8}Estymata}{19}{section.8}%
+\contentsline {section}{\numberline {9}Sprinty}{20}{section.9}%
+\contentsline {section}{\numberline {10}Interfejs aplikacji}{24}{section.10}%
+\contentsline {section}{\numberline {11}Uruchomienie w środowisku developerskim}{25}{section.11}%
+\contentsline {section}{\numberline {12}Podsumowanie}{27}{section.12}%
+\contentsline {section}{\numberline {13}Spis rysunków}{28}{section.13}%

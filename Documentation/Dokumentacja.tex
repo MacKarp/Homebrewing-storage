@@ -40,7 +40,7 @@
 
 	%Początek pierwszej sekcji opisującej system
 	\section{Opis funkcjonalny systemu}
-		\indent Projekt ,,Magazynek piwosza'' jest aplikacją internetową przeznaczoną dla pasjonatów warzących piwo w domu, którzy chcieliby posiadać listę posiadanych składników.\\
+			\indent Projekt ,,Magazynek piwosza'' jest aplikacją internetową przeznaczoną dla pasjonatów warzących piwo w domu, którzy chcieliby posiadać listę posiadanych składników.\\
 		\indent ,,Magazynek piwosza'' pozwala zarejestrowanemu i zalogowanemu użytkownikowi na tworzenie swoich wirtualnych ,,schowków'' i przypisywania do nich
 		składników wraz z ich datami ważności.\\
 		\indent Funkcjonalność aplikacji obejmuje:
@@ -53,6 +53,17 @@
 			\item wysyłanie powiadomień o zbliżającym się terminie ważności,
 			\item logowanie akcji użytkownika.
 		\end{itemize}
+		\indent Aplikacja pierwotnie stworzona dla miłośników piwowarstwa, ma za zadanie pomóc w zarządzaniu składnikami w swoich magazynkach, które niezbędne
+			są do warzenia piwa. Wszystkie dodane magazyny są indywidualne i spersonalizowane, stąd też program wymaga od użytkownika zalogowania się albo poprzez rejestrację
+			na stronie, albo używając mediów społecznościowych (gmail, facebook). Aby użytkownik dodał swoje produkty, musi na samym początku dodać swój pierwszy magazyn.
+			Składów może być wiele - użytkownik może je podzielić wedle uznania kategoriami lub użyć jednego magazynu, aby trzymać w nim wszystkie składniki.\\
+		\indent Każdy produkt posiada swoją indywidualną datę przydatności do spożycia, dlatego też przy dodawaniu przedmiotu do magazynu, niezbędne jest podanie daty przydatności
+			do spożycia.\\
+		\indent Aplikacja raz dziennie zbiera wszystkie informacje na temat produktów dodanych w magazynach, sprawdza daty przydatności i wysyła spersonalizowane powiadomienia
+			mailowe z informacją, który składnik przeterminuje się lub który już jest przeterminowany.\\
+		\indent Gotowa aplikacja przystosowana będzie typowo pod miłośników piwowarstwa, więc użytkownicy, przy dodawaniu przedmiotów do swoich magazynów, będą mogli wybierać
+			predefiniowane składniki tylko z kategorii ,,Piwowarstwa'', jednak aplikacja została stworzona w taki sposób, aby umożliwić przyszłościowo rozbudowanie
+			bibliotek produktowych o np. ,,nabiał'', czy ,,produkty mięsne''.
 	\newpage
 
 	%sekcja druga, opis wykorzystanych technologii
@@ -179,7 +190,19 @@
 				i aktualizuje zmiany. Drugą z cech szczególnych React jest język JSX. Jest on nakładką na JavaScript, która dodaje możliwość wstawiania kodu html
 				(lub komponentów React) bezpośrednio w kodzie, zamiast ciągu znaków. React.js jest obecnie używany na stronach internetowych firm takich
 				jak Netflix, Imgur, PayPal, Archive.org, Gamepedia, SeatGeek, HelloSign czy Walmart.
-		
+
+		\subsection{SEQ}
+			\indent Seq jest zbudowany na potrzeby nowoczesnego, strukturalnego rejestrowania za pomocą szablonów wiadomości. Zamiast tracić czas i wysiłek na próbę
+				wyodrębnienia danych z dzienników w postaci zwykłego tekstu za pomocą delikatnego analizowania dziennika, właściwości skojarzone z każdym zdarzeniem
+				dziennika są przechwytywane i wysyłane do Seq w czystym formacie JSON. Szablony wiadomości są obsługiwane natywnie przez ASP.NET Core, Serilog, NLog
+				i wiele innych bibliotek. 
+
+		\subsection{Serilog}
+			\indent Serilog jest łatwą w konfiguracji biblioteką .NET zapewniającą podstawowe logowanie diagnostyczne do plików, konsoli itd. W przeciwieństwie do innych bibliotek
+				rejestrowania dla .NET, parametry przekazywane wraz z komunikatami dziennika nie są destruktywnie renderowane do formatu tekstowego. Zamiast tego są zachowywane
+				jako dane strukturalne, które można zapisać w formie dokumentu w magazynie danych NoSQL. Szablony komunikatów Serilog używają prostego DSL, który rozszerza
+				zwykłe ciągi formatu .NET. Właściwości są nazywane w szablonie wiadomości i dopasowywane pozycyjnie z argumentami dostarczonymi do metody dziennika.
+
 		\subsection{Swashbuckle}
 			\indent Swashbuckle jest biblioteką, która dodaje zestaw narzędzi ,,Swagger" generujących automatycznie dokumentację API aplikacji,
 				wyposażoną w przejrzysty interfejs użytkownika. Swashbuckle umożliwia również testowanie API. Dokumentacja jest dostępna pod adresem internetowym:

@@ -65,7 +65,7 @@
 			dla pomiarowców, którzy zajmują się wykonywaniem indywidualnych pomiarów u klienta w celu bezproblemowych realizacji zamówień. Ostatnim z~obowiązków pracowników biurowych
 			jest archiwizacja dokumentów wraz z faktoringiem.\\
 		\indent Część magazynowa i montażowa zajmuje się przyjmowaniem towaru, wykonywaniem serwisów, napraw i montażem wszystkich wymienionych wyżej elementów bezpośrednio
-			u klienta.
+			u~klienta.
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.8\textwidth]{img/siedziba.jpg}
@@ -146,7 +146,7 @@
 		\end{figure}
 		\subsection{Baza danych}
 		\indent Baza danych realizuje funkcję gromadzenia danych wprowadzanych przez użytkowników. Dane wprowadzone do bazy danych są raz dziennie automatycznie archiwizowane
-			w kopii zapasowej na twardym dysku zgodnie z ustawionym harmonogramem. Model bazy danych przedstawia rysunek nr. \ref{fig:db_model}\\
+			w~kopii zapasowej na twardym dysku zgodnie z ustawionym harmonogramem. Model bazy danych przedstawia rysunek nr. \ref{fig:db_model}\\
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.9\textwidth]{img/model_bazy_danych.jpg}
@@ -155,7 +155,7 @@
 		\end{figure}
 		\subsection{Frontend}
 		\indent Frontend realizuje funkcje komunikacji pomiędzy użytkownikiem a modułem backendu. Udostępnia prosty i przejrzysty interfejs użytkownika, przetwarza
-			dane pobrane z API w sposób przyjazny dla użytkownika, oraz umożliwia w łatwy sposób wprowadzanie nowych danych do systemu informatycznego.\\	
+			dane pobrane z API w~sposób przyjazny dla użytkownika, oraz umożliwia w łatwy sposób wprowadzanie nowych danych do systemu informatycznego.\\	
 		\subsection{Funkcjonalność systemu informatycznego}		  
 		\indent System informacyjny realizuje następującą funkcjonalność:
 			\begin{itemize}
@@ -335,6 +335,18 @@
 				i aktualizuje zmiany. Drugą z cech szczególnych React jest język JSX. Jest on nakładką na JavaScript, która dodaje możliwość wstawiania kodu html
 				(lub komponentów React) bezpośrednio w kodzie, zamiast ciągu znaków. React.js jest obecnie używany na stronach internetowych firm takich
 				jak Netflix, Imgur, PayPal, Archive.org, Gamepedia, SeatGeek, HelloSign czy Walmart.
+
+		\subsection{SEQ}
+			\indent Seq jest zbudowany na potrzeby nowoczesnego, strukturalnego rejestrowania za pomocą szablonów wiadomości. Zamiast tracić czas i wysiłek na próbę
+				wyodrębnienia danych z~dzienników w postaci zwykłego tekstu za pomocą delikatnego analizowania dziennika, właściwości skojarzone z każdym zdarzeniem
+				dziennika są przechwytywane i wysyłane do Seq w czystym formacie JSON. Szablony wiadomości są obsługiwane natywnie przez ASP.NET Core, Serilog, NLog
+				i wiele innych bibliotek. 
+
+		\subsection{Serilog}
+			\indent Serilog jest łatwą w konfiguracji biblioteką .NET zapewniającą podstawowe logowanie diagnostyczne do plików, konsoli itd. W przeciwieństwie do innych bibliotek
+				rejestrowania dla .NET, parametry przekazywane wraz z komunikatami dziennika nie są destruktywnie renderowane do formatu tekstowego. Zamiast tego są zachowywane
+				jako dane strukturalne, które można zapisać w formie dokumentu w magazynie danych NoSQL. Szablony komunikatów Serilog używają prostego DSL, który rozszerza
+				zwykłe ciągi formatu .NET. Właściwości są nazywane w szablonie wiadomości i dopasowywane pozycyjnie z argumentami dostarczonymi do metody dziennika.
 							 
 		\subsection{Swashbuckle}
 			\indent Swashbuckle jest biblioteką, która dodaje zestaw narzędzi ,,Swagger" generujących automatycznie dokumentację API aplikacji,
