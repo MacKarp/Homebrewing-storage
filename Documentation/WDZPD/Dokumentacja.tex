@@ -255,6 +255,18 @@
 				i aktualizuje zmiany. Drugą z cech szczególnych React jest język JSX. Jest on nakładką na JavaScript, która dodaje możliwość wstawiania kodu html
 				(lub komponentów React) bezpośrednio w kodzie, zamiast ciągu znaków. React.js jest obecnie używany na stronach internetowych firm takich
 				jak Netflix, Imgur, PayPal, Archive.org, Gamepedia, SeatGeek, HelloSign czy Walmart.
+
+		\subsection{SEQ}
+			\indent Seq jest zbudowany na potrzeby nowoczesnego, strukturalnego rejestrowania za pomocą szablonów wiadomości. Zamiast tracić czas i wysiłek na próbę
+				wyodrębnienia danych z~dzienników w postaci zwykłego tekstu za pomocą delikatnego analizowania dziennika, właściwości skojarzone z każdym zdarzeniem
+				dziennika są przechwytywane i wysyłane do Seq w czystym formacie JSON. Szablony wiadomości są obsługiwane natywnie przez ASP.NET Core, Serilog, NLog
+				i wiele innych bibliotek. 
+
+		\subsection{Serilog}
+			\indent Serilog jest łatwą w konfiguracji biblioteką .NET zapewniającą podstawowe logowanie diagnostyczne do plików, konsoli itd. W przeciwieństwie do innych bibliotek
+				rejestrowania dla .NET, parametry przekazywane wraz z komunikatami dziennika nie są destruktywnie renderowane do formatu tekstowego. Zamiast tego są zachowywane
+				jako dane strukturalne, które można zapisać w formie dokumentu w magazynie danych NoSQL. Szablony komunikatów Serilog używają prostego DSL, który rozszerza
+				zwykłe ciągi formatu .NET. Właściwości są nazywane w szablonie wiadomości i dopasowywane pozycyjnie z argumentami dostarczonymi do metody dziennika.
 		
 		\subsection{Swashbuckle}
 			\indent Swashbuckle jest biblioteką, która dodaje zestaw narzędzi ,,Swagger" generujących automatycznie dokumentację API aplikacji,
@@ -309,15 +321,49 @@
 	
 	%Backlog
 	\section{Backlog}
-		\indent Backlog zaplanowanych działań został rozpisany na platformie ,,Trello'', pod adresem: \url{https://trello.com/b/z9uj9uzc}
-		\newline
+		\indent Backlog zaplanowanych działań został rozpisany na platformie ,,Trello''\\
 		\begin{figure}[H]
 			\centering
-			\includegraphics[width=0.3\textwidth]{img/spotkania.png}
+			\includegraphics[width=\textwidth]{img/backlog.png}
+			\caption{Backlog na platformie Trello}
+			\label{fig:trello-backlog}
+		\end{figure}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.5\textwidth]{img/spotkania.png}
 			\caption{Terminy spotkań}
 			\label{fig:trello-spotkania}
 		\end{figure}
-		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{img/sprawy_biezace.png}
+			\caption{Sprawy bieżące}
+			\label{fig:trello-sprawy}
+		\end{figure}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.5\textwidth]{img/backend_niedokonczony.png}
+			\caption{Backend - TODO}
+			\label{fig:trello-backend-to-do}
+		\end{figure}
+			\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{img/backend_done.png}
+			\caption{Backend - Zrealizowane}
+			\label{fig:trello-backend-done}
+		\end{figure}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{img/dokumentacja.png}
+			\caption{Dokumentacja}
+			\label{fig:trello-doc}
+		\end{figure}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{img/frontend.png}
+			\caption{Frontend}
+			\label{fig:trello-front}
+		\end{figure}
 	\newpage
 	
 	%Estymata
@@ -416,6 +462,10 @@
 			\item Backend-Start-DEV.bat
 			\item Backend-Stop.bat
 			\item Backend-Stop-DEV.bat
+			\item Frontend-Start.bat
+			\item Frontend-Start-DEV.bat
+			\item Frontend-Stop.bat
+			\item Frontend-Stop-DEV.bat
 		\end{itemize}
 		Pliki dla systemu Linux:
 		\begin{itemize}
@@ -423,16 +473,45 @@
 			\item Backend-Start-DEV.sh
 			\item Backend-Stop.sh
 			\item Backend-Stop-DEV.sh
+			\item Frontend-Start.sh
+			\item Frontend-Start-DEV.sh
+			\item Frontend-Stop.sh
+			\item Frontend-Stop-DEV.sh
 		\end{itemize}
-		Pliki ,,Backend-Start.bat'', ,,Backend-Stop.bat'' oraz ,,Backend-Start.sh'' i ,,Backend-Stop.sh'' służą do uruchomiania i zatrzymywania ,,backendu'' w wersji produkcyjnej,
-		która pobierze i~uruchomi najnowszą stabilną wersję ,,backendu'' aplikacji i bazę danych z serwisu ,,Docker Hub'', w przypadku pliku z przyrostkiem ,,DEV''
-		zostanie uruchomiona kompilacja wersji deweloperskiej znajdującej się w lokalnym katalogu ,,Backend'' a następnie zostanie utworzony kontener z działającą aplikacją.
-		W przypadku chęci zmiany ustawień ,,backendu'' aplikacji lub kontenera należy edytować - zachowując odpowiednie formatowanie plików yaml - plik w wersji produkcyjnej
-		lub deweloperskiej:
+		\indent Pliki ,,Backend-Start.bat'', ,,Backend-Stop.bat'' oraz ,,Backend-Start.sh'' i ,,Backend-Stop.sh'' służą do uruchomiania i zatrzymywania ,,backendu'' w wersji produkcyjnej,
+			która pobierze i~uruchomi najnowszą stabilną wersję ,,backendu'' aplikacji i bazę danych z serwisu ,,Docker Hub'', w przypadku pliku z przyrostkiem ,,DEV''
+			zostanie uruchomiona kompilacja wersji deweloperskiej znajdującej się w lokalnym katalogu ,,Backend'' a następnie zostanie utworzony kontener z działającą aplikacją.
+			W przypadku chęci zmiany ustawień ,,backendu'' aplikacji lub kontenera należy edytować - zachowując odpowiednie formatowanie plików yaml - plik w wersji produkcyjnej
+			lub deweloperskiej:
 		\begin{itemize}
 			\item docker-compose-backend.yaml
 			\item docker-compose-backend-dev.yaml		
 		\end{itemize}
+			\indent Pliki ,,Frontend-Start.bat'', ,,Frontend-Stop.bat'' oraz ,,Frontend-Start.sh'' i ,,Frontend-Stop.sh'' służą do uruchomiania i zatrzymywania ,,frontendu''
+			aplikacji w wersji produkcyjnej,
+			która pobierze i~uruchomi najnowszą stabilną wersję ,,frontendu'' z serwisu ,,Docker Hub'', w przypadku pliku z przyrostkiem ,,DEV''
+			zostanie uruchomiona kompilacja wersji deweloperskiej znajdującej się w lokalnym katalogu ,Frontend'' a następnie zostanie utworzony kontener z działającą aplikacją.
+			W przypadku chęci zmiany ustawień ,,frontendu'' aplikacji lub kontenera należy edytować - zachowując odpowiednie formatowanie plików yaml - plik w wersji produkcyjnej
+			lub deweloperskiej:
+		\begin{itemize}
+			\item docker-compose-frontend.yaml
+			\item docker-compose-frontend-dev.yaml		
+		\end{itemize}
+		\indent Domyślna konfiguracja znajdująca się w repozytorium umożliwia osobne uruchomienie ,,frontendu'' i ,,backendu'' wraz z bazą danych na jednym komputerze.
+			Poszczególne komponenty aplikacji są dostępne pod adresami:
+		\begin{itemize}
+			\item Backend: \url{http://localhost:8080}
+			\item Frontend: \url{http://localhost:}
+			\item Logi: \url{http://localhost:5341}
+		\end{itemize}
+		\indent Domyślne dane dostępowe do bazy danych:
+		\begin{itemize}
+			\item Nazwa użytkownika: SA
+			\item Hasło użytkownika: ThisIsNotSuperSecretP@55w0rd
+			\item Adres: localhost
+			\item Port: 14331
+		\end{itemize}
+			
 	\newpage	
 	
 	%Podsumowanie, wnioski
@@ -447,5 +526,9 @@
 		\indent Wspólnie doszliśmy do wniosku że Event Storming był nowym i  ciekawym doświadczeniem, chodź lepszym byłoby spotkanie ,,twarzą w twarz''
 		wraz z osobą doświadczoną, która mogłaby poprowadzić takie spotkanie.\\
 		\indent Wszyscy członkowie zespołu zgodnie stwierdzili że największym problem podczas pracy był problem z bieżącą komunikacją oraz z początkowym brakiem zrozumienia działania
-		tablic na platformie ,,Trello'', raz zdarzyło się nawet	że dwie osoby zrobiły tą samą część aplikacji - na szczęście strata czasu w tym wypadku była mała. 	
+		tablic na platformie ,,Trello'', raz zdarzyło się nawet	że dwie osoby zrobiły tą samą część aplikacji - na szczęście strata czasu w tym wypadku była mała.
+	
+	\newpage	
+	\section{Spis rysunków}
+		\listoffigures
 \end{document}
