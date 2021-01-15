@@ -1,0 +1,17 @@
+div#mainApp{
+    margin: 0 auto;
+    width: 800px;
+    background: silver;
+}
+div{
+    border: solid 1px black;
+}
+button.singleStorage{
+    width: 100px;
+    height: 100px;
+    text-align:center;
+    background-image:url('storage.png');
+}
+div#showAllStorages{
+    display: flex;
+}
