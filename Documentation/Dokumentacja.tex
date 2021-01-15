@@ -239,7 +239,7 @@
 			\end{tcolorbox}			
 			Po poprawnym zainstalowaniu i skonfigurowaniu narzędzi należy utworzyć plik o nazwie: ,,docker-compose.yaml'',
 			z następującą przykładową konfiguracją:  
-			\begin{tcolorbox}[minipage,colback=white,arc=0pt,outer arc=0pt, fontupper=\footnotesize]
+			\begin{tcolorbox}[minipage,colback=white,arc=0pt,outer arc=0pt, fontupper=\scriptsize]
 				\begin{tabbing}
 						version: '3' \\
 						serv\= ices: \\
@@ -272,7 +272,13 @@
             			\>\>\> MSSQL\_PID: Express \\
         				\>\> container\_name: Database \\
         				\>\> ports: \\
-						\>\>\> - "14331:1433"
+						\>\>\> - "14331:1433" \\
+						\> frontend: \\
+        				\>\> image: karpiu/homebrewing-storage-frontend \\
+        				\>\> restart: always \\
+        				\>\> container\_name: Frontend \\
+        				\>\> ports: \\
+            			\>\>\> - "3000:3000"
 					\end{tabbing}
 				\end{tcolorbox}	
 				\begin{tcolorbox}[minipage,colback=white,arc=0pt,outer arc=0pt, fontupper=\scriptsize]
