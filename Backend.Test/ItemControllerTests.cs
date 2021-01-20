@@ -48,7 +48,7 @@ namespace Backend.Test
         }
 
         [Theory]
-        [InlineData(6)]
+        [InlineData(1001)]
         public async Task GetItemById_ItemNotExists(int id)
         {
             // Arrange
@@ -104,7 +104,7 @@ namespace Backend.Test
         }
 
         [Theory]
-        [InlineData(6)]
+        [InlineData(1001)]
         public async Task UpdateItem_NotFound(int id)
         {
             // Arrange
@@ -152,7 +152,7 @@ namespace Backend.Test
             // Arrange
 
             // Act
-            var response = await TestClient.DeleteAsync(Url + 6);
+            var response = await TestClient.DeleteAsync(Url + 1001);
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
