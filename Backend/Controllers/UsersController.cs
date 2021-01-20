@@ -32,8 +32,8 @@ namespace Backend.Controllers
         private readonly IConfiguration _configuration;
 
         public UsersController(
-            IBackendRepo repository, 
-            IMapper mapper, 
+            IBackendRepo repository,
+            IMapper mapper,
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<UsersController> logger,
@@ -49,15 +49,15 @@ namespace Backend.Controllers
         }
 
         [HttpGet("roles")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult<List<string>> GetRoles()
         {
             var roles = _repository.GetRoles();
-            return roles. Select(x => x.Name).ToList();        
+            return roles.Select(x => x.Name).ToList();
         }
 
         [HttpPost("AssignRole")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<ActionResult> AssignRole(EditRoleDto editRoleDto)
         {
             var user = await _userManager.FindByIdAsync(editRoleDto.UserId);
@@ -72,7 +72,7 @@ namespace Backend.Controllers
         }
 
         [HttpPost("RemoveRole")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<ActionResult> RemoveRole(EditRoleDto editRoleDto)
         {
             var user = await _userManager.FindByIdAsync(editRoleDto.UserId);
@@ -85,7 +85,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet] //GET api/users
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public ActionResult<IEnumerable<UserReadDto>> GetAllUsers()
         {
             var users = _repository.GetAllUsers();
@@ -99,7 +99,7 @@ namespace Backend.Controllers
 
         //GET api/users/{id}
         [HttpGet("{id}", Name = "GetUserById")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public ActionResult<UserReadDto> GetUserById(string id)
         {
             var user = _repository.GetUserById(id);
@@ -112,7 +112,7 @@ namespace Backend.Controllers
 
         //GET api/users/GetUser   GETs the data of actual user on whose behalf the code is running
         [HttpGet("GetActiveUser")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult<UserReadDto> GetActiveUser()
         {
             string emailAdress = HttpContext.User.Identity.Name;
@@ -130,7 +130,7 @@ namespace Backend.Controllers
         {
             var user = new IdentityUser { UserName = model.EmailAddress, Email = model.EmailAddress };
             var result = await _userManager.CreateAsync(user, model.Password);
-                        
+
             await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "User"));
             if (result.Succeeded)
             {
@@ -150,7 +150,7 @@ namespace Backend.Controllers
         {
             var user = new IdentityUser { UserName = model.EmailAddress, Email = model.EmailAddress };
             var result = await _userManager.CreateAsync(user, model.Password);
-            
+
             //await _userManager.AddToRoleAsync(user, "Admin");
             await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Admin"));
             if (result.Succeeded)
@@ -199,7 +199,7 @@ namespace Backend.Controllers
         }
 
         [HttpPost("RenewToken")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public async Task<ActionResult<UserToken>> Renew()
         {
             var userInfo = new UserInfo
@@ -211,8 +211,8 @@ namespace Backend.Controllers
 
         //POST api/users/{id}
         [HttpPut("{id}", Name = "PutUpdateUser")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
-        public ActionResult UpdateUser([FromRoute]string id, UserCreateDto userUpdateDto)
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        public ActionResult UpdateUser([FromRoute] string id, UserCreateDto userUpdateDto)
         {
             var modelFromRepo = _repository.GetUserById(id);
             if (modelFromRepo == null)
@@ -229,7 +229,7 @@ namespace Backend.Controllers
 
         //PATCH api/users/{id}
         [HttpPatch("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult PartialUpdateUser(string id, JsonPatchDocument<UserCreateDto> patchDocument)
         {
             var modelFromRepo = _repository.GetUserById(id);
@@ -252,7 +252,7 @@ namespace Backend.Controllers
             return NoContent();
         }
 
-               
+
 
         private async Task<UserToken> BuildToken(UserInfo userInfo)
         {
@@ -288,13 +288,13 @@ namespace Backend.Controllers
 
         //DELETE api/users/{id}
         [HttpDelete("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public ActionResult DeleteUser(string id)
         {
             var modelFromRepo = _repository.GetUserById(id);
             if (modelFromRepo == null)
             {
-                _logger.LogInformation("DELETE USER failed. No user with {id}",id);
+                _logger.LogInformation("DELETE USER failed. No user with {id}", id);
                 return NotFound();
             }
             try
@@ -307,7 +307,7 @@ namespace Backend.Controllers
             {
                 _logger.LogError("DELETE USER with ID:{UserId} failed. Exception: {exException}", id, ex.Message);
             }
-            
+
 
             return NoContent();
         }

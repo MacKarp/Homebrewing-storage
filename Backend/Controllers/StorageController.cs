@@ -24,7 +24,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult<IEnumerable<StorageReadDto>> GetAllStorages()
         {
             var item = _repository.GetAllStorages();
@@ -36,7 +36,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet("{id}", Name = "GetStorageById")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult<StorageReadDto> GetStorageById(int id)
         {
             var item = _repository.GetStorageById(id);
@@ -48,7 +48,7 @@ namespace Backend.Controllers
         }
 
         [HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult<StorageReadDto> CreateStorage(StorageCreateDto storageCreateDto)
         {
             var model = new Storage()
@@ -65,7 +65,7 @@ namespace Backend.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult UpdateStorage(int id, StorageUpdateDto storageUpdateDto)
         {
             var modelFromRepo = _repository.GetStorageById(id);
@@ -84,7 +84,7 @@ namespace Backend.Controllers
         }
 
         [HttpPatch("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult PartialUpdateStorage(int id, JsonPatchDocument<StorageUpdateDto> patchDocument)
         {
             var modelFromRepo = _repository.GetStorageById(id);
@@ -108,7 +108,7 @@ namespace Backend.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult DeleteStorage(int id)
         {
             var modelFromRepo = _repository.GetStorageById(id);

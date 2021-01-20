@@ -27,7 +27,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult<IEnumerable<ItemReadDto>> GetAllItems()
         {
             var item = _repository.GetAllItems();
@@ -39,7 +39,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet("{id}", Name = "GetItemById")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult<ItemReadDto> GetItemById(int id)
         {
             var item = _repository.GetItemById(id);
@@ -49,13 +49,13 @@ namespace Backend.Controllers
             }
             else
             {
-                 _logger.LogWarning("Item with ID: {id} was not found", id);
+                _logger.LogWarning("Item with ID: {id} was not found", id);
                 return NotFound();
             }
         }
 
         [HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult<ItemReadDto> CreateItem(ItemCreateDto itemCreateDto)
         {
             var model = new Item()
@@ -63,7 +63,7 @@ namespace Backend.Controllers
                 IdCategory = _repository.GetCategoryById(itemCreateDto.CategoryId),
                 ItemName = itemCreateDto.ItemName,
             };
-            
+
             try
             {
                 _repository.CreateItem(model);
@@ -74,7 +74,7 @@ namespace Backend.Controllers
             {
                 _logger.LogInformation("Item creation failed. Exception:", ex.Message);
             }
-            
+
 
             var readDto = _mapper.Map<ItemReadDto>(model);
 
@@ -82,7 +82,7 @@ namespace Backend.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult UpdateItem(int id, ItemUpdateDto itemUpdateDto)
         {
             var modelFromRepo = _repository.GetItemById(id);
@@ -102,13 +102,13 @@ namespace Backend.Controllers
         }
 
         [HttpPatch("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult PartialUpdateItem(int id, JsonPatchDocument<ItemUpdateDto> patchDocument)
         {
             var modelFromRepo = _repository.GetItemById(id);
             if (modelFromRepo == null)
             {
-                
+
                 return NotFound();
             }
 
@@ -128,7 +128,7 @@ namespace Backend.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult DeleteItem(int id)
         {
             var modelFromRepo = _repository.GetItemById(id);

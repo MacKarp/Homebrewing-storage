@@ -25,7 +25,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult<IEnumerable<ExpireReadDto>> GetAllExpires()
         {
             var item = _repository.GetAllExpires();
@@ -37,7 +37,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet("{id}", Name = "GetExpireById")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult<ExpireReadDto> GetExpireById(int id)
         {
             var item = _repository.GetExpireById(id);
@@ -49,7 +49,7 @@ namespace Backend.Controllers
         }
 
         [HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult<ExpireReadDto> CreateExpire(ExpireCreateDto expireCreateDto)
         {
             var model = new Expire()
@@ -68,7 +68,7 @@ namespace Backend.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult UpdateExpire(int id, ExpireUpdateDto expireUpdateDto)
         {
             var modelFromRepo = _repository.GetExpireById(id);
@@ -88,7 +88,7 @@ namespace Backend.Controllers
         }
 
         [HttpPatch("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult PartialUpdateExpire(int id, JsonPatchDocument<ExpireUpdateDto> patchDocument)
         {
             var modelFromRepo = _repository.GetExpireById(id);
@@ -112,7 +112,7 @@ namespace Backend.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult DeleteExpire(int id)
         {
             var modelFromRepo = _repository.GetExpireById(id);
@@ -126,8 +126,8 @@ namespace Backend.Controllers
             return NoContent();
         }
 
-        [HttpGet("byUserId/{id}",Name = "GetExpireByUserId")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
+        [HttpGet("byUserId/{id}", Name = "GetExpireByUserId")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,User")]
         public ActionResult<IEnumerable<ExpireReadDto>> GetExpireByUserId(string id)
         {
             var item = _repository.GetExpiresByUserId(id);
