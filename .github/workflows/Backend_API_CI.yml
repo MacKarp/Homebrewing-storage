@@ -13,10 +13,12 @@ env:
   NotificationSchedule: "0 0 3 * * ?"
 
 on:
+  workflow_dispatch:
+    branches: [ Tests]
   push:
-    branches: [ Test ]
+    branches: [ Tests]
   pull_request:
-    branches: [ Test ]
+    branches: [ Tests]
 
 jobs:
   build_and_test:
