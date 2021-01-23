@@ -85,7 +85,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet] //GET api/users
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public ActionResult<IEnumerable<UserReadDto>> GetAllUsers()
         {
             var users = _repository.GetAllUsers();
@@ -99,7 +99,7 @@ namespace Backend.Controllers
 
         //GET api/users/{id}
         [HttpGet("{id}", Name = "GetUserById")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public ActionResult<UserReadDto> GetUserById(string id)
         {
             var user = _repository.GetUserById(id);
