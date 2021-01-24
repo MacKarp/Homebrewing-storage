@@ -85,6 +85,17 @@ div.loginForm{
 div#showCenter input,div#showCenter select {
     margin-bottom: 5px;
 }
+div#addStorage{
+    width:100%;
+    margin-bottom: 10px;
+    text-align:center;
+    font-size: 14px;
+    font-weight: bold;
+}
+div#dodawarka{
+    text-align:center;
+    font-weight: bold;
+}
 div.loginForm input{
 width: 400px;
 margin-bottom: 5px;
