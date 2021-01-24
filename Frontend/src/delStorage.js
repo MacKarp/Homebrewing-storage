@@ -6,7 +6,7 @@ class DelStorage extends React.Component  {
     super(props);
     this.state = {
         storageId: props.storageId,
-        token: 'Bearer '+ props.token,
+        token: props.token,
         postId: null,
         idUser: props.idUser,
       };

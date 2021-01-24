@@ -40,7 +40,7 @@ renderSwitch(param) {
       </div>)
     case 2:
         return(
-            <div>{this.belka()}
+            <div id="dodawarka">{this.belka()}
            Dodaj magazyn: <input onInput={this.handleInputState} /> <button className="classicButton" onClick={this.handleStateSet} value={3}>Dodaj</button></div>)
     case 3:
             return(
