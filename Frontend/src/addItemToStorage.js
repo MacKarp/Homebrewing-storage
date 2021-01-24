@@ -7,21 +7,30 @@ class AddItemToStorage extends React.Component  {
     super(props);
     this.onChangeHandleCat = this.onChangeHandleCat.bind(this);
     this.state = {
-        token: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibWFpbEBvMi5wbCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6Im1haWxAbzIucGwiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTYxMTA4MDk1OX0.GElal5oY0zodHyRh3_-jDkjyiPVAQkPYBw1NScwFlkY',
+        token: props.token,
         storageId: props.storageId,
         categories: 0,
         catSelected: 0,
         loadedCategories: null,
-        rand: Math.random()
+        rand: Math.random(),
+        user: props.user
       };
     }
  
+
+    
     componentDidMount() {
-        fetch("http://localhost:8080/api/Category")
+
+          const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'accept: text/plain', 'Authorization' : this.state.token}
+    };
+
+
+
+        fetch("http://localhost:8080/api/Category",requestOptions)
           .then(res => res.json())
           .then(json => this.setState({ categories: json})).then(this.setState({loadedCategories:true}))
-          //niefiltrowane
-        // FILTROWANE USEREM .then(json => this.setState({ storages: json.filter(user => user.idUser === this.state.user)}))
         
       }
 
@@ -45,9 +54,7 @@ class AddItemToStorage extends React.Component  {
 
     switcherCheker(){
         if(parseInt(this.state.catSelected,10)!==0){
-            return <div><SingleItemAdder key={this.state.rand} categoryId={this.state.catSelected} /></div>          
-        } else {
-            return <div>Wybierz kategorię</div>
+            return <div><SingleItemAdder token={this.state.token} user={this.state.user} storageID={this.state.storageId} key={this.state.rand} categoryId={this.state.catSelected} /></div>          
         }
     }
 

@@ -1,25 +1,29 @@
 import * as React from 'react';
 //import ReactDOM from 'react-dom';
 
-class AddStorage extends React.Component  {
+class AddExpirationItem extends React.Component  {
   constructor(props){
     super(props);
     this.state = {
-        token: 'Bearer '+props.token,
+        token: props.token,
         postId: null,
-        idUser: props.idUser,
-        nameStorage: props.nameStorage
+        itemID: props.itemID,
+        expDate: props.expDate,
+        idStorage:props.idStorage,
+        user:props.user
       };
     }
+
+
 
    componentDidMount() {
         // Simple POST request with a JSON body using fetch
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json-patch+json', 'Authorization': this.state.token},
-            body: JSON.stringify({ userId: this.state.idUser, storageName: this.state.nameStorage })
+            body: JSON.stringify({ userId: this.state.user, idStorage: this.state.idStorage, idItem: this.state.itemID, expirationDate: this.state.expDate })
         };
-        fetch('http://localhost:8080/api/Storage', requestOptions)
+        fetch('http://localhost:8080/api/Expire', requestOptions)
             .then(res => res.json())
             .then(data => this.setState({ postId: data.id }))
     }
@@ -31,7 +35,7 @@ class AddStorage extends React.Component  {
 
         return(
             <div id="addStorage">
-                    Dodano  biblioteczkę o nazwie: {this.state.nameStorage}!
+                   <b>Dodano!</b>
             </div>
         )
     }
@@ -40,4 +44,4 @@ class AddStorage extends React.Component  {
 
 
 
-export default AddStorage;
+export default AddExpirationItem;

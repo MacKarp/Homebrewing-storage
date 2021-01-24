@@ -1,17 +1,140 @@
-div#mainApp{
-    margin: 0 auto;
-    width: 800px;
-    background: silver;
+body{
+    background-image: url('images/bg.png');
+    background-size: cover;
 }
-div{
+div#mainApp{
+    margin: 10px auto;
+    width: 802px;
+    background-image: url('images/app_bg.png');
+    background-size: cover;
+    
+}
+button.classicButton{
+    background-image: url('images/but_bg.png');
+    color: white;
+    padding: 8px 25px 8px 25px;
     border: solid 1px black;
+    border-radius: 6px;
+    font-weight: bold;
+    margin: 3px 7px 3px 7px;
+}
+td.redDate{
+    color: rgb(255, 0, 0);
+    font-weight: bold;
+}
+td.semiRedDate{
+    color: rgb(126, 0, 0);
+    font-weight: bold;
+}
+td.blackDate{
+    color:green;
+    font-weight: bold;
+}
+div#dodajDoBibl{
+    width: 750px;
+    margin: 10px auto;
+    text-align:center;
+}
+td#nameProdukt{
+width: 400px;
+text-align: center;
+font-weight: bold;
+} 
+td.itemName{
+    padding-left: 10px;
+}
+td#expDateTd{
+width: 300px;
+text-align: left;
+font-weight: bold;
+} 
+td#delTd{
+    width:40px;
+}
+div#dodajDoBibl span{
+    font-size: 16px;
+
+}
+button.classicButton:hover{
+    background-image: url('images/but_bg_act.png');
+    padding: 8px 24px 8px 26px;
+}
+div#logo{
+    border: solid 1px black;
+    width: 802px;
+}
+button.del_exp{
+border: none;background-image: url('images/del_exp.png');
+width: 20px;height:20px; 
+margin: 0 0 2px 0;
+}
+div#logout{
+    width: 100%;
+    text-align: right;
+}
+div#loggedBelka{
+    text-align:center;
+}
+div.loginForm{
+    width: 700px;
+    margin: 0 auto;
+    font-size: 14px;
+    font-weight:bold;
+    text-align:center;
+}
+div#showCenter input,div#showCenter select {
+    margin-bottom: 5px;
+}
+div.loginForm input{
+width: 400px;
+margin-bottom: 5px;
+}
+div.loginForm button{
+    margin-bottom: 10px;
+}
+div.loginForm h2{
+    padding: 0 0 0 0;
+    margin: 10px 0 10px 0;
+    font-size: 26px;
+}
+div#showAllItems table {
+    width: 750px;
+    margin: 0 auto;
+    border-top: solid 1px black;
+    border-left: solid 1px black;
+    border-right: solid 1px black;
+}
+div#showAllItems table tbody tr td{
+    border-bottom: solid 1px black;
+    vertical-align: middle;
+    background-color: rgb(255,255,255,0.3)
+}
+input{
+    box-shadow: 0px 0px 5px 1px white;
+    background: rgb(255, 233, 221);
+    border: solid 1px black;
+    padding: 4px 2px 4px 4px;
+}
+select{
+    box-shadow: 0px 0px 5px 1px white;
+    background: rgb(255, 233, 221);
+    border: solid 1px black;
+    padding: 4px 2px 4px 4px;
+    width: 400px;
 }
 button.singleStorage{
+    border:none;
+    background:none;
     width: 100px;
     height: 100px;
     text-align:center;
-    background-image:url('storage.png');
+    background-image:url('images/barrel.png');
+    margin: 20px 7px 7px;
+}
+button.singleStorage:hover,button.singleStorage:active{
+    background-image:url('images/barrel_hover.png');
 }
 div#showAllStorages{
-    display: flex;
+
+    width:802px;
 }
