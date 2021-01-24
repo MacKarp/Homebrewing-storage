@@ -1,12 +1,12 @@
 import * as React from 'react';
 //import ReactDOM from 'react-dom';
 
-class DelStorage extends React.Component  {
+class DelExpire extends React.Component  {
   constructor(props){
     super(props);
     this.state = {
-        storageId: props.storageId,
-        token: 'Bearer '+ props.token,
+        expireId: props.expireId,
+        token: props.token,
         postId: null,
         idUser: props.idUser,
       };
@@ -17,9 +17,9 @@ class DelStorage extends React.Component  {
         // Simple POST request with a JSON body using fetch
         const requestOptions = {
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json-patch+json', 'Authorization': this.state.token}
+            headers: { 'Content-Type': 'application/json-patch+json', 'Authorization' : this.state.token}
         };
-        fetch('http://localhost:8080/api/Storage/'+this.state.storageId, requestOptions)
+        fetch('http://localhost:8080/api/Expire/'+this.state.expireId, requestOptions)
 
     }
 
@@ -29,9 +29,9 @@ class DelStorage extends React.Component  {
     render(){
 
         return(
-            <div id="addStorage">
+            <span>
                   Usunięto
-            </div>
+            </span>
         )
     }
 }
@@ -39,4 +39,4 @@ class DelStorage extends React.Component  {
 
 
 
-export default DelStorage;
+export default DelExpire;
